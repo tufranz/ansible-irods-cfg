@@ -1,0 +1,46 @@
+---
+- name: test default variable generate correct configuration files
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+  vars:
+    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+  tasks:
+    - name: verify service_account.config is correct
+      assert:
+        that:
+          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=irods')
+          - service_account | search('IRODS_SERVICE_GROUP_NAME=irods')
+
+
+- name: test custom service account name
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/service_account_name.yml
+  vars:
+    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+  tasks:
+    - name: verify service_account.config is correct
+      assert:
+        that:
+          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=custom')
+          - service_account | search('IRODS_SERVICE_GROUP_NAME=custom')
+
+
+- name: test custom service group name
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/service_group_name.yml
+  vars:
+    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+  tasks:
+    - name: verify service_account.config is correct
+      assert:
+        that:
+          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=irods')
+          - service_account | search('IRODS_SERVICE_GROUP_NAME=custom')

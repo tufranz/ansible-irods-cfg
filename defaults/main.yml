@@ -1,2 +1,4 @@
 ---
-# defaults file for ansible-irods
+# service account config
+irods_server_cfg_service_account_name: irods
+irods_server_cfg_service_group_name: "{{ irods_server_cfg_service_account_name }}"

@@ -17,6 +17,8 @@ Here are the role variables. None of them are required.
 
 Variable                                | Default                                 | Choices | Comment
 --------------------------------------- | --------------------------------------- | ------- | -------
+`irods_server_cfg_service_account_name` | irods                                   |         | The account used to run iRODS
+`irods_server_cfg_group_account_name`   | `irods_server_cfg_service_account_name` |         | The group used to run iRODS
 
 
 Dependencies
