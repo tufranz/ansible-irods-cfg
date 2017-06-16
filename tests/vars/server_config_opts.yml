@@ -1,0 +1,36 @@
+---
+irods_server_cfg_default_number_of_transfer_threads: 16
+irods_server_cfg_default_resource_directory: vault
+irods_server_cfg_default_resource_name: resc
+irods_server_cfg_default_temporary_password_lifetime: 1
+irods_server_cfg_environment_variables:
+  var1: val1
+  var2: val2
+irods_server_cfg_federation:
+  - icat_host: icat1
+    zone_name: zone1
+    zone_key: key1
+    negotiation_key: TEMPORARY_32byte_negotiation_ke1
+  - icat_host: icat2
+    zone_name: zone2
+    zone_key: key2
+    negotiation_key: TEMPORARY_32byte_negotiation_ke2
+irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes: 2
+irods_server_cfg_maximum_size_for_single_buffer: 3
+irods_server_cfg_maximum_temporary_password_lifetime: 4
+irods_server_cfg_pam_no_extend: true
+irods_server_cfg_pam_password_length: 0
+irods_server_cfg_pam_password_max_time: 1
+irods_server_cfg_pam_password_min_time: 2
+irods_server_cfg_re_additional_data_variable_mappings:
+  - dvm1
+  - dvm2
+irods_server_cfg_re_additional_function_name_mappings:
+  - fnm1
+  - fnm2
+irods_server_cfg_re_additional_rulebases:
+  - re1
+  - re2
+irods_server_cfg_transfer_buffer_size_for_parallel_transfer: 32
+irods_server_cfg_transfer_chunk_size_for_parallel_transfer: 5
+irods_server_cfg_xmsg_port: 3

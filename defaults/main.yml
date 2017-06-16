@@ -2,3 +2,44 @@
 # service account config
 irods_server_cfg_service_account_name: irods
 irods_server_cfg_service_group_name: "{{ irods_server_cfg_service_account_name }}"
+
+# server_config
+irods_server_cfg_default_dir_mode: '0750'
+irods_server_cfg_default_file_mode: '0600'
+irods_server_cfg_default_hash_scheme: SHA256
+irods_server_cfg_default_number_of_transfer_threads: null
+irods_server_cfg_default_resource_directory: null
+irods_server_cfg_default_resource_name: null
+irods_server_cfg_default_temporary_password_lifetime: null
+irods_server_cfg_environment_variables: {}
+irods_server_cfg_federation: []
+irods_server_cfg_icat_host: "{{ inventory_hostname }}"
+irods_server_cfg_kerberos_name: null
+irods_server_cfg_match_hash_policy: compatible
+irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes: null
+irods_server_cfg_maximum_size_for_single_buffer: null
+irods_server_cfg_maximum_temporary_password_lifetime: null
+irods_server_cfg_negotiation_key: TEMPORARY_32byte_negotiation_key
+irods_server_cfg_pam_no_extend: null
+irods_server_cfg_pam_password_length: null
+irods_server_cfg_pam_password_max_time: null
+irods_server_cfg_pam_password_min_time: null
+irods_server_cfg_re_additional_data_variable_mappings: []
+irods_server_cfg_re_additional_function_name_mappings: []
+irods_server_cfg_re_additional_rulebases: []
+irods_server_cfg_schema_validation_base_uri: https://schemas.irods.org/configuration
+irods_server_cfg_server_control_plane_encryption_algorithm: AES-256-CBC
+irods_server_cfg_server_control_plane_encryption_num_hash_rounds: 16
+irods_server_cfg_server_control_plane_key: TEMPORARY__32byte_ctrl_plane_key
+irods_server_cfg_server_control_plane_port: 1248
+irods_server_cfg_server_control_plane_timeout: 10000
+irods_server_cfg_server_port_range_start: 20000
+irods_server_cfg_server_port_range_end: 20199
+irods_server_cfg_transfer_buffer_size_for_parallel_transfer: null
+irods_server_cfg_transfer_chunk_size_for_parallel_transfer: null
+irods_server_cfg_xmsg_port: null
+irods_server_cfg_zone_auth_scheme: native
+irods_server_cfg_zone_key: TEMPORARY_zone_key
+irods_server_cfg_zone_name: tempZone
+irods_server_cfg_zone_port: 1247
+irods_server_cfg_zone_user: rods
