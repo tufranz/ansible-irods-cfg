@@ -43,3 +43,9 @@ irods_server_cfg_zone_key: TEMPORARY_zone_key
 irods_server_cfg_zone_name: tempZone
 irods_server_cfg_zone_port: 1247
 irods_server_cfg_zone_user: rods
+
+# host_access_control_config
+irods_server_cfg_access_entries: []
+
+# hosts_config
+irods_server_cfg_host_entries: []

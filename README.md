@@ -28,6 +28,7 @@ Variable                                                                     | D
 `irods_server_cfg_default_temporary_password_lifetime`                       |                                         |                               | the default number of seconds a server-side temporary password is valid
 `irods_server_cfg_environment_variables`                                     | `{}`                                    |                               | a set of environment variables to add to the server process environment
 `irods_server_cfg_federation`                                                | `[]`                                    |                               | an array of federation objects identifying the zones this zone federates with, see below
+`irods_server_cfg_host_entries`                                              | `[]`                                    |                               | an array of host entry objects grouping host names and addresses referring to the same host, see below
 `irods_server_cfg_icat_host`                                                 | `ansible_inventory_name`                |                               | the fully qualified domain name of the iCAT enabled server
 `irods_server_cfg_kerberos_name`                                             |                                         |                               | Kerberos distinguished name for KRB and GSI authentication
 `irods_server_cfg_match_hash_policy`                                         | compatible                              | compatible, strict            | indicates to iRODS whether to use the hash used by the client or the data at rest, or to force the use of the default hash scheme
@@ -59,19 +60,26 @@ Variable                                                                     | D
 `irods_server_cfg_zone_port`                                                 | 1247                                    |                               | the main port used by the zone for communication
 `irods_server_cfg_zone_user`                                                 | rods                                    |                               | the name of the rodsadmin user running this iRODS instance
 
-The `irods_server_cfg_environment_variables` is a dictionary where the key is the name of a server
-process environment variable, and the value is the value of the environment variable.
+The `irods_server_cfg_environment_variables` variable is a dictionary where the key is the name of a
+server process environment variable, and the value is the value of the environment variable.
 
-The `irods_server_cfg_federation` is an array of `federation` objects. A `federation` object has the
-following fields, all of them required.
+The `irods_server_cfg_federation` variable is an array of `federation` objects. A `federation`
+object has the following fields, all of them required.
 
-Field             | Comments
------------------ | --------
-`icat_host`       | the host name of the iCAT server in the federated zone
-`negotiation_key` | the 32-byte encryption key of the federated zone
-`zone_key `       | the shared authentication secret with the federated zone
-`zone_name`       | the name of the federated zone
+Field             | Choices | Comments
+----------------- | --------| --------
+`icat_host`       |         | the host name of the iCAT server in the federated zone
+`negotiation_key` |         | the 32-byte encryption key of the federated zone
+`zone_key `       |         | the shared authentication secret with the federated zone
+`zone_name`       |         | the name of the federated zone
 
+The `irods_server_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry`
+object has the following fields, all of them required.
+
+Field          | Choices       | Comments
+-------------- | ------------- | --------
+`address_type` | local, remote | indicates if this host is localhost.
+`addresses`    |               | an array of names and addresses referring to this host
 
 Dependencies
 ------------
@@ -96,6 +104,12 @@ Example Playbook
               negotiation_key: "Don't you wish!                !"
               zone_key: crack me
               zone_name: tacc
+          irods_server_cfg_host_entries:
+            - address_type: local
+              addresses:
+                - ares.iplantcollaborative.org
+                - data.cyverse.org
+                - data.iplantcollaborative.org
           irods_server_cfg_negotiation_key: Just guess it                  .
           irods_server_cfg_re_additional_data_variable_mappings:
             - cyverse

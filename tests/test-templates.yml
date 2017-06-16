@@ -5,14 +5,14 @@
   vars_files:
     - ../defaults/main.yml
   vars:
-    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+    hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
+    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
-    - name: verify service_account.config is correct
+    - name: verify hosts_config.json is correct
       assert:
         that:
-          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=irods')
-          - service_account | search('IRODS_SERVICE_GROUP_NAME=irods')
+          - hosts_config.host_entries | length == 0
 
     - name: verify server_config.json is correct
       assert:
@@ -54,39 +54,32 @@
           - server_config.zone_port == 1247
           - server_config.zone_user == 'rods'
 
-
-- name: test custom service account name
-  hosts: localhost
-  gather_facts: false
-  vars_files:
-    - ../defaults/main.yml
-    - vars/service_account_name.yml
-  vars:
-    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
-  tasks:
-    - name: verify service_account.config is correct
-      assert:
-        that:
-          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=custom')
-          - service_account | search('IRODS_SERVICE_GROUP_NAME=custom')
-
-
-- name: test custom service group name
-  hosts: localhost
-  gather_facts: false
-  vars_files:
-    - ../defaults/main.yml
-    - vars/service_group_name.yml
-  vars:
-    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
-  tasks:
     - name: verify service_account.config is correct
       assert:
         that:
           - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=irods')
-          - service_account | search('IRODS_SERVICE_GROUP_NAME=custom')
+          - service_account | search('IRODS_SERVICE_GROUP_NAME=irods')
 
 
+- name: test hosts_config options
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/hosts_config_opts.yml
+  vars:
+    hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
+  tasks:
+    - name: verify entries
+      assert:
+        that:
+          - hosts_config.host_entries | length == 2
+          - hosts_config.host_entries[0].address_type == 'local'
+          - hosts_config.host_entries[0].addresses | length == 1
+          - hosts_config.host_entries[0].addresses[0].address == 'my.host.com'
+          - hosts_config.host_entries[1].address_type == 'remote'
+          - hosts_config.host_entries[1].addresses | length == 2
+          - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'  
 - name: test server_config options
   hosts: localhost
   gather_facts: false
@@ -129,3 +122,35 @@
           - server_config.re_rulebase_set[0].filename == 're1'
           - server_config.re_rulebase_set[2].filename == 'core'
           - server_config.xmsg_port == 3
+
+
+- name: test custom service account name
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/service_account_name.yml
+  vars:
+    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+  tasks:
+    - name: verify service_account.config is correct
+      assert:
+        that:
+          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=custom')
+          - service_account | search('IRODS_SERVICE_GROUP_NAME=custom')
+
+
+- name: test custom service group name
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/service_group_name.yml
+  vars:
+    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+  tasks:
+    - name: verify service_account.config is correct
+      assert:
+        that:
+          - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=irods')
+          - service_account | search('IRODS_SERVICE_GROUP_NAME=custom')

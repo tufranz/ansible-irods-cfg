@@ -1,0 +1,14 @@
+{
+  "host_entries": [
+{% for entry in irods_server_cfg_host_entries %}
+    {
+      "address_type": "{{ entry.address_type }}",
+      "addresses": [
+{% for address in entry.addresses %}
+        { "address": "{{ address }}" }{% if not loop.last %},{% endif %}
+{% endfor %}      
+      ]
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+  ]
+}
