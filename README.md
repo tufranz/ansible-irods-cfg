@@ -1,5 +1,6 @@
 irods-server-cfg
 ================
+[![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-server-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-server-cfg)
 
 This role can be used to completely configure an iRODS server once iRODS is installed.
 
