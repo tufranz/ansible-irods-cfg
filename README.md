@@ -18,6 +18,7 @@ Here are the role variables. None of them are required.
 
 Variable                                                                     | Default                                                            | Choices                                         | Comment
 ---------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------- | -------
+`irods_server_cfg_access_entries`                                            | []                                                                 |                               | A list of access entry objects defining who can access iRODS and from where, see below
 `irods_server_cfg_authentication_file`                                       |                                                                    |                                                 | the authentication file for the clerver
 `irods_server_cfg_clerver_default_hash_scheme`                               | `irods_server_cfg_default_hash_scheme`                             | MD5, SHA256                                     | checksum scheme for clerver
 `irods_server_cfg_clerver_default_resource`                                  | `irods_server_cfg_default_resource_name`                           |                                                 | the name of the resource used for clerver operations if one is not specified
@@ -82,6 +83,15 @@ Variable                                                                     | D
 `irods_server_cfg_zone_name`                                                 | tempZone                                                           |                                                 | the name of the in which the server participates
 `irods_server_cfg_zone_port`                                                 | 1247                                                               |                                                 | the main port used by the zone for communication
 `irods_server_cfg_zone_user`                                                 | rods                                                               |                                                 | the name of the rodsadmin user running this iRODS instance
+
+The `irods_server_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry` object has the following fields, all of them required.
+
+Field     | Choices | Comments
+--------- | ------- | --------
+`address` |         | the IPv4 address of a host or network that is able to access
+`group`   |         | the iRODS group able to access
+`mask`    |         | the network mask when `address` is a network address
+`user`    |         | the iRODS user able to access
 
 The `irods_server_cfg_environment_variables` variable is a dictionary where the key is the name of a server process environment variable, and the value is the value of the environment variable.
 

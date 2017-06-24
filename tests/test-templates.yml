@@ -5,10 +5,16 @@
   vars_files:
     - ../defaults/main.yml
   vars:
+    hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
+    - name: verify host_access_control_config.json is correct
+      assert:
+        that:
+          - hacc.access_entries | length == 0
+
     - name: verify hosts_config.json is correct
       assert:
         that:
@@ -61,6 +67,25 @@
           - service_account | search('IRODS_SERVICE_GROUP_NAME=irods')
 
 
+- name: test host_access_control_config options
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/host_access_control_config_opts.yml
+  vars:
+    hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
+  tasks:
+    - name: verify entries
+      assert:
+        that:
+          - hacc.access_entries | length == 2
+          - hacc.access_entries[0].address == 'address1'
+          - hacc.access_entries[1].group == 'group2'
+          - hacc.access_entries[0].mask == 'mask1'
+          - hacc.access_entries[1].user == 'user2'
+
+
 - name: test hosts_config options
   hosts: localhost
   gather_facts: false
@@ -79,7 +104,7 @@
           - hosts_config.host_entries[0].addresses[0].address == 'my.host.com'
           - hosts_config.host_entries[1].address_type == 'remote'
           - hosts_config.host_entries[1].addresses | length == 2
-          - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'  
+          - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'
 - name: test server_config options
   hosts: localhost
   gather_facts: false

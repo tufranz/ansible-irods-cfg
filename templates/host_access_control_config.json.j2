@@ -1,0 +1,12 @@
+{
+  "access_entries": [
+{% for entry in irods_server_cfg_access_entries %}
+    {
+      "address": "{{ entry.address }}",
+      "group": "{{ entry.group }}",
+      "mask": "{{ entry.mask }}",
+      "user": "{{ entry.user }}"
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+  ]
+}
