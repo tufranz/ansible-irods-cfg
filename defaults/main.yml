@@ -63,7 +63,7 @@ irods_server_cfg_clerver_encryption_salt_size: null
 irods_server_cfg_cwd: null
 irods_server_cfg_debug: null
 irods_server_cfg_gsi_server_dn: null
-irods_server_cfg_host: null
+irods_server_cfg_host: "{{ inventory_hostname }}"
 irods_server_cfg_home: null
 irods_server_cfg_log_level: null
 irods_server_cfg_ssl_ca_certificate_file: null
