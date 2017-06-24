@@ -13,7 +13,7 @@ irods_server_cfg_default_resource_name: null
 irods_server_cfg_default_temporary_password_lifetime: null
 irods_server_cfg_environment_variables: {}
 irods_server_cfg_federation: []
-irods_server_cfg_icat_host: "{{ inventory_hostname }}"
+irods_server_cfg_icat_host: "{{ irods_server_cfg_host }}"
 irods_server_cfg_kerberos_name: null
 irods_server_cfg_match_hash_policy: compatible
 irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes: null
@@ -49,3 +49,27 @@ irods_server_cfg_access_entries: []
 
 # hosts_config
 irods_server_cfg_host_entries: []
+
+# irods_environment
+irods_server_cfg_authentication_file: null
+irods_server_cfg_client_server_negotiation: null
+irods_server_cfg_client_server_policy: null
+irods_server_cfg_clerver_default_hash_scheme: "{{ irods_server_cfg_default_hash_scheme }}"
+irods_server_cfg_clerver_default_resource : "{{ irods_server_cfg_default_resource_name }}"
+irods_server_cfg_clerver_encryption_algorithm: "{{ irods_server_cfg_server_control_plane_encryption_algorithm }}"
+irods_server_cfg_clerver_encryption_key_size: null
+irods_server_cfg_clerver_encryption_num_hash_rounds: "{{ irods_server_cfg_server_control_plane_encryption_num_hash_rounds }}"
+irods_server_cfg_clerver_encryption_salt_size: null
+irods_server_cfg_cwd: null
+irods_server_cfg_debug: null
+irods_server_cfg_gsi_server_dn: null
+irods_server_cfg_host: null
+irods_server_cfg_home: null
+irods_server_cfg_log_level: null
+irods_server_cfg_ssl_ca_certificate_file: null
+irods_server_cfg_ssl_ca_certificate_path: null
+irods_server_cfg_ssl_certificate_chain: null
+irods_server_cfg_ssl_certificate_key_file: null
+irods_server_cfg_ssl_dh_params_file: null
+irods_server_cfg_ssl_verify_server: null
+irods_server_cfg_xmsg_host: null

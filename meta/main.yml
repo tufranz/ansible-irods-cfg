@@ -216,7 +216,40 @@ galaxy_info:
     # NOTE: A tag is limited to a single word comprised of
     # alphanumeric characters. Maximum 20 tags per role.
 
-dependencies: []
-  # List your role dependencies here, one per line.
-  # Be sure to remove the '[]' above if you add dependencies
-  # to this list.
+dependencies:
+  - src: CyVerse-Ansible.irods-env
+    name: cyverse.irods-env
+    vars:
+      irods_env_authentication_file: "{{ irods_server_cfg_authentication_file }}"
+      irods_env_authentication_scheme: "{{ irods_server_cfg_zone_auth_scheme }}"
+      irods_env_client_server_negotiation: "{{ irods_server_cfg_client_server_negotiation }}"
+      irods_env_client_server_policy: "{{ irods_server_cfg_client_server_policy }}"
+      irods_env_control_plane_port: "{{ irods_server_cfg_server_control_plane_port }}"
+      irods_env_control_plane_key: "{{ irods_server_cfg_server_control_plane_key }}"
+      irods_env_cwd: "{{ irods_server_cfg_cwd }}"
+      irods_env_debug: "{{ irods_server_cfg_debug }}"
+      irods_env_default_hash_scheme: "{{ irods_server_cfg_clerver_default_hash_scheme }}"
+      irods_env_default_resource: "{{ irods_server_cfg_clerver_default_resource }}"
+      irods_env_encryption_algorithm: "{{ irods_server_cfg_clerver_encryption_algorithm }}"
+      irods_env_encryption_key_size: "{{ irods_server_cfg_clerver_encryption_key_size }}"
+      irods_env_encryption_num_hash_rounds: "{{ irods_server_cfg_clerver_encryption_num_hash_rounds }}"
+      irods_env_encryption_salt_size: "{{ irods_server_cfg_clerver_encryption_salt_size }}"
+      irods_env_for_server: true
+      irods_env_gsi_server_dn: "{{ irods_server_cfg_gsi_server_dn }}"
+      irods_env_home: "{{ irods_server_cfg_home }}"
+      irods_env_host: "{{ irods_server_cfg_host }}"
+      irods_env_log_level: "{{ irods_server_cfg_log_level }}"
+      irods_env_match_hash_policy: "{{ irods_server_cfg_match_hash_policy }}"
+      irods_env_port: "{{ irods_server_cfg_zone_port }}"
+      irods_env_ssl_ca_certificate_file: "{{ irods_server_cfg_ssl_ca_certificate_file }}"
+      irods_env_ssl_ca_certificate_path: "{{ irods_server_cfg_ssl_ca_certificate_path }}"
+      irods_env_ssl_certificate_chain_file: "{{ irods_server_cfg_ssl_certificate_chain }}"
+      irods_env_ssl_certificate_key_file: "{{ irods_server_cfg_ssl_certificate_key_file }}"
+      irods_env_ssl_dh_params_file: "{{ irods_server_cfg_ssl_dh_params_file }}"
+      irods_env_ssl_verify_server: "{{ irods_server_cfg_ssl_verify_server }}"
+      irods_env_sys_user_name: "{{ irods_server_cfg_service_account_name }}"
+      irods_env_sys_group_name: "{{ irods_server_cfg_service_group_name }}"
+      irods_env_user_name: "{{ irods_server_cfg_zone_user }}"
+      irods_env_xmsg_host: "{{ irods_server_cfg_xmsg_host }}"
+      irods_env_xmsg_port: "{{ irods_server_cfg_xmsg_port }}"
+      irods_env_zone_name: "{{ irods_server_cfg_zone_name }}"
