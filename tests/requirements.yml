@@ -1,0 +1,4 @@
+---
+- name: cyverse.irods-env
+  src: Ansible-CyVerse.irods-env
+  version: master
