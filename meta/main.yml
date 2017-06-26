@@ -217,8 +217,7 @@ galaxy_info:
     # alphanumeric characters. Maximum 20 tags per role.
 
 dependencies:
-  - name: cyverse.irods-env
-  - src: CyVerse-Ansible.irods-env
+  - name: CyVerse-Ansible.irods-env
     version: master
     vars:
       irods_env_authentication_file: "{{ irods_server_cfg_authentication_file }}"
