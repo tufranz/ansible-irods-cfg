@@ -10,8 +10,8 @@
     - name: check irods_environment.json
       stat:
         path: /var/lib/irods/.irods/irods_environment.json
-        register: response
-        failed_when: >
-          not response.state.exists or
-          response.stat.pw_name != 'irods' or
-          response.stat.gr_name != 'irods'
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'irods' or
+        response.stat.gr_name != 'irods'
