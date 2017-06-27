@@ -89,7 +89,7 @@ _irods_server_cfg_gsi_server_dn: "{{
     irods_server_cfg_gsi_server_dn if irods_server_cfg_gsi_server_dn else
     None }}"
 
-_irods_server_cfg_home: "{{ irods_server_cfg_host if irods_server_cfg_host else None }}"
+_irods_server_cfg_home: "{{ irods_server_cfg_home if irods_server_cfg_home else None }}"
 
 _irods_server_cfg_host: "{{ irods_server_cfg_host if irods_server_cfg_host else
                             inventory_hostname }}"
