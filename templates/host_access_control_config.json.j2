@@ -1,6 +1,6 @@
 {
   "access_entries": [
-{% for entry in irods_server_cfg_access_entries %}
+{% for entry in _irods_server_cfg_access_entries %}
     {
       "address": "{{ entry.address }}",
       "group": "{{ entry.group }}",

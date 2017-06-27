@@ -4,6 +4,7 @@
   gather_facts: false
   vars_files:
     - ../defaults/main.yml
+    - ../vars/main.yml
   vars:
     hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
@@ -73,6 +74,7 @@
   vars_files:
     - ../defaults/main.yml
     - vars/host_access_control_config_opts.yml
+    - ../vars/main.yml
   vars:
     hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
   tasks:
@@ -92,6 +94,7 @@
   vars_files:
     - ../defaults/main.yml
     - vars/hosts_config_opts.yml
+    - ../vars/main.yml
   vars:
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
   tasks:
@@ -105,12 +108,15 @@
           - hosts_config.host_entries[1].address_type == 'remote'
           - hosts_config.host_entries[1].addresses | length == 2
           - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'
+
+
 - name: test server_config options
   hosts: localhost
   gather_facts: false
   vars_files:
     - ../defaults/main.yml
     - vars/server_config_opts.yml
+    - ../vars/main.yml
   vars:
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
   tasks:
@@ -155,6 +161,7 @@
   vars_files:
     - ../defaults/main.yml
     - vars/service_account_name.yml
+    - ../vars/main.yml
   vars:
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
@@ -171,6 +178,7 @@
   vars_files:
     - ../defaults/main.yml
     - vars/service_group_name.yml
+    - ../vars/main.yml
   vars:
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
