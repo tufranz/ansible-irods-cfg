@@ -1,9 +1,16 @@
 ---
-# service account config
-irods_server_cfg_service_account_name: irods
-irods_server_cfg_service_group_name: "{{ irods_server_cfg_service_account_name }}"
-
-# server_config
+irods_server_cfg_access_entries: []
+irods_server_cfg_authentication_file: null
+irods_server_cfg_clerver_default_hash_scheme: "{{ irods_server_cfg_default_hash_scheme }}"
+irods_server_cfg_clerver_default_resource : "{{ irods_server_cfg_default_resource_name }}"
+irods_server_cfg_clerver_encryption_algorithm: "{{ irods_server_cfg_server_control_plane_encryption_algorithm }}"
+irods_server_cfg_clerver_encryption_key_size: null
+irods_server_cfg_clerver_encryption_num_hash_rounds: "{{ irods_server_cfg_server_control_plane_encryption_num_hash_rounds }}"
+irods_server_cfg_clerver_encryption_salt_size: null
+irods_server_cfg_client_server_negotiation: null
+irods_server_cfg_client_server_policy: null
+irods_server_cfg_cwd: null
+irods_server_cfg_debug: null
 irods_server_cfg_default_dir_mode: '0750'
 irods_server_cfg_default_file_mode: '0600'
 irods_server_cfg_default_hash_scheme: SHA256
@@ -13,8 +20,13 @@ irods_server_cfg_default_resource_name: null
 irods_server_cfg_default_temporary_password_lifetime: null
 irods_server_cfg_environment_variables: {}
 irods_server_cfg_federation: []
+irods_server_cfg_gsi_server_dn: null
+irods_server_cfg_home: null
+irods_server_cfg_host_entries: []
+irods_server_cfg_host: "{{ inventory_hostname }}"
 irods_server_cfg_icat_host: "{{ irods_server_cfg_host }}"
 irods_server_cfg_kerberos_name: null
+irods_server_cfg_log_level: null
 irods_server_cfg_match_hash_policy: compatible
 irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes: null
 irods_server_cfg_maximum_size_for_single_buffer: null
@@ -33,43 +45,22 @@ irods_server_cfg_server_control_plane_encryption_num_hash_rounds: 16
 irods_server_cfg_server_control_plane_key: TEMPORARY__32byte_ctrl_plane_key
 irods_server_cfg_server_control_plane_port: 1248
 irods_server_cfg_server_control_plane_timeout: 10000
-irods_server_cfg_server_port_range_start: 20000
 irods_server_cfg_server_port_range_end: 20199
-irods_server_cfg_transfer_buffer_size_for_parallel_transfer: null
-irods_server_cfg_transfer_chunk_size_for_parallel_transfer: null
-irods_server_cfg_xmsg_port: null
-irods_server_cfg_zone_auth_scheme: native
-irods_server_cfg_zone_key: TEMPORARY_zone_key
-irods_server_cfg_zone_name: tempZone
-irods_server_cfg_zone_port: 1247
-irods_server_cfg_zone_user: rods
-
-# host_access_control_config
-irods_server_cfg_access_entries: []
-
-# hosts_config
-irods_server_cfg_host_entries: []
-
-# irods_environment
-irods_server_cfg_authentication_file: null
-irods_server_cfg_client_server_negotiation: null
-irods_server_cfg_client_server_policy: null
-irods_server_cfg_clerver_default_hash_scheme: "{{ irods_server_cfg_default_hash_scheme }}"
-irods_server_cfg_clerver_default_resource : "{{ irods_server_cfg_default_resource_name }}"
-irods_server_cfg_clerver_encryption_algorithm: "{{ irods_server_cfg_server_control_plane_encryption_algorithm }}"
-irods_server_cfg_clerver_encryption_key_size: null
-irods_server_cfg_clerver_encryption_num_hash_rounds: "{{ irods_server_cfg_server_control_plane_encryption_num_hash_rounds }}"
-irods_server_cfg_clerver_encryption_salt_size: null
-irods_server_cfg_cwd: null
-irods_server_cfg_debug: null
-irods_server_cfg_gsi_server_dn: null
-irods_server_cfg_host: "{{ inventory_hostname }}"
-irods_server_cfg_home: null
-irods_server_cfg_log_level: null
+irods_server_cfg_server_port_range_start: 20000
+irods_server_cfg_service_account_name: irods
+irods_server_cfg_service_group_name: "{{ irods_server_cfg_service_account_name }}"
 irods_server_cfg_ssl_ca_certificate_file: null
 irods_server_cfg_ssl_ca_certificate_path: null
 irods_server_cfg_ssl_certificate_chain: null
 irods_server_cfg_ssl_certificate_key_file: null
 irods_server_cfg_ssl_dh_params_file: null
 irods_server_cfg_ssl_verify_server: null
+irods_server_cfg_transfer_buffer_size_for_parallel_transfer: null
+irods_server_cfg_transfer_chunk_size_for_parallel_transfer: null
 irods_server_cfg_xmsg_host: null
+irods_server_cfg_xmsg_port: null
+irods_server_cfg_zone_auth_scheme: native
+irods_server_cfg_zone_key: TEMPORARY_zone_key
+irods_server_cfg_zone_name: tempZone
+irods_server_cfg_zone_port: 1247
+irods_server_cfg_zone_user: rods
