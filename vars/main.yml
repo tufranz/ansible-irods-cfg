@@ -3,6 +3,10 @@ _irods_server_cfg_access_entries: "{{
     irods_server_cfg_access_entries if irods_server_cfg_access_entries else
     [] }}"
 
+_irods_server_cfg_authentication_file: "{{
+    irods_server_cfg_authentication_file if irods_server_cfg_authentication_file else
+    None }}"
+
 _irods_server_cfg_clerver_default_hash_scheme: "{{
     irods_server_cfg_clerver_default_hash_scheme
       if irods_server_cfg_clerver_default_hash_scheme else
