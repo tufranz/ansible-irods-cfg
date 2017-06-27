@@ -1,0 +1,17 @@
+---
+- name: test that the defaults are correctly placed
+  hosts: localhost
+  gather_facts: false
+  become: true
+  roles:
+    - role: ../../ansible-irods-server-cfg
+
+  post_tasks:
+    - name: check irods_environment.json
+      stat:
+        path: /var/lib/irods/.irods/irods_environment.json
+        register: response
+        failed_when: >
+          not response.state.exists or
+          response.stat.pw_name != 'irods' or
+          response.stat.gr_name != 'irods'
