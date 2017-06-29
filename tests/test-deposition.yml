@@ -17,6 +17,15 @@
         response.stat.pw_name != 'root' or
         response.stat.gr_name != 'irods'
 
+    - name: check service_account.config deposition
+      stat:
+        path: /etc/irods/service_account.config
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'root' or
+        response.stat.gr_name != 'irods'
+
 
 - name: verify contents of irods_environment.json
   hosts: localhost

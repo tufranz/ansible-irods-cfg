@@ -24,11 +24,11 @@ before_script:
   # Create irods user
   - sudo useradd --system --home-dir /var/lib/irods irods
 
-  # Create home directory for irods user
-  - sudo mkdir --parents /var/lib/irods
+  # Create directories for irods user
+  - sudo mkdir --parents /etc/irods /var/lib/irods
 
-  # Give irods ownership of its home directory
-  - sudo chown irods:irods /var/lib/irods
+  # Give irods ownership of its directories
+  - sudo chown irods:irods /etc/irods /var/lib/irods
 
 script:
   # Install dependencies
