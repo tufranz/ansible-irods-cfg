@@ -4,4 +4,7 @@
     msg: not implemented
   failed_when: false
 
+- include: host_access_control_config.yml
+- include: hosts_config.yml
+- include: server_config.yml
 - include: service_account.yml

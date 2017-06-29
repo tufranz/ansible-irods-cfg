@@ -1,0 +1,12 @@
+---
+- name: validate server config vars
+  fail:
+    msg: not implemented
+  failed_when: false
+
+- name: generate server_config.json
+  template:
+    src: server_config.json.j2
+    dest: /etc/irods/server_config.json
+    owner: "{{ _irods_server_cfg_service_account_name }}"
+    group: "{{ _irods_server_cfg_service_group_name }}"

@@ -17,6 +17,33 @@
         response.stat.pw_name != 'root' or
         response.stat.gr_name != 'irods'
 
+    - name: check host_access_control_config.json deposition
+      stat:
+        path: /etc/irods/host_access_control_config.json
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'root' or
+        response.stat.gr_name != 'irods'
+
+    - name: check hosts_config.json deposition
+      stat:
+        path: /etc/irods/hosts_config.json
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'root' or
+        response.stat.gr_name != 'irods'
+
+    - name: check server_config.json deposition
+      stat:
+        path: /etc/irods/server_config.json
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'root' or
+        response.stat.gr_name != 'irods'
+
     - name: check service_account.config deposition
       stat:
         path: /etc/irods/service_account.config
