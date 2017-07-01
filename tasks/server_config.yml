@@ -1,9 +1,4 @@
 ---
-- name: validate server config vars
-  fail:
-    msg: not implemented
-  failed_when: false
-
 - name: generate server_config.json
   template:
     src: server_config.json.j2

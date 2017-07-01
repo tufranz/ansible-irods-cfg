@@ -1,9 +1,4 @@
 ---
-- name: validate host access control config vars
-  fail:
-    msg: not implemented
-  failed_when: false
-
 - name: generate host_access_control_config.json
   template:
     src: host_access_control_config.json.j2
