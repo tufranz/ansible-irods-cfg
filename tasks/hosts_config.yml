@@ -1,8 +1,9 @@
 ---
-- name: validate hosts config vars
-  fail:
-    msg: not implemented
-  failed_when: false
+- name: validate address type
+  with_items: "{{ _irods_server_cfg_host_entries }}"
+  assert:
+    that:
+      - item.address_type == 'local' or item.address_type == 'remote'
 
 - name: generate hosts_config.json
   template:
