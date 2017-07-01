@@ -1,0 +1,3 @@
+---
+irods_server_cfg_default_number_of_transfer_threads: 0
+irods_server_cfg_pam_password_length: 0

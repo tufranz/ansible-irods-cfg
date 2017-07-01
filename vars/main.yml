@@ -64,7 +64,8 @@ _irods_server_cfg_default_hash_scheme: "{{
 
 _irods_server_cfg_default_number_of_transfer_threads: "{{
     irods_server_cfg_default_number_of_transfer_threads
-      if irods_server_cfg_default_number_of_transfer_threads else
+      if irods_server_cfg_default_number_of_transfer_threads
+         or irods_server_cfg_default_number_of_transfer_threads == 0 else
     None }}"
 
 _irods_server_cfg_default_resource_directory: "{{
