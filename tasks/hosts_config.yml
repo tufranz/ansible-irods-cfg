@@ -4,6 +4,7 @@
   assert:
     that:
       - item.address_type == 'local' or item.address_type == 'remote'
+  ignore_errors: true
 
 - name: generate hosts_config.json
   template:
