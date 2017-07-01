@@ -1,4 +1,9 @@
 ---
+- name: validate service account vars
+  fail:
+    msg: not implemented
+  failed_when: false
+
 - name: generate server_config.json
   template:
     src: server_config.json.j2
