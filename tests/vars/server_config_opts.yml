@@ -15,6 +15,7 @@ irods_server_cfg_federation:
     zone_name: zone2
     zone_key: key2
     negotiation_key: TEMPORARY_32byte_negotiation_ke2
+irods_server_cfg_kerberos_name: kerberos
 irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes: 2
 irods_server_cfg_maximum_size_for_single_buffer: 3
 irods_server_cfg_maximum_temporary_password_lifetime: 4
