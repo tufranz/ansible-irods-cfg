@@ -8,10 +8,6 @@
       - item.negotiation_key | length == 32
 #  ignore_errors: true
 
-- name:
-  debug:
-    var: _irods_server_cfg_server_control_plane_port
-    
 - name: validate other server configuration parameters
   assert:
     that:
@@ -42,22 +38,24 @@
                (_irods_server_cfg_pam_password_min_time > 0))'
       - _irods_server_cfg_server_control_plane_encryption_num_hash_rounds >= 0
       - _irods_server_cfg_server_control_plane_key | length == 32
-      - '_irods_server_cfg_server_control_plane_port >= 1
-           and _irods_server_cfg_server_control_plane_port <= 65535'
+      - '_irods_server_cfg_server_control_plane_port | int >= 1
+           and _irods_server_cfg_server_control_plane_port | int <= 65535'
       - _irods_server_cfg_server_control_plane_timeout > 0
-      - '_irods_server_cfg_server_port_range_end >= 1
-           and _irods_server_cfg_server_port_range_end <= 65535'
-      - '_irods_server_cfg_server_port_range_start >= 1
-           and _irods_server_cfg_server_port_range_start <= _irods_server_cfg_server_port_range_end'
+      - '_irods_server_cfg_server_port_range_end | int >= 1
+           and _irods_server_cfg_server_port_range_end | int <= 65535'
+      - '_irods_server_cfg_server_port_range_start | int >= 1
+           and _irods_server_cfg_server_port_range_start | int
+                 <= _irods_server_cfg_server_port_range_end | int'
       - 'not _irods_server_cfg_transfer_buffer_size_for_parallel_transfer
            or _irods_server_cfg_transfer_buffer_size_for_parallel_transfer > 0'
       - 'not _irods_server_cfg_transfer_chunk_size_for_parallel_transfer
            or _irods_server_cfg_transfer_chunk_size_for_parallel_transfer > 0'
       - 'not _irods_server_cfg_xmsg_port
-           or (_irods_server_cfg_xmsg_port >= 1 and _irods_server_cfg_xmsg_port <= 65535)'
+           or (_irods_server_cfg_xmsg_port | int >= 1
+               and _irods_server_cfg_xmsg_port | int <= 65535)'
       - _irods_server_cfg_zone_auth_scheme in ['GSI', 'KRB', 'native', 'OSAuth', 'PAM']
       - not _irods_server_cfg_zone_key | match('.*-.*')
-      - _irods_server_cfg_zone_port >= 1 and _irods_server_cfg_zone_port <= 65535
+      - _irods_server_cfg_zone_port | int >= 1 and _irods_server_cfg_zone_port | int <= 65535
 #  ignore_errors: true
 
 - name: generate server_config.json
