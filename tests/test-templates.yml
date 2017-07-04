@@ -139,6 +139,7 @@
           - server_config.federation[0].zone_name == 'zone1'
           - server_config.federation[0].zone_key == 'key1'
           - server_config.federation[0].negotiation_key == 'TEMPORARY_32byte_negotiation_ke1'
+          - server_config.kerberos_name == 'kerberos'
           - server_config.pam_no_extend == true
           - server_config.pam_password_length == 0
           - server_config.pam_password_max_time == 1

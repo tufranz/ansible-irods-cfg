@@ -53,7 +53,7 @@
       - 'not _irods_server_cfg_xmsg_port
            or (_irods_server_cfg_xmsg_port | int >= 1
                and _irods_server_cfg_xmsg_port | int <= 65535)'
-      - _irods_server_cfg_zone_auth_scheme in ['GSI', 'KRB', 'native', 'OSAuth', 'PAM']
+      - _irods_server_cfg_zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
       - not _irods_server_cfg_zone_key | match('.*-.*')
       - _irods_server_cfg_zone_port | int >= 1 and _irods_server_cfg_zone_port | int <= 65535
 #  ignore_errors: true
