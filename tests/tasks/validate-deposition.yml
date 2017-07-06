@@ -1,0 +1,20 @@
+---
+- name: check {{ cfg }} deposition
+  stat:
+    path: /etc/irods/{{ cfg }}
+  register: response
+  failed_when: >
+    not response.stat.exists or
+    response.stat.pw_name != 'root' or
+    response.stat.gr_name != 'irods'
+
+- name: download {{ cfg }} schema
+  get_url:
+    url: https://schemas.irods.org/configuration/v2/{{ cfg }}
+    dest: "{{ ansible_env.HOME }}"
+
+- name: validate {{ cfg }} with chema
+  shell: |
+    /home/travis/virtualenv/python2.7.13/bin/jsonschema --instance /etc/irods/{{ cfg }} \
+      {{ ansible_env.HOME }}/{{ cfg }}
+  changed_when: false
