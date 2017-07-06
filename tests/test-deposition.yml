@@ -44,7 +44,7 @@
       assert:
         that:
           - irods_environment.irods_authentication_file == '/auth'
-          - irods_environment.irods_authentication_scheme == 'gsi'
+          - irods_environment.irods_authentication_scheme is not defined
           - irods_environment.irods_client_server_negotiation == 'none'
           - irods_environment.irods_client_server_policy == 'CS_NEG_REFUSE'
           - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_ke1'
