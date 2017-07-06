@@ -22,11 +22,11 @@
 {% if _irods_server_cfg_default_resource_name %}
   "default_resource_name": "{{ _irods_server_cfg_default_resource_name }}",
 {% endif %}
-  "environment_variables": [
+  "environment_variables": {
 {% for key, value in _irods_server_cfg_environment_variables.iteritems() %}
-    "{{ key }}={{ value }}"{% if not loop.last %},{% endif %}
+    "{{ key }}": "{{ value }}"{% if not loop.last %},{% endif %}
 {% endfor %}
-  ],
+  },
   "federation": [
 {% for federate in _irods_server_cfg_federation %}
     {
