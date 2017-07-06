@@ -128,7 +128,7 @@ _irods_server_cfg_maximum_size_for_single_buffer: "{{
 _irods_server_cfg_maximum_temporary_password_lifetime: "{{
     irods_server_cfg_maximum_temporary_password_lifetime
       if irods_server_cfg_maximum_temporary_password_lifetime else
-    None }}"
+    1000 }}"
 
 _irods_server_cfg_negotiation_key: "{{
     irods_server_cfg_negotiation_key if irods_server_cfg_negotiation_key else
