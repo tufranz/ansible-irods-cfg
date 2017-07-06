@@ -218,7 +218,7 @@ galaxy_info:
 
 dependencies:
   - name: CyVerse-Ansible.irods-env
-    version: master
+    version: 2.0
     vars:
       irods_env_authentication_file: "{{ _irods_server_cfg_authentication_file }}"
       irods_env_authentication_scheme: "{{ _irods_server_cfg_zone_auth_scheme }}"
