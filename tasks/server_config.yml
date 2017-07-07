@@ -6,7 +6,7 @@
       - item.icat_host != _irods_server_cfg_icat_host
       - item.zone_name != _irods_server_cfg_zone_name
       - item.negotiation_key | length == 32
-#  ignore_errors: true
+  ignore_errors: true
 
 - name: validate other server configuration parameters
   assert:
