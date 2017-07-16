@@ -31,9 +31,6 @@ before_script:
   - sudo chown irods:irods /etc/irods /var/lib/irods
 
 script:
-  # Install dependencies
-  - ansible-galaxy install --role-file=tests/requirements.yml
-
   # Basic role syntax check
   - ansible-playbook --syntax-check tests/test.yml --inventory-file=tests/inventory tests/test.yml
 
