@@ -1,5 +1,6 @@
 ---
 - include: host_access_control_config.yml
 - include: hosts_config.yml
+- include: irods_environment.yml
 - include: server_config.yml
 - include: service_account.yml

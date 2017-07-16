@@ -8,6 +8,7 @@
   vars:
     hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
@@ -20,7 +21,41 @@
       assert:
         that:
           - hosts_config.host_entries | length == 0
-        
+
+    - name: verify irods_environment.json expands correctly
+      assert:
+        that:
+          - irods_environment.irods_authentication_file is not defined
+          - irods_environment.irods_authentication_scheme is not defined
+          - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
+          - irods_environment.irods_client_server_policy == 'CS_NEG_REFUSE'
+          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
+          - irods_environment.irods_control_plane_port == 1248
+          - irods_environment.irods_cwd is not defined
+          - irods_environment.irods_debug is not defined
+          - irods_environment.irods_default_hash_scheme == 'SHA256'
+          - irods_environment.irods_default_resource is not defined
+          - irods_environment.irods_encryption_algorithm == 'AES-256-CBC'
+          - irods_environment.irods_encryption_key_size == 32
+          - irods_environment.irods_encryption_num_hash_rounds == 16
+          - irods_environment.irods_encryption_salt_size == 8
+          - irods_environment.irods_gsi_server_dn is not defined
+          - irods_environment.irods_home is not defined
+          - irods_environment.irods_host == 'localhost'
+          - irods_environment.irods_log_level is not defined
+          - irods_environment.irods_match_hash_policy == 'compatible'
+          - irods_environment.irods_plugins_home == '/var/lib/irods/plugins'
+          - irods_environment.irods_port == 1247
+          - irods_environment.irods_ssl_ca_certificate_file is not defined
+          - irods_environment.irods_ssl_ca_certificate_path is not defined
+          - irods_environment.irods_ssl_certificate_chain_file is not defined
+          - irods_environment.irods_ssl_certificate_key_file is not defined
+          - irods_environment.irods_ssl_dh_params_file is not defined
+          - irods_environment.irods_user_name == 'rods'
+          - irods_environment.irods_xmsg_host is not defined
+          - irods_environment.irods_xmsg_port is not defined
+          - irods_environment.irods_zone_name == 'tempZone'
+
     - name: verify server_config.json is correct
       assert:
         that:
@@ -121,6 +156,51 @@
           - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'
 
 
+- name: test irods_environment options
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/irods_environment_opts.yml
+    - ../vars/main.yml
+  vars:
+    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+  tasks:
+    - name: verify irods_environment
+      assert:
+        that:
+          - irods_environment.irods_authentication_file == '/auth'
+          - irods_environment.irods_authentication_scheme is not defined
+          - irods_environment.irods_client_server_negotiation == 'none'
+          - irods_environment.irods_client_server_policy == 'CS_NEG_REFUSE'
+          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_ke1'
+          - irods_environment.irods_control_plane_port == 5
+          - irods_environment.irods_cwd == '/zone'
+          - irods_environment.irods_debug == 0
+          - irods_environment.irods_default_hash_scheme == 'MD5'
+          - irods_environment.irods_default_resource == 'resource'
+          - irods_environment.irods_encryption_algorithm == 'algorithm'
+          - irods_environment.irods_encryption_key_size == 1
+          - irods_environment.irods_encryption_num_hash_rounds == 2
+          - irods_environment.irods_encryption_salt_size == 3
+          - irods_environment.irods_gsi_server_dn == 'dn'
+          - irods_environment.irods_home == '/zone/home'
+          - irods_environment.irods_host == 'host'
+          - irods_environment.irods_log_level == 4
+          - irods_environment.irods_match_hash_policy == 'strict'
+          - irods_environment.irods_port == 7
+          - irods_environment.irods_ssl_ca_certificate_file == 'certificate_file'
+          - irods_environment.irods_ssl_ca_certificate_path == '/path/to/certificates'
+          - irods_environment.irods_ssl_certificate_chain_file == 'chain'
+          - irods_environment.irods_ssl_certificate_key_file == 'key_file'
+          - irods_environment.irods_ssl_dh_params_file == 'params_file'
+          - irods_environment.irods_ssl_verify_server == 'cert'
+          - irods_environment.irods_user_name == 'user'
+          - irods_environment.irods_xmsg_host == 'xmsg_host'
+          - irods_environment.irods_xmsg_port == 6
+          - irods_environment.irods_zone_name == 'zone'
+
+
 - name: test server_config options
   hosts: localhost
   gather_facts: false
@@ -212,8 +292,21 @@
     - vars/jinja2-quirks.yml
     - ../vars/main.yml
   vars:
+    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
   tasks:
+    - debug:
+        var: irods_environment
+
+    - name: verify irods_environment.json is correct
+      assert:
+        that:
+          - irods_environment.irods_debug == 0
+          - irods_environment.irods_encryption_key_size == 0
+          - irods_environment.irods_encryption_num_hash_rounds == 0
+          - irods_environment.irods_encryption_salt_size == 0
+          - irods_environment.irods_log_level == 0
+
     - name: verify server_config.json is correct
       assert:
         that:

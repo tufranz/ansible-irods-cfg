@@ -21,7 +21,7 @@ irods_server_cfg_service_account_name: root
 irods_server_cfg_service_group_name: irods
 irods_server_cfg_ssl_ca_certificate_file: certificate_file
 irods_server_cfg_ssl_ca_certificate_path: /path/to/certificates
-irods_server_cfg_ssl_certificate_chain: chain
+irods_server_cfg_ssl_certificate_chain_file: chain
 irods_server_cfg_ssl_certificate_key_file: key_file
 irods_server_cfg_ssl_dh_params_file: params_file
 irods_server_cfg_ssl_verify_server: cert

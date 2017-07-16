@@ -51,7 +51,7 @@ irods_server_cfg_service_account_name: null
 irods_server_cfg_service_group_name: null
 irods_server_cfg_ssl_ca_certificate_file: null
 irods_server_cfg_ssl_ca_certificate_path: null
-irods_server_cfg_ssl_certificate_chain: null
+irods_server_cfg_ssl_certificate_chain_file: null
 irods_server_cfg_ssl_certificate_key_file: null
 irods_server_cfg_ssl_dh_params_file: null
 irods_server_cfg_ssl_verify_server: null
