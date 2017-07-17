@@ -6,7 +6,7 @@ irods_server_cfg_clerver_encryption_algorithm: algorithm
 irods_server_cfg_clerver_encryption_key_size: 1
 irods_server_cfg_clerver_encryption_num_hash_rounds: 2
 irods_server_cfg_clerver_encryption_salt_size: 3
-irods_server_cfg_client_server_negotiation: none
+irods_server_cfg_client_server_negotiation: off
 irods_server_cfg_client_server_policy: CS_NEG_REFUSE
 irods_server_cfg_cwd: /zone
 irods_server_cfg_debug: 0

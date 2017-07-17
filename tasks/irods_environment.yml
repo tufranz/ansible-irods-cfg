@@ -2,8 +2,8 @@
 - name: validate variables
   assert:
     that:
-      - 'not _irods_server_cfg_client_server_negotiation
-         or _irods_server_cfg_client_server_negotiation in ["none", "request_server_negotiation"]'
+      - '_irods_server_cfg_client_server_negotiation == None
+         or _irods_server_cfg_client_server_negotiation in ["off", "request_server_negotiation"]'
       - 'not _irods_server_cfg_client_server_policy
          or _irods_server_cfg_client_server_policy
               in ["CS_NEG_DONT_CARE", "CS_NEG_REFUSE", "CS_NEG_REQUIRE"]'

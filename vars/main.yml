@@ -41,6 +41,7 @@ _irods_server_cfg_clerver_encryption_salt_size: "{{
 
 _irods_server_cfg_client_server_negotiation: "{{
     irods_server_cfg_client_server_negotiation if irods_server_cfg_client_server_negotiation else
+    'off' if irods_server_cfg_client_server_negotiation == False else
     'request_server_negotiation' }}"
 
 _irods_server_cfg_client_server_policy: "{{
