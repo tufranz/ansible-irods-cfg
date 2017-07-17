@@ -25,7 +25,7 @@
       - not _irods_server_cfg_home or _irods_server_cfg_home | match('/..*')
       - not _irods_server_cfg_log_level or _irods_server_cfg_log_level | int >= 0
       - 'not _irods_server_cfg_match_hash_policy
-         or _irods_server_cfg_match_hash_policy in ['compatible', 'strict']''
+         or _irods_server_cfg_match_hash_policy in ["compatible", "strict"]'
       - 'not _irods_server_cfg_ssl_verify_server
          or _irods_server_cfg_ssl_verify_server in ["cert", "hostname", "none"]'
       - 'not _irods_server_cfg_xmsg_port
