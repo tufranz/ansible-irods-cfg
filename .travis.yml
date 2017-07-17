@@ -25,10 +25,10 @@ before_script:
   - sudo useradd --system --home-dir /var/lib/irods irods
 
   # Create directories for irods user
-  - sudo mkdir --parents /etc/irods /var/lib/irods
+  - sudo mkdir --parents /etc/irods /var/lib/irods/.irods
 
   # Give irods ownership of its directories
-  - sudo chown irods:irods /etc/irods /var/lib/irods
+  - sudo chown --recursive irods:irods /etc/irods /var/lib/irods
 
 script:
   # Basic role syntax check
