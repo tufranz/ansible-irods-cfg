@@ -5,7 +5,7 @@
   register: response
   failed_when: >
     not response.stat.exists or
-    response.stat.pw_name != 'root' or
+    response.stat.pw_name != 'irods' or
     response.stat.gr_name != 'irods'
 
 - name: download {{ schema }} schema

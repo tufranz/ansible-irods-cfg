@@ -2,8 +2,6 @@
 - name: test that the defaults are correctly placed
   hosts: localhost
   become: true
-  vars_files:
-    - vars/irods_environment_opts.yml
   roles:
     - role: ../../ansible-irods-server-cfg
 
