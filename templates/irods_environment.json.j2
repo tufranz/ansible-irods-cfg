@@ -26,9 +26,7 @@
 {% if _irods_server_cfg_clerver_default_hash_scheme %}
   "irods_default_hash_scheme": "{{ _irods_server_cfg_clerver_default_hash_scheme }}",
 {% endif %}
-{% if _irods_server_cfg_clerver_default_resource %}
   "irods_default_resource": "{{ _irods_server_cfg_clerver_default_resource }}",
-{% endif %}
 {% if _irods_server_cfg_clerver_encryption_algorithm %}
   "irods_encryption_algorithm": "{{ _irods_server_cfg_clerver_encryption_algorithm }}",
 {% endif %}
@@ -47,9 +45,7 @@
 {% if _irods_server_cfg_gsi_server_dn %}
   "irods_gsi_server_dn": "{{ _irods_server_cfg_gsi_server_dn }}",
 {% endif %}
-{% if _irods_server_cfg_home %}
   "irods_home": "{{ _irods_server_cfg_home }}",
-{% endif %}
   "irods_host": "{{ _irods_server_cfg_host }}",
 {% if _irods_server_cfg_log_level or _irods_server_cfg_log_level == 0 %}
   "irods_log_level": {{ _irods_server_cfg_log_level }},
