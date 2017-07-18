@@ -34,7 +34,7 @@
           - irods_environment.irods_cwd is not defined
           - irods_environment.irods_debug is not defined
           - irods_environment.irods_default_hash_scheme == 'SHA256'
-          - irods_environment.irods_default_resource is not defined
+          - irods_environment.irods_default_resource == 'demoResc'
           - irods_environment.irods_encryption_algorithm == 'AES-256-CBC'
           - irods_environment.irods_encryption_key_size == 32
           - irods_environment.irods_encryption_num_hash_rounds == 16

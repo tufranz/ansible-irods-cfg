@@ -14,7 +14,8 @@ _irods_server_cfg_clerver_default_hash_scheme: "{{
 
 _irods_server_cfg_clerver_default_resource: "{{
     irods_server_cfg_clerver_default_resource if irods_server_cfg_clerver_default_resource else
-    _irods_server_cfg_default_resource_name }}"
+    _irods_server_cfg_default_resource_name if _irods_server_cfg_default_resource_name else
+    'demoResc' }}"
 
 _irods_server_cfg_clerver_encryption_algorithm: "{{
     irods_server_cfg_clerver_encryption_algorithm
