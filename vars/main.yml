@@ -5,7 +5,7 @@ _irods_server_cfg_access_entries: "{{
 
 _irods_server_cfg_authentication_file: "{{
     irods_server_cfg_authentication_file if irods_server_cfg_authentication_file else
-    None }}"
+    '/var/lib/irods/.irods/.irodsA' }}"
 
 _irods_server_cfg_clerver_default_hash_scheme: "{{
     irods_server_cfg_clerver_default_hash_scheme
@@ -52,9 +52,7 @@ _irods_server_cfg_client_server_policy: "{{
 _irods_server_cfg_cwd: "{{ irods_server_cfg_cwd if irods_server_cfg_cwd else
                            _irods_server_cfg_home }}"
 
-_irods_server_cfg_debug: "{{
-    irods_server_cfg_debug if irods_server_cfg_debug or irods_server_cfg_debug == 0 else
-    None }}"
+_irods_server_cfg_debug: "{{ irods_server_cfg_debug if irods_server_cfg_debug else '' }}"
 
 _irods_server_cfg_default_dir_mode: "{{
     irods_server_cfg_default_dir_mode if irods_server_cfg_default_dir_mode else
@@ -116,9 +114,7 @@ _irods_server_cfg_kerberos_name: "{{
     irods_server_cfg_kerberos_name if irods_server_cfg_kerberos_name else
     None }}"
 
-_irods_server_cfg_log_level: "{{
-    irods_server_cfg_log_level if irods_server_cfg_log_level or irods_server_cfg_log_level == 0 else
-    None }}"
+_irods_server_cfg_log_level: "{{ irods_server_cfg_log_level if irods_server_cfg_log_level else 5 }}"
 
 _irods_server_cfg_match_hash_policy: "{{
     irods_server_cfg_match_hash_policy if irods_server_cfg_match_hash_policy else
@@ -239,7 +235,7 @@ _irods_server_cfg_ssl_dh_params_file: "{{
 
 _irods_server_cfg_ssl_verify_server: "{{
    irods_server_cfg_ssl_verify_server if irods_server_cfg_ssl_verify_server else
-   None }}"
+   'hostname' }}"
 
 _irods_server_cfg_transfer_buffer_size_for_parallel_transfer: "{{
    irods_server_cfg_transfer_buffer_size_for_parallel_transfer
@@ -255,7 +251,7 @@ _irods_server_cfg_xmsg_host: "{{ irods_server_cfg_xmsg_host if irods_server_cfg_
                                  None }}"
 
 _irods_server_cfg_xmsg_port: "{{ irods_server_cfg_xmsg_port if irods_server_cfg_xmsg_port else
-                                 None }}"
+                                 1249 }}"
 
 _irods_server_cfg_zone_auth_scheme: "{{
     irods_server_cfg_zone_auth_scheme if irods_server_cfg_zone_auth_scheme else
