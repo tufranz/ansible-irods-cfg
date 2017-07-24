@@ -181,7 +181,8 @@ _irods_server_cfg_server_control_plane_encryption_algorithm: "{{
 
 _irods_server_cfg_server_control_plane_encryption_num_hash_rounds: "{{
     irods_server_cfg_server_control_plane_encryption_num_hash_rounds
-      if irods_server_cfg_server_control_plane_encryption_num_hash_rounds else
+      if irods_server_cfg_server_control_plane_encryption_num_hash_rounds
+         or irods_server_cfg_server_control_plane_encryption_num_hash_rounds == 0 else
     16 }}"
 
 _irods_server_cfg_server_control_plane_key: "{{
