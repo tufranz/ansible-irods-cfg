@@ -116,7 +116,7 @@ Field          | Choices       | Comments
 Dependencies
 ------------
 
-The role [CyVerse-Ansible.irods-env](https://galaxy.ansible.com/CyVerse-Ansible/irods-env/) is used internally to update the server's irods_environment.json file.
+None
 
 
 Example Playbook
