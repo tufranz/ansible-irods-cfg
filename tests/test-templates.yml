@@ -42,7 +42,6 @@
           - irods_environment.irods_host == 'localhost'
           - irods_environment.irods_log_level == 5
           - irods_environment.irods_match_hash_policy == 'compatible'
-          - irods_environment.irods_plugins_home == '/var/lib/irods/plugins'
           - irods_environment.irods_port == 1247
           - irods_environment.irods_server_control_plane_encryption_algorithm == 'AES-256-CBC'
           - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 16
