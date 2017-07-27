@@ -6,8 +6,6 @@
        "value": _irods_server_cfg_default_number_of_transfer_threads },
      { "name": "default_temporary_password_lifetime_in_seconds",
        "value": _irods_server_cfg_default_temporary_password_lifetime },
-     { "name": "maximum_number_of_concurrent_rule_engine_server_processes",
-       "value": _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes },
      { "name": "maximum_size_for_single_buffer_in_megabytes",
        "value": _irods_server_cfg_maximum_size_for_single_buffer },
      { "name": "transfer_buffer_size_for_parallel_transfer_in_megabytes",
@@ -17,6 +15,8 @@
    ] | selectattr("value") %}
     "{{ setting.name }}": {{ setting.value }},
 {% endfor %}
+    "maximum_number_of_concurrent_rule_engine_server_processes": {{
+      _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes }},
     "maximum_temporary_password_lifetime_in_seconds": {{
       _irods_server_cfg_maximum_temporary_password_lifetime }}
   },

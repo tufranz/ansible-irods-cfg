@@ -24,8 +24,7 @@
       - 'not _irods_server_cfg_default_temporary_password_lifetime
          or _irods_server_cfg_default_temporary_password_lifetime | int > 0'
       - _irods_server_cfg_match_hash_policy in ['compatible', 'strict']
-      - 'not _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes
-         or _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes| int  >= 1'
+      - _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes | int >= 1
       - 'not _irods_server_cfg_maximum_size_for_single_buffer
          or _irods_server_cfg_maximum_size_for_single_buffer | int > 0'
       - _irods_server_cfg_negotiation_key | length == 32
