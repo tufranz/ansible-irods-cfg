@@ -37,7 +37,7 @@
           - irods_environment.irods_encryption_key_size == 32
           - irods_environment.irods_encryption_num_hash_rounds == 16
           - irods_environment.irods_encryption_salt_size == 8
-          - irods_environment.irods_gsi_server_dn == ''
+          - irods_environment.irods_gsi_server_dn is not defined
           - irods_environment.irods_home == '/tempZone/home/rods'
           - irods_environment.irods_host == 'localhost'
           - irods_environment.irods_log_level == 5
