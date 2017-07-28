@@ -4,5 +4,6 @@ irods_server_cfg_clerver_encryption_num_hash_rounds: 0
 irods_server_cfg_clerver_encryption_salt_size: 0
 irods_server_cfg_client_server_negotiation: off
 irods_server_cfg_default_number_of_transfer_threads: 0
+irods_server_cfg_maximum_size_for_single_buffer: 0
 irods_server_cfg_pam_password_length: 0
 irods_server_cfg_server_control_plane_encryption_num_hash_rounds: 0

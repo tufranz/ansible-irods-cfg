@@ -127,8 +127,9 @@ _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes: "{{
 
 _irods_server_cfg_maximum_size_for_single_buffer: "{{
     irods_server_cfg_maximum_size_for_single_buffer
-      if irods_server_cfg_maximum_size_for_single_buffer else
-    None }}"
+      if irods_server_cfg_maximum_size_for_single_buffer
+         or irods_server_cfg_maximum_size_for_single_buffer == 0 else
+    32 }}"
 
 _irods_server_cfg_maximum_temporary_password_lifetime: "{{
     irods_server_cfg_maximum_temporary_password_lifetime
