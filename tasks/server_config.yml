@@ -61,7 +61,7 @@
          and (_irods_server_cfg_zone_port | int < _irods_server_cfg_server_port_range_start | int
               or _irods_server_cfg_zone_port | int > _irods_server_cfg_server_port_range_end | int)
          and _irods_server_cfg_zone_port != _irods_server_cfg_xmsg_port'
-#  ignore_errors: true
+  ignore_errors: true
 
 - name: generate server_config.json
   template:
