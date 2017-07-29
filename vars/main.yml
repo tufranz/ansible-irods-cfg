@@ -14,8 +14,7 @@ _irods_server_cfg_clerver_default_hash_scheme: "{{
 
 _irods_server_cfg_clerver_default_resource: "{{
     irods_server_cfg_clerver_default_resource if irods_server_cfg_clerver_default_resource else
-    _irods_server_cfg_default_resource_name if _irods_server_cfg_default_resource_name else
-    'demoResc' }}"
+    _irods_server_cfg_default_resource_name }}"
 
 _irods_server_cfg_clerver_encryption_algorithm: "{{
     irods_server_cfg_clerver_encryption_algorithm
@@ -70,7 +69,7 @@ _irods_server_cfg_default_number_of_transfer_threads: "{{
     irods_server_cfg_default_number_of_transfer_threads
       if irods_server_cfg_default_number_of_transfer_threads
          or irods_server_cfg_default_number_of_transfer_threads == 0 else
-    None }}"
+    4 }}"
 
 _irods_server_cfg_default_resource_directory: "{{
     irods_server_cfg_default_resource_directory if irods_server_cfg_default_resource_directory else
@@ -78,12 +77,12 @@ _irods_server_cfg_default_resource_directory: "{{
 
 _irods_server_cfg_default_resource_name: "{{
     irods_server_cfg_default_resource_name if irods_server_cfg_default_resource_name else
-    None }}"
+    'demoResc' }}"
 
 _irods_server_cfg_default_temporary_password_lifetime: "{{
     irods_server_cfg_default_temporary_password_lifetime
       if irods_server_cfg_default_temporary_password_lifetime else
-    None }}"
+    120 }}"
 
 _irods_server_cfg_environment_variables: "{{
     irods_server_cfg_environment_variables if irods_server_cfg_environment_variables else
@@ -242,18 +241,18 @@ _irods_server_cfg_ssl_verify_server: "{{
 _irods_server_cfg_transfer_buffer_size_for_parallel_transfer: "{{
    irods_server_cfg_transfer_buffer_size_for_parallel_transfer
      if irods_server_cfg_transfer_buffer_size_for_parallel_transfer else
-  None }}"
+   4 }}"
 
 _irods_server_cfg_transfer_chunk_size_for_parallel_transfer: "{{
    irods_server_cfg_transfer_chunk_size_for_parallel_transfer
      if irods_server_cfg_transfer_chunk_size_for_parallel_transfer else
-   None }}"
+   40 }}"
 
 _irods_server_cfg_xmsg_host: "{{ irods_server_cfg_xmsg_host if irods_server_cfg_xmsg_host else
                                  None }}"
 
 _irods_server_cfg_xmsg_port: "{{ irods_server_cfg_xmsg_port if irods_server_cfg_xmsg_port else
-                                 1249 }}"
+                                 1279 }}"
 
 _irods_server_cfg_zone_auth_scheme: "{{
     irods_server_cfg_zone_auth_scheme if irods_server_cfg_zone_auth_scheme else

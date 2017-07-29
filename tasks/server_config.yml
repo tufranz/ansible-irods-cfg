@@ -12,20 +12,15 @@
   assert:
     that:
       - _irods_server_cfg_default_hash_scheme in ['MD5', 'SHA256']
-      - 'not _irods_server_cfg_default_number_of_transfer_threads
-         or _irods_server_cfg_default_number_of_transfer_threads | int >= 0'
+      - _irods_server_cfg_default_number_of_transfer_threads | int >= 0
       - "not _irods_server_cfg_default_resource_directory
          or _irods_server_cfg_default_resource_directory | match('/.*')"
-      - 'not _irods_server_cfg_maximum_temporary_password_lifetime
-         or ((_irods_server_cfg_maximum_temporary_password_lifetime | int
-                >= _irods_server_cfg_default_temporary_password_lifetime | int)
-               if _irods_server_cfg_default_temporary_password_lifetime else
-             (_irods_server_cfg_maximum_temporary_password_lifetime | int > 0))'
-      - 'not _irods_server_cfg_default_temporary_password_lifetime
-         or _irods_server_cfg_default_temporary_password_lifetime | int > 0'
-      - _irods_server_cfg_match_hash_policy in ['compatible', 'strict']
+      - _irods_server_cfg_default_temporary_password_lifetime | int > 0
       - _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes | int >= 1
       - _irods_server_cfg_maximum_size_for_single_buffer | int >= 0
+      - '_irods_server_cfg_maximum_temporary_password_lifetime | int
+           >= _irods_server_cfg_default_temporary_password_lifetime | int'
+      - _irods_server_cfg_match_hash_policy in ['compatible', 'strict']
       - _irods_server_cfg_negotiation_key | length == 32
       - not _irods_server_cfg_pam_no_extend or _irods_server_cfg_pam_no_extend in [true, false]
       - 'not _irods_server_cfg_pam_password_length
@@ -51,18 +46,13 @@
            < _irods_server_cfg_server_port_range_start | int
          or _irods_server_cfg_server_control_plane_port | int
               > _irods_server_cfg_server_port_range_end | int'
-      - 'not _irods_server_cfg_transfer_buffer_size_for_parallel_transfer
-         or _irods_server_cfg_transfer_buffer_size_for_parallel_transfer | int > 0'
-      - 'not _irods_server_cfg_transfer_chunk_size_for_parallel_transfer
-         or _irods_server_cfg_transfer_chunk_size_for_parallel_transfer | int > 0'
-      - 'not _irods_server_cfg_xmsg_port
-         or (_irods_server_cfg_xmsg_port | int >= 1
-             and _irods_server_cfg_xmsg_port | int <= 65535
-             and _irods_server_cfg_xmsg_port != _irods_server_cfg_server_control_plane_port
-             and (_irods_server_cfg_xmsg_port | int
-                    < _irods_server_cfg_server_port_range_start | int
-                  or _irods_server_cfg_xmsg_port | int
-                       > _irods_server_cfg_server_port_range_end | int))'
+      - _irods_server_cfg_transfer_buffer_size_for_parallel_transfer | int > 0
+      - _irods_server_cfg_transfer_chunk_size_for_parallel_transfer | int > 0
+      - '_irods_server_cfg_xmsg_port | int >= 1
+         and _irods_server_cfg_xmsg_port | int <= 65535
+         and _irods_server_cfg_xmsg_port != _irods_server_cfg_server_control_plane_port
+         and (_irods_server_cfg_xmsg_port | int < _irods_server_cfg_server_port_range_start | int
+              or _irods_server_cfg_xmsg_port | int > _irods_server_cfg_server_port_range_end | int)'
       - _irods_server_cfg_zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
       - not _irods_server_cfg_zone_key | match('.*-.*')
       - '_irods_server_cfg_zone_port | int >= 1
@@ -70,8 +60,7 @@
          and _irods_server_cfg_zone_port != _irods_server_cfg_server_control_plane_port
          and (_irods_server_cfg_zone_port | int < _irods_server_cfg_server_port_range_start | int
               or _irods_server_cfg_zone_port | int > _irods_server_cfg_server_port_range_end | int)
-         and (not _irods_server_cfg_xmsg_port
-              or _irods_server_cfg_zone_port != _irods_server_cfg_xmsg_port)'
+         and _irods_server_cfg_zone_port != _irods_server_cfg_xmsg_port'
 #  ignore_errors: true
 
 - name: generate server_config.json
