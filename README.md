@@ -3,13 +3,19 @@ irods-server-cfg
 [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-server-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-server-cfg)
 [![Ansible Galaxy](https://img.shields.io/ansible/role/18523.svg)](https://galaxy.ansible.com/CyVerse-Ansible/irods-server-cfg/)
 
-This role can be used to completely configure an iRODS server once iRODS is installed.
+Eventually this role will be able to be used to completely configure an iRODS server once iRODS is installed. At the moment, it can maintain the following configuration files.
+
+* /etc/irods/host_access_control_config.json
+* /etc/irods/hosts_config.json
+* /etc/irods/server_config.json
+* /etc/irods/service_account.config
+* /var/lib/irods/.irods/irods_environment.json
 
 
 Requirements
 ------------
 
-None
+iRODS 4.1.10 is installed.
 
 
 Role Variables
