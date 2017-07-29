@@ -13,7 +13,7 @@
     that:
       - _irods_server_cfg_default_hash_scheme in ['MD5', 'SHA256']
       - _irods_server_cfg_default_number_of_transfer_threads | int >= 0
-      - "not _irods_server_cfg_default_resource_directory
+      - "_irods_server_cfg_default_resource_directory == ''
          or _irods_server_cfg_default_resource_directory | match('/.*')"
       - _irods_server_cfg_default_temporary_password_lifetime | int > 0
       - _irods_server_cfg_maximum_number_of_concurrent_rule_engine_server_processes | int >= 1

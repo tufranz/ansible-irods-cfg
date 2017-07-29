@@ -82,10 +82,10 @@
           - server_config.kerberos_name == ''
           - server_config.match_hash_policy == 'compatible'
           - server_config.negotiation_key == 'TEMPORARY_32byte_negotiation_key'
-          - server_config.pam_no_extend == None
-          - server_config.pam_password_length == None
-          - server_config.pam_password_max_time == None
-          - server_config.pam_password_min_time == None
+          - server_config.pam_no_extend is not defined
+          - server_config.pam_password_length is not defined
+          - server_config.pam_password_max_time is not defined
+          - server_config.pam_password_min_time is not defined
           - server_config.re_data_variable_mapping_set | length == 1
           - server_config.re_data_variable_mapping_set[0].filename == 'core'
           - server_config.re_function_name_mapping_set | length == 1
