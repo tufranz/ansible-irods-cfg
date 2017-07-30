@@ -1,6 +1,6 @@
 ---
 - name: validate address type
-  with_items: "{{ _irods_server_cfg_host_entries }}"
+  with_items: "{{ _irods_cfg_host_entries }}"
   assert:
     that:
       - item.address_type == 'local' or item.address_type == 'remote'
@@ -10,5 +10,5 @@
   template:
     src: hosts_config.json.j2
     dest: /etc/irods/hosts_config.json
-    owner: "{{ _irods_server_cfg_service_account_name }}"
-    group: "{{ _irods_server_cfg_service_group_name }}"
+    owner: "{{ _irods_cfg_service_account_name }}"
+    group: "{{ _irods_cfg_service_group_name }}"

@@ -1,5 +1,5 @@
 ---
-irods_server_cfg_access_entries:
+irods_cfg_access_entries:
   - address: address1
     group: group1
     mask: mask1

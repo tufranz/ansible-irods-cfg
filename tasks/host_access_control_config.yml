@@ -3,5 +3,5 @@
   template:
     src: host_access_control_config.json.j2
     dest: /etc/irods/host_access_control_config.json
-    owner: "{{ _irods_server_cfg_service_account_name }}"
-    group: "{{ _irods_server_cfg_service_group_name }}"
+    owner: "{{ _irods_cfg_service_account_name }}"
+    group: "{{ _irods_cfg_service_group_name }}"

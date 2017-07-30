@@ -1,5 +1,5 @@
 ---
-irods_server_cfg_host_entries:
+irods_cfg_host_entries:
   - address_type: local
     addresses:
       - my.host.com
