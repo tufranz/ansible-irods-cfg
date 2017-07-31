@@ -3,7 +3,7 @@
   hosts: localhost
   become: true
   roles:
-    - role: ../../ansible-irods-server-cfg
+    - role: ../../ansible-irods-cfg
 
   post_tasks:
     - include: tasks/validate-deposition.yml cfg_path=/etc/irods/{{ item }} schema={{ item }}
