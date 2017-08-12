@@ -28,7 +28,6 @@ Variable                                                              | Default 
 --------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------ | -------
 `irods_cfg_access_entries`                                            | []                                                          |                                                  | A list of access entry objects defining who can access iRODS and from where, see below
 `irods_cfg_authentication_file`                                       | /var/lib/irods/.irods/.irodsA                               |                                                  | the authentication file for the clerver
-`irods_cfg_catalog_database_type`                                     | postgres                                                    | mysql, oracle, postgres                          | the type of database iRODS is using for the iCAT           
 `irods_cfg_clerver_default_hash_scheme`                               | `irods_cfg_default_hash_scheme`                             | MD5, SHA256                                      | checksum scheme for clerver
 `irods_cfg_clerver_default_resource`                                  | `irods_cfg_default_resource_name`                           |                                                  | the name of the resource used for clerver operations if one is not specified
 `irods_cfg_clerver_encryption_algorithm`                              | `irods_cfg_server_control_plane_encryption_algorithm`       |                                                  | EVP-supplied encryption algorithm for parallel transfer
@@ -38,12 +37,6 @@ Variable                                                              | Default 
 `irods_cfg_client_server_negotiation`                                 | request_server_negotiation                                  | none, request_server_negotiation                 | whether or not advanced negotiation is desired for the clerver
 `irods_cfg_client_server_policy`                                      | CS_NEG_DONT_CARE                                            | CS_NEG_DONT_CARE, CS_NEG_REFUSE, CS_NEG_REQUIRE  | which SSL policy for the clerver to use
 `irods_cfg_cwd`                                                       | `irods_cfg_home`                                            |                                                  | the initial working collection for the admin user
-`irods_cfg_db_host`                                                   | localhost                                                   |                                                  | the hostname of the DBMS
-`irods_cfg_db_name`                                                   | ICAT                                                        |                                                  | the name of the database used as the iCAT
-`irods_cfg_db_odbc_type`                                              | unix                                                        |                                                  | the ODBC type
-`irods_cfg_db_password`                                               | testpassword                                                |                                                  | the password used by `irods_cfg_db_username` to connect to `irods_cfg_db_name`
-`irods_cfg_db_port`                                                   | 5432                                                        |                                                  | the port on which the database server is listening
-`irods_cfg_db_username`                                               | irods                                                       |                                                  | the database user name
 `irods_cfg_debug`                                                     | ''                                                          | '' or any combination of 'CAT', 'RDA', and 'SQL' | desired verbosity of the debug logging level for clerver. e.g., 'CATRDA' means include CAT and RDA debugging in debug log messages
 `irods_cfg_default_dir_mode`                                          | 0750                                                        |                                                  | the Unix file system octal permission mode for a newly created directory
 `irods_cfg_default_file_mode`                                         | 0600                                                        |                                                  | the Unix file system octal permission mode for a newly created file
@@ -58,6 +51,7 @@ Variable                                                              | Default 
 `irods_cfg_home`                                                      | /`irods_cfg_zone_name`/home/`irods_cfg_zone_user`           |                                                  | the home collection of the admin user
 `irods_cfg_host`                                                      | `ansible_inventory_name`                                    |                                                  | the fully qualified domain name of the server the clerver connects to
 `irods_cfg_host_entries`                                              | []                                                          |                                                  | an array of host entry objects grouping host names and addresses referring to the same host, see below
+`irods_cfg_icat`                                                      | null                                                        |                                                  | The ICAT DB configuration object. See below. If the server being configured isn't an IES, this should be `null`.
 `irods_cfg_icat_host`                                                 | `irods_cfg_host`                                            |                                                  | the fully qualified domain name of the iCAT enabled server
 `irods_cfg_kerberos_name`                                             | null                                                        |                                                  | Kerberos distinguished name for KRB and GSI authentication
 `irods_cfg_log_level`                                                 | 5                                                           | 1 - 10                                           | desired verbosity of logging
@@ -126,6 +120,17 @@ Field          | Choices       | Comments
 `address_type` | local, remote | indicates if this host is localhost.
 `addresses`    |               | an array of names and addresses referring to this host
 
+The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none of them are required.
+
+Field                   | Default      | Choices                 | Comments
+----------------------- | ------------ | ----------------------- | --------
+`catalog_database_type` | postgres     | mysql, oracle, postgres | the type of database iRODS is using for the iCAT           
+`db_host`               | localhost    |                         | the hostname of the DBMS
+`db_name`               | ICAT         |                         | the name of the database used as the iCAT
+`db_odbc_type`          | unix         |                         | the ODBC type
+`db_password`           | testpassword |                         | the password used by `db_username` to connect to `db_name`
+`db_port`               | 5432         |                         | the port on which the database server is listening
+`db_username`           | irods        |                         | the database user name
 
 Dependencies
 ------------
@@ -133,44 +138,61 @@ Dependencies
 None
 
 
-Example Playbook
-----------------
+Example Playbooks
+-----------------
+    # IES
+    - hosts: ies
+      roles:
+        - role: CyVerse-Ansible.irods-cfg
+          vars:
+            irods_cfg_default_hash_scheme: MD5
+            irods_cfg_default_number_of_transfer_threads: 16
+            irods_cfg_default_resource_name: CyVerseRes
+            irods_cfg_environment_variables:
+              amqp_host: amqp.cyverse.org
+            irods_cfg_federation:
+              - icat_host: irods.tacc.utexas.edu
+                negotiation_key: "Don't you wish!                !"
+                zone_key: crack me
+                zone_name: tacc
+            irods_cfg_host_entries:
+              - address_type: local
+                addresses:
+                  - ares.iplantcollaborative.org
+                  - data.cyverse.org
+                  - data.iplantcollaborative.org
+            irods_cfg_icat:
+              db_host: irods-db.cyverse.org
+              db_password: secret
+              db_username: icatuser
+            irods_cfg_negotiation_key: Just guess it                  .
+            irods_cfg_re_additional_rulebases:
+              - ipc_custom
+            irods_cfg_server_control_plane_key: "I'm not telling                ."
+            irods_cfg_server_port_range_end: 20399
+            irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
+            irods_cfg_zone_key: secret
+            irods_cfg_zone_name: iplant
+            irods_cfg_zone_user: cyverse_admin
 
+    # Resource Server
     - hosts: rs
       roles:
         - role: CyVerse-Ansible.irods-cfg
-          irods_cfg_db_host: irods_db.cyverse.org
-          irods_cfg_db_password: secret
-          irods_cfg_db_user: icatuser
-          irods_cfg_default_hash_scheme: MD5
-          irods_cfg_default_number_of_transfer_threads: 16
-          irods_cfg_default_resource_name: CyVerseRes
-          irods_cfg_environment_variables:
-            amqp_host: "{{ irods_amqp_host }}"
-          irods_cfg_federation:
-            - icat_host: irods.tacc.utexas.edu
-              negotiation_key: "Don't you wish!                !"
-              zone_key: crack me
-              zone_name: tacc
-          irods_cfg_host_entries:
-            - address_type: local
-              addresses:
-                - ares.iplantcollaborative.org
-                - data.cyverse.org
-                - data.iplantcollaborative.org
-          irods_cfg_negotiation_key: Just guess it                  .
-          irods_cfg_re_additional_data_variable_mappings:
-            - cyverse
-          irods_cfg_re_additional_function_name_mappings:
-            - cyverse
-          irods_cfg_re_additional_rulebases
-            - ipc_custom
-          irods_cfg_server_control_plane_key: "I'm not telling                ."
-          irods_cfg_server_port_range_end: 20399
-          irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
-          irods_cfg_zone_key: secret
-          irods_cfg_zone_name: iplant
-          irods_cfg_zone_user: cyverse_admin
+          vars:
+            irods_cfg_default_hash_scheme: MD5
+            irods_cfg_default_number_of_transfer_threads: 16
+            irods_cfg_default_resource_directory: /f2/haboob
+            irods_cfg_default_resource_name: haboobRes
+            irods_cfg_negotiation_key: Just guess it                  .
+            irods_cfg_re_additional_rulebases:
+              - ipc_custom
+            irods_cfg_server_control_plane_key: "I'm not telling                ."
+            irods_cfg_server_port_range_end: 20399
+            irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
+            irods_cfg_zone_key: secret
+            irods_cfg_zone_name: iplant
+            irods_cfg_zone_user: has_admin
 
 
 License
