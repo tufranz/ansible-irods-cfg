@@ -5,6 +5,7 @@ irods-cfg
 
 Eventually this role will be able to be used to completely configure an iRODS server once iRODS is installed. At the moment, it can maintain the following configuration files.
 
+* /etc/irods/database_config.json
 * /etc/irods/host_access_control_config.json
 * /etc/irods/hosts_config.json
 * /etc/irods/server_config.json
@@ -27,6 +28,7 @@ Variable                                                              | Default 
 --------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------ | -------
 `irods_cfg_access_entries`                                            | []                                                          |                                                  | A list of access entry objects defining who can access iRODS and from where, see below
 `irods_cfg_authentication_file`                                       | /var/lib/irods/.irods/.irodsA                               |                                                  | the authentication file for the clerver
+`irods_cfg_catalog_database_type`                                     | postgres                                                    | mysql, oracle, postgres                          | the type of database iRODS is using for the iCAT           
 `irods_cfg_clerver_default_hash_scheme`                               | `irods_cfg_default_hash_scheme`                             | MD5, SHA256                                      | checksum scheme for clerver
 `irods_cfg_clerver_default_resource`                                  | `irods_cfg_default_resource_name`                           |                                                  | the name of the resource used for clerver operations if one is not specified
 `irods_cfg_clerver_encryption_algorithm`                              | `irods_cfg_server_control_plane_encryption_algorithm`       |                                                  | EVP-supplied encryption algorithm for parallel transfer
@@ -36,6 +38,12 @@ Variable                                                              | Default 
 `irods_cfg_client_server_negotiation`                                 | request_server_negotiation                                  | none, request_server_negotiation                 | whether or not advanced negotiation is desired for the clerver
 `irods_cfg_client_server_policy`                                      | CS_NEG_DONT_CARE                                            | CS_NEG_DONT_CARE, CS_NEG_REFUSE, CS_NEG_REQUIRE  | which SSL policy for the clerver to use
 `irods_cfg_cwd`                                                       | `irods_cfg_home`                                            |                                                  | the initial working collection for the admin user
+`irods_cfg_db_host`                                                   | localhost                                                   |                                                  | the hostname of the DBMS
+`irods_cfg_db_name`                                                   | ICAT                                                        |                                                  | the name of the database used as the iCAT
+`irods_cfg_db_odbc_type`                                              | unix                                                        |                                                  | the ODBC type
+`irods_cfg_db_password`                                               | testpassword                                                |                                                  | the password used by `irods_cfg_db_username` to connect to `irods_cfg_db_name`
+`irods_cfg_db_port`                                                   | 5432                                                        |                                                  | the port on which the database server is listening
+`irods_cfg_db_username`                                               | irods                                                       |                                                  | the database user name
 `irods_cfg_debug`                                                     | ''                                                          | '' or any combination of 'CAT', 'RDA', and 'SQL' | desired verbosity of the debug logging level for clerver. e.g., 'CATRDA' means include CAT and RDA debugging in debug log messages
 `irods_cfg_default_dir_mode`                                          | 0750                                                        |                                                  | the Unix file system octal permission mode for a newly created directory
 `irods_cfg_default_file_mode`                                         | 0600                                                        |                                                  | the Unix file system octal permission mode for a newly created file
@@ -130,11 +138,13 @@ Example Playbook
 
     - hosts: rs
       roles:
-        - role: cyverse.irods-server-cfg
+        - role: CyVerse-Ansible.irods-cfg
+          irods_cfg_db_host: irods_db.cyverse.org
+          irods_cfg_db_password: secret
+          irods_cfg_db_user: icatuser
           irods_cfg_default_hash_scheme: MD5
           irods_cfg_default_number_of_transfer_threads: 16
-          irods_cfg_default_resource_directory: "{{ irods_resource_dir }}"
-          irods_cfg_default_resource_name: "{{ irods_default_resource }}"
+          irods_cfg_default_resource_name: CyVerseRes
           irods_cfg_environment_variables:
             amqp_host: "{{ irods_amqp_host }}"
           irods_cfg_federation:
@@ -155,12 +165,12 @@ Example Playbook
             - cyverse
           irods_cfg_re_additional_rulebases
             - ipc_custom
-          irods_cfg_port_range_start: "{{ irods_server_port_range_start }}"
           irods_cfg_server_control_plane_key: "I'm not telling                ."
-          irods_cfg_server_port_range_end: "{{ irods_server_port_range_end }}"
+          irods_cfg_server_port_range_end: 20399
           irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
           irods_cfg_zone_key: secret
           irods_cfg_zone_name: iplant
+          irods_cfg_zone_user: cyverse_admin
 
 
 License
