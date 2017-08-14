@@ -1,4 +1,34 @@
 ---
+# This is the value of _irods_cfg_icat if the server being configured is an IES
+__irods_cfg_icat_guess:
+  catalog_database_type: "{{
+    irods_cfg_icat.catalog_database_type
+      if irods_cfg_icat.catalog_database_type is defined
+         and irods_cfg_icat.catalog_database_type else
+    'postgres' }}"
+  db_host: "{{
+    irods_cfg_icat.db_host if irods_cfg_icat.db_host is defined and irods_cfg_icat.db_host else
+    'localhost' }}"
+  db_name: "{{
+    irods_cfg_icat.db_name if irods_cfg_icat.db_name is defined and irods_cfg_icat.db_name else
+    'ICAT' }}"
+  db_odbc_type: "{{
+    irods_cfg_icat.db_odbc_type
+      if irods_cfg_icat.db_odbc_type is defined and irods_cfg_icat.db_odbc_type else
+    'unix' }}"
+  db_password: "{{
+    irods_cfg_icat.db_password
+      if irods_cfg_icat.db_password is defined and irods_cfg_icat.db_password else
+    'testpassword' }}"
+  db_port: "{{
+    irods_cfg_icat.db_port if irods_cfg_icat.db_port is defined and irods_cfg_icat.db_port else
+    5432 }}"
+  db_username: "{{
+    irods_cfg_icat.db_username
+      if irods_cfg_icat.db_username is defined and irods_cfg_icat.db_username else
+    'irods' }}"
+
+
 _irods_cfg_access_entries: "{{ irods_cfg_access_entries if irods_cfg_access_entries else [] }}"
 
 _irods_cfg_authentication_file: "{{
@@ -89,6 +119,8 @@ _irods_cfg_home: "{{ irods_cfg_home if irods_cfg_home else
 _irods_cfg_host: "{{ irods_cfg_host if irods_cfg_host else inventory_hostname }}"
 
 _irods_cfg_host_entries: "{{ irods_cfg_host_entries if irods_cfg_host_entries else [] }}"
+
+_irods_cfg_icat: "{{ __irods_cfg_icat_guess if irods_cfg_icat is mapping else None }}"
 
 _irods_cfg_icat_host: "{{ irods_cfg_icat_host if irods_cfg_icat_host else _irods_cfg_host }}"
 

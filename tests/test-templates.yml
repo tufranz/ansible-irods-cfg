@@ -12,6 +12,11 @@
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
+    - name: verify that derived irods_cfg_icat is null
+      assert:
+        that:
+          - not _irods_cfg_icat
+
     - name: verify host_access_control_config.json is correct
       assert:
         that:
@@ -112,6 +117,50 @@
         that:
           - service_account | search('IRODS_SERVICE_ACCOUNT_NAME=irods')
           - service_account | search('IRODS_SERVICE_GROUP_NAME=irods')
+
+
+- name: test default database_config
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/database_config_defaults.yml
+    - ../vars/main.yml
+  vars:
+    database_config: "{{ lookup('template', '../templates/database_config.json.j2') }}"
+  tasks:
+    - name: verify entries
+      assert:
+        that:
+          - database_config.catalog_database_type == 'postgres'
+          - database_config.db_host == 'localhost'
+          - database_config.db_name == 'ICAT'
+          - database_config.db_odbc_type == 'unix'
+          - database_config.db_password == 'testpassword'
+          - database_config.db_port == 5432
+          - database_config.db_username == 'irods'
+
+
+- name: test database_config options
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - vars/database_config_opts.yml
+    - ../vars/main.yml
+  vars:
+    database_config: "{{ lookup('template', '../templates/database_config.json.j2') }}"
+  tasks:
+    - name: verify entries
+      assert:
+        that:
+          - database_config.catalog_database_type == 'mysql'
+          - database_config.db_host == 'icat.domain'
+          - database_config.db_name == 'db'
+          - database_config.db_odbc_type == 'postgres'
+          - database_config.db_password == 'secret'
+          - database_config.db_port == 1
+          - database_config.db_username == 'irodsuser'
 
 
 - name: test host_access_control_config options

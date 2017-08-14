@@ -6,11 +6,20 @@
     - role: ../../ansible-irods-cfg
 
   post_tasks:
-    - include: tasks/validate-deposition.yml cfg_path=/etc/irods/{{ item }} schema={{ item }}
+    - include: tasks/validate-deposition.yml
+      vars:
+        cfg_path: /etc/irods/{{ item }}
+        schema: "{{ item }}"
       with_items:
         - host_access_control_config.json
         - hosts_config.json
         - server_config.json
+
+    - name: verify that database_config.json was not deposited
+      stat:
+        path: /etc/irods/database_config.json
+      register: response
+      failed_when: resposnes.stat.exists
 
     - include: tasks/validate-deposition.yml
       vars:

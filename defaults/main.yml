@@ -24,6 +24,7 @@ irods_cfg_gsi_server_dn: null
 irods_cfg_home: null
 irods_cfg_host_entries: null
 irods_cfg_host: null
+irods_cfg_icat: null
 irods_cfg_icat_host: null
 irods_cfg_kerberos_name: null
 irods_cfg_log_level: null

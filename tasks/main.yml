@@ -1,4 +1,7 @@
 ---
+- when: _irods_cfg_icat is mapping
+  include: database_config.yml
+
 - include: host_access_control_config.yml
 - include: hosts_config.yml
 - include: irods_environment.yml
