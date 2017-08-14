@@ -19,7 +19,7 @@
       stat:
         path: /etc/irods/database_config.json
       register: response
-      failed_when: resposnes.stat.exists
+      failed_when: response.stat.exists
 
     - include: tasks/validate-deposition.yml
       vars:

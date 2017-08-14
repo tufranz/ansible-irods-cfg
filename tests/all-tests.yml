@@ -1,0 +1,4 @@
+---
+- include: test-templates.yml
+- include: test-core-deposition.yml
+- include: test-db-cfg-deposition.yml

@@ -1,0 +1,14 @@
+---
+- name: test that database_config.json is correctly placed
+  hosts: localhost
+  become: true
+  vars_files:
+    - vars/database_config_defaults.yml
+  roles:
+    - role: ../../ansible-irods-cfg
+
+  post_tasks:
+    - include: tasks/validate-deposition.yml
+      vars:
+        cfg_path: /etc/irods/database_config.json
+        schema: database_config.json

@@ -15,7 +15,7 @@
     - name: verify that derived irods_cfg_icat is null
       assert:
         that:
-          - not _irods_cfg_icat
+          - _irods_cfg_icat is not mapping
 
     - name: verify host_access_control_config.json is correct
       assert:

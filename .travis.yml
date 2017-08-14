@@ -32,17 +32,30 @@ before_script:
 
 script:
   # Basic role syntax check
-  - ansible-playbook --syntax-check tests/test.yml --inventory-file=tests/inventory tests/test.yml
+  - ansible-playbook --syntax-check --inventory-file=tests/inventory tests/all-tests.yml
 
-  # Test role
-  - ansible-playbook --inventory-file=tests/inventory tests/test.yml
+  # Test template expansion
+  - ansible-playbook --inventory-file=tests/inventory tests/test-templates.yml
+
+  # Test core deposition
+  - ansible-playbook --inventory-file=tests/inventory tests/test-core-deposition.yml
 
   # Idempotence test
   - >
-    ansible-playbook --inventory-file=tests/inventory tests/test.yml \
+    ansible-playbook --inventory-file=tests/inventory tests/test-core-deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)
+
+  # Test database_config deposition
+  - ansible-playbook --inventory-file=tests/inventory tests/test-db-cfg-deposition.yml
+
+  - >
+    ansible-playbook --inventory-file=tests/inventory tests/test-db-cfg-deposition.yml \
+      | grep --quiet 'changed=0.*failed=0' \
+        && (echo 'Idempotence test: pass' && exit 0) \
+        || (echo 'Idempotence test: fail' && exit 1)
+
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
