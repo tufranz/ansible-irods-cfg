@@ -63,5 +63,6 @@ irods_cfg_xmsg_port: null
 irods_cfg_zone_auth_scheme: null
 irods_cfg_zone_key: null
 irods_cfg_zone_name: null
+irods_cfg_zone_password: null
 irods_cfg_zone_port: null
 irods_cfg_zone_user: null

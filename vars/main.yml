@@ -265,6 +265,8 @@ _irods_cfg_zone_key: "{{ irods_cfg_zone_key if irods_cfg_zone_key else 'TEMPORAR
 
 _irods_cfg_zone_name: "{{ irods_cfg_zone_name if irods_cfg_zone_name else 'tempZone' }}"
 
+_irods_cfg_zone_password: "{{ irods_cfg_zone_password if irods_cfg_zone_password else 'rods' }}"
+
 _irods_cfg_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }}"
 
 _irods_cfg_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"

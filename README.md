@@ -12,6 +12,7 @@ Eventually this role will be able to be used to completely configure an iRODS se
 * /etc/irods/service_account.config
 * /var/lib/irods/.irods/irods_environment.json
 
+This role contains one task file, `init_zone_user.yml`, that is not part of the main tasks. It can be used through `include_role` to initialize the iRODS zone user.
 
 Requirements
 ------------
@@ -90,6 +91,7 @@ Variable                                                              | Default 
 `irods_cfg_zone_auth_scheme`                                          | native                                                      | gsi, krb, native, pam                            | the authentication scheme used by `irods_cfg_zone_user`
 `irods_cfg_zone_key`                                                  | TEMPORARY_zone_key                                          |                                                  | the shared secret used for authentication and identification on server-to-server communication, it cannot contain hyphens (`-`)
 `irods_cfg_zone_name`                                                 | tempZone                                                    |                                                  | the name of the in which the server participates
+`irods_cfg_zone_password`                                             | rods                                                        |                                                  | the password used to authenticate `irods_cfg_zone_user`.
 `irods_cfg_zone_port`                                                 | 1247                                                        |                                                  | the main port used by the zone for communication
 `irods_cfg_zone_user`                                                 | rods                                                        |                                                  | the name of the rodsadmin user running this iRODS instance
 

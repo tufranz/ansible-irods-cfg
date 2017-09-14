@@ -1,0 +1,17 @@
+---
+- name: initialize clerver connection
+  shell: |
+    bak='{{ irods_cfg_authentication_file }}.bak'
+    touch '{{ irods_cfg_authentication_file }}'
+    cp '{{ irods_cfg_authentication_file }}' "$bak"
+    if ! iinit '{{ _irods_cfg_zone_password }}'
+    then
+      exit 1
+    fi
+    if ! diff --brief "$bak" '{{ irods_cfg_authentication_file }}' 2> /dev/null
+    then
+      printf 'changed'
+    fi
+    rm --force "$bak"
+  register: result
+  changed_when: result.stdout == 'changed'
