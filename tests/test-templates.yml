@@ -17,6 +17,9 @@
         that:
           - _irods_cfg_icat is not mapping
 
+    - debug:
+        var: hacc
+        
     - name: verify host_access_control_config.json is correct
       assert:
         that:
