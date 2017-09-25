@@ -8,7 +8,7 @@
     - role: ../../ansible-irods-cfg
 
   post_tasks:
-    - include_tasks: tasks/validate-deposition.yml
+    - include: tasks/validate-deposition.yml
       vars:
         cfg_path: /etc/irods/database_config.json
         schema: database_config.json
