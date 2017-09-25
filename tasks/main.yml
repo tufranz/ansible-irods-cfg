@@ -1,9 +1,9 @@
 ---
-- when: _irods_cfg_icat is mapping
-  import_task: database_config.yml
+- include_tasks: database_config.yml
+  when: _irods_cfg_icat is mapping
 
-- import_task: host_access_control_config.yml
-- import_task: hosts_config.yml
-- import_task: irods_environment.yml
-- import_task: server_config.yml
-- import_task: service_account.yml
+- include_tasks: host_access_control_config.yml
+- include_tasks: hosts_config.yml
+- include_tasks: irods_environment.yml
+- include_tasks: server_config.yml
+- include_tasks: service_account.yml
