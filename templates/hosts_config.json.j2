@@ -1,14 +1,18 @@
 {
   "host_entries": [
-{% for entry in _irods_cfg_host_entries %}
+{%- for entry in _irods_cfg_host_entries %}
+
     {
       "address_type": "{{ entry.address_type }}",
       "addresses": [
 {% for address in entry.addresses %}
-        { "address": "{{ address }}" }{% if not loop.last %},{% endif %}
+        { "address": "{{ address }}" }{% if not loop.last %},
+{% endif %}
 {% endfor %}
+
       ]
-    }{% if not loop.last %},{% endif %}
-{% endfor %}
-  ]
+    }{% if not loop.last %},{% else %}
+
+  {% endif %}
+{% endfor %}]
 }
