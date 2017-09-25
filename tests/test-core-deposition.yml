@@ -6,7 +6,7 @@
     - role: ../../ansible-irods-cfg
 
   post_tasks:
-    - include: tasks/validate-deposition.yml
+    - import_task: tasks/validate-deposition.yml
       vars:
         cfg_path: /etc/irods/{{ item }}
         schema: "{{ item }}"
@@ -21,7 +21,7 @@
       register: response
       failed_when: response.stat.exists
 
-    - include: tasks/validate-deposition.yml
+    - import_task: tasks/validate-deposition.yml
       vars:
         cfg_path: /var/lib/irods/.irods/irods_environment.json
         schema: service_account_environment.json
