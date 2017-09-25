@@ -1,9 +1,9 @@
 ---
 - when: _irods_cfg_icat is mapping
-  include: database_config.yml
+  import_playbook: database_config.yml
 
-- include: host_access_control_config.yml
-- include: hosts_config.yml
-- include: irods_environment.yml
-- include: server_config.yml
-- include: service_account.yml
+- import_playbook: host_access_control_config.yml
+- import_playbook: hosts_config.yml
+- import_playbook: irods_environment.yml
+- import_playbook: server_config.yml
+- import_playbook: service_account.yml
