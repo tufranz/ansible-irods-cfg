@@ -3,7 +3,7 @@ galaxy_info:
   description: An ansible role for configuring an iRODS server
   company: CyVerse
   license: See license.md
-  min_ansible_version: 2.0
+  min_ansible_version: 2.3.1.0
 
   platforms:
   - name: Ubuntu
