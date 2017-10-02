@@ -3,7 +3,7 @@ irods-cfg
 [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg)
 [![Ansible Galaxy](https://img.shields.io/ansible/role/19612.svg)](https://galaxy.ansible.com/CyVerse-Ansible/irods-cfg/)
 
-Eventually this role will be able to be used to completely configure an iRODS server once iRODS is installed. At the moment, it can maintain the following configuration files.
+Excluding ODBC configuration, this role will eventually be able to be used to completely configure an iRODS server once iRODS is installed. At the moment, it can maintain the following configuration files.
 
 * /etc/irods/database_config.json
 * /etc/irods/host_access_control_config.json
