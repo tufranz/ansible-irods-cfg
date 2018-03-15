@@ -1,5 +1,5 @@
 ---
-- include: database_config.yml
+- include_tasks: database_config.yml
   when: _irods_cfg_icat is mapping
 
 - import_tasks: host_access_control_config.yml
