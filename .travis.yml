@@ -6,7 +6,7 @@ sudo: required
 
 install:
   # Install ansible
-  - pip install ansible==2.3.1.0 jsonschema
+  - pip install ansible==2.4.3.0 jsonschema
 
   # Check ansible version
   - ansible --version
@@ -49,7 +49,6 @@ script:
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)
-
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
