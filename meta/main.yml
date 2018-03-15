@@ -6,21 +6,21 @@ galaxy_info:
   min_ansible_version: 2.4.3.0
 
   platforms:
-  - name: Ubuntu
-    versions:
-      - precise
-      - quantal
-      - raring
-      - saucy
-      - trusty
-      - utopic
-      - vivid
-      - wily
-      - xenial
-  - name: EL
-    versions:
-      - 6
-      - 7
+    - name: Ubuntu
+      versions:
+        - precise
+        - quantal
+        - raring
+        - saucy
+        - trusty
+        - utopic
+        - vivid
+        - wily
+        - xenial
+    - name: EL
+      versions:
+        - 6
+        - 7
 
   galaxy_tags:
     - CyVerse
