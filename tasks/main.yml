@@ -3,7 +3,7 @@
   when: _irods_cfg_icat is mapping
 
 - import_tasks: host_access_control_config.yml
-- include: hosts_config.yml
-- include: irods_environment.yml
-- include: server_config.yml
-- include: service_account.yml
+- import_tasks: hosts_config.yml
+- import_tasks: irods_environment.yml
+- import_tasks: server_config.yml
+- import_tasks: service_account.yml
