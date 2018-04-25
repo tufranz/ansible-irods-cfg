@@ -1,0 +1,16 @@
+---
+- import_role:
+    name: cyverse.unixodbc-cfg
+  # vars:
+  #   unixodbc_cfg_sources:
+  #     "{{ _irods_cfg.catalog_database_type }}":
+  #       driver_file: /usr/pgsql-9.3/lib/psqlodbc.so
+  #       driver_properties:
+  #         CommLog: 0
+  #         Database: "{{ _irods_cfg_icat.db_name }}"
+  #         Debug: 0
+  #         Ksqo: 0
+  #         Port: "{{ _irods_cfg_icat.db_port }}"
+  #         ReadOnly: no
+  #         Servername: "{{ _irods_cfg_icat.db_host }}"
+  #   unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"

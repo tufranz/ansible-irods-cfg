@@ -1,4 +1,7 @@
 ---
+- include_tasks: odbc.yml
+  when: _irods_cfg_icat is mapping
+
 - include_tasks: database_config.yml
   when: _irods_cfg_icat is mapping
 
