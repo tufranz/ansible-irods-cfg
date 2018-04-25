@@ -24,6 +24,9 @@ before_script:
   # Give irods ownership of its directories
   - sudo chown --recursive irods:irods /etc/irods /var/lib/irods
 
+  # Install dependent roles
+  - ansible-galaxy install --role-file=tests/requirements.yml
+
 script:
   # Basic role syntax check
   - ansible-playbook --syntax-check --inventory-file=tests/inventory tests/all-tests.yml
