@@ -2,6 +2,7 @@
 - import_role:
     name: cyverse.unixodbc-cfg
   vars:
+    unixodbc_cfg_odbcini_path: /var/lib/irods
     unixodbc_cfg_sources:
       "{{ _irods_cfg.catalog_database_type }}":
         driver_file: /usr/pgsql-9.3/lib/psqlodbc.so
