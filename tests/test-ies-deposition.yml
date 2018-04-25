@@ -12,3 +12,12 @@
       vars:
         cfg_path: /etc/irods/database_config.json
         schema: database_config.json
+
+    - name: check .odbc.ini deposition
+      stat:
+        path: /var/lib/irods/.odbc.ini
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'irods' or
+        response.stat.gr_name != 'irods'

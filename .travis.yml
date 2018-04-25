@@ -45,10 +45,10 @@ script:
         || (echo 'Idempotence test: fail' && exit 1)
 
   # Test database_config deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test-db-cfg-deposition.yml
+  - ansible-playbook --inventory-file=tests/inventory tests/test-ies-deposition.yml
 
   - >
-    ansible-playbook --inventory-file=tests/inventory tests/test-db-cfg-deposition.yml \
+    ansible-playbook --inventory-file=tests/inventory tests/test-ies-deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)

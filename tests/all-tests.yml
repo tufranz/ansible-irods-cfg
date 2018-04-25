@@ -1,4 +1,4 @@
 ---
 - import_playbook: test-templates.yml
 - import_playbook: test-core-deposition.yml
-- import_playbook: test-db-cfg-deposition.yml
+- import_playbook: test-ies-deposition.yml
