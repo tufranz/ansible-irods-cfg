@@ -1,23 +1,42 @@
 ---
 - name: locate ODBC driver file
   shell: |
-    if [ '{{ ansible_distribution }}' = CentOS \
-         -a "{{ ansible_distribution_version is version('6.2', '<') }}" = True ]
-    then
-      odbc=$(find /usr -name libodbcpsql.so | grep 64)
+    case '{{ _irods_cfg_icat.catalog_database_type }}' in
+      mysql)
+        if [ '{{ ansible_distribution }}' = CentOS \
+             -a "{{ ansible_distribution_version is version('7', '<') }}" = True ]
+        then
+          odbc=$(find /usr -name libmyodbc5.so | grep 64)
 
-      if [ -z "$odbc" ]
-      then
-        odbc=$(find /usr -name libodbcpsql.so)
-      fi
+          if [ -z "$odbc" ]
+          then
+            odbc=$(find /usr -name 'libmyodbc*.so')
+          fi
+        fi
+        ;;
+        
+      postgres)
+        if [ '{{ ansible_distribution }}' = CentOS \
+             -a "{{ ansible_distribution_version is version('6.2', '<') }}" = True ]
+        then
+          odbc=$(find /usr -name libodbcpsql.so | grep 64)
 
-      if [ -z "$odbc" ]
-      then
-        odbc=$(find /usr -name 'psqlodbc*.so')
-      fi
-    else
-      odbc=$(find /usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
-    fi
+          if [ -z "$odbc" ]
+          then
+            odbc=$(find /usr -name libodbcpsql.so)
+          fi
+
+          if [ -z "$odbc" ]
+          then
+            odbc=$(find /usr -name 'psqlodbc*.so')
+          fi
+        else
+          odbc=$(find /usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
+        fi
+        ;;
+      *)
+        ;;
+    esac
 
     printf '%s' "$odbc" | head --lines 1
   register: result
@@ -36,11 +55,6 @@
     unixodbc_cfg_sources:
       - source_name: "{{ _irods_cfg_icat.catalog_database_type }}"
         driver_file: "{{ result.stdout }}"
-        driver_properties:
-          CommLog: 0
-          Database: "{{ _irods_cfg_icat.db_name }}"
-          Debug: 0
-          Ksqo: 0
-          Port: "{{ _irods_cfg_icat.db_port }}"
-          ReadOnly: 'no'
-          Servername: "{{ _irods_cfg_icat.db_host }}"
+        driver_properties: "{{
+          _irods_cfg_odbc_properties['base']
+          | combine(_irods_cfg_odbc_properties[_irods_cfg_icat.catalog_database_type]) }}"

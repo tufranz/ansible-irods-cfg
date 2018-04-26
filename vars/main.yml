@@ -270,3 +270,16 @@ _irods_cfg_zone_password: "{{ irods_cfg_zone_password if irods_cfg_zone_password
 _irods_cfg_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }}"
 
 _irods_cfg_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"
+
+_irods_cfg_odbc_properties:
+  base:
+    Database: "{{ _irods_cfg_icat.db_name }}"
+    Port: "{{ _irods_cfg_icat.db_port }}"
+    Servername: "{{ _irods_cfg_icat.db_host }}"
+  mysql:
+    Options: 2
+  postgres:
+    CommLog: 0
+    Debug: 0
+    Ksqo: 0
+    ReadOnly: 'no'
