@@ -14,7 +14,16 @@
           fi
         fi
         ;;
-        
+
+      oracle)
+        if [ -z "$ORACLE_HOME" ]
+        then
+          ORACLE_HOME=/usr/lib/oracle/11.2/client64
+        fi
+
+        odbc="$ORACLE_HOME"/lib/libsqora.so.11.1
+        ;;
+
       postgres)
         if [ '{{ ansible_distribution }}' = CentOS \
              -a "{{ ansible_distribution_version is version('6.2', '<') }}" = True ]
