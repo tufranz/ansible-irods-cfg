@@ -27,7 +27,10 @@ __irods_cfg_icat_guess:
     irods_cfg_icat.db_username
       if irods_cfg_icat.db_username is defined and irods_cfg_icat.db_username else
     'irods' }}"
-
+  odbc_driver: "{{
+    irod_cfg_icat.odbc_driver
+      if irods_cfg_icat.odbc_driver is defined and irods_cfg_icat.odbc_driver else
+    None }}"
 
 _irods_cfg_access_entries: "{{ irods_cfg_access_entries if irods_cfg_access_entries else [] }}"
 
@@ -276,8 +279,12 @@ _irods_cfg_odbc_properties:
     Database: "{{ _irods_cfg_icat.db_name }}"
     Port: "{{ _irods_cfg_icat.db_port }}"
     Servername: "{{ _irods_cfg_icat.db_host }}"
+
   mysql:
     Options: 2
+
+  oracle: {}
+
   postgres:
     CommLog: 0
     Debug: 0
