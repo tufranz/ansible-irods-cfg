@@ -34,7 +34,7 @@
     unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
     unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
     unixodbc_cfg_sources:
-      postgres:
+      - source_name: postgres
         driver_file: "{{ result.stdout }}"
         driver_properties:
           CommLog: 0
