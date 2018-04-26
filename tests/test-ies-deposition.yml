@@ -32,7 +32,7 @@
         that:
           - odbcEncoded.content | b64decode | regex_search('^\\[postgres\\]\\n')
           - "lookup('ini', 'driver section=postgres file=/var/lib/irods/.odbc.ini')
-               == '/usr/pgsql-9.3/lib/psqlodbc.so'"
+               == '/usr/lib/x86_64-linux-gnu/odbc/psqlodbca.so'"
           - lookup('ini', 'CommLog section=postgres file=/var/lib/irods/.odbc.ini') == '0'
           - lookup('ini', 'Database section=postgres file=/var/lib/irods/.odbc.ini') == 'ICAT'
           - lookup('ini', 'Debug section=postgres file=/var/lib/irods/.odbc.ini') == '0'

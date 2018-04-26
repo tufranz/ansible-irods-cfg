@@ -4,9 +4,14 @@ python: "2.7.13"
 
 sudo: required
 
+addons:
+  apt:
+    packages:
+      - odbc-postgresql
+
 install:
   # Install ansible
-  - pip install ansible==2.4.3.0 jsonschema
+  - pip install ansible jsonschema
 
   # Check ansible version
   - ansible --version

@@ -1,4 +1,31 @@
 ---
+- name: locate ODBC driver file
+  shell: |
+    if [ '{{ ansible_distribution }}' = CentOS \
+         -a "{{ ansible_distribution_version is version('6.2', '<') }}" = True ]
+    then
+      odbc=$(find /usr -name libodbcpsql.so | grep 64)
+
+      if [ -z "$odbc" ]
+      then
+        odbc=$(find /usr -name libodbcpsql.so)
+      fi
+
+      if [ -z "$odbc" ]
+      then
+        odbc=$(find /usr -name 'psqlodbc*.so')
+      fi
+    else
+      odbc=$(find /usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
+    fi
+
+    printf '%s' "$odbc" | head --lines 1
+  register: result
+  changed_when: false
+
+- debug:
+    var: result.stdout
+
 - include_role:
     name: cyverse.unixodbc-cfg
     tasks_from: odbc.yml
@@ -8,7 +35,7 @@
     unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
     unixodbc_cfg_sources:
       postgres:
-        driver_file: /usr/pgsql-9.3/lib/psqlodbc.so
+        driver_file: "{{ result.stdout }}"
         driver_properties:
           CommLog: 0
           Database: "{{ _irods_cfg_icat.db_name }}"
