@@ -1,8 +1,11 @@
 ---
-- import_role:
+- include_role:
     name: cyverse.unixodbc-cfg
+    tasks_from: odbc.yml
   vars:
     unixodbc_cfg_odbcini_path: /var/lib/irods
+    unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
+    unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
     unixodbc_cfg_sources:
       "{{ _irods_cfg.catalog_database_type }}":
         driver_file: /usr/pgsql-9.3/lib/psqlodbc.so
@@ -14,4 +17,3 @@
           Port: "{{ _irods_cfg_icat.db_port }}"
           ReadOnly: no
           Servername: "{{ _irods_cfg_icat.db_host }}"
-    unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
