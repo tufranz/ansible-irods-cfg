@@ -21,3 +21,23 @@
         not response.stat.exists or
         response.stat.pw_name != 'irods' or
         response.stat.gr_name != 'irods'
+
+    - name: retrieve .odbc.ini contents
+      slurp:
+        src: /var/lib/irods/.odbc.ini
+      register: odbcEncoded
+
+    - name: verify .odbc.ini contents
+      assert:
+        that:
+          - odbcEncoded.content | b64decode | regex_search('^\\[postgres\\]\\n')
+          - "lookup('ini', 'driver section=postgres file=/var/lib/irods/.odbc.ini')
+               == '/usr/pgsql-9.3/lib/psqlodbc.so'"
+          - lookup('ini', 'CommLog section=postgres file=/var/lib/irods/.odbc.ini') == '0'
+          - lookup('ini', 'Database section=postgres file=/var/lib/irods/.odbc.ini') == 'ICAT'
+          - lookup('ini', 'Debug section=postgres file=/var/lib/irods/.odbc.ini') == '0'
+          - lookup('ini', 'Ksqo section=postgres file=/var/lib/irods/.odbc.ini') == '0'
+          - lookup('ini', 'Port section=postgres file=/var/lib/irods/.odbc.ini') == '5432'
+          - lookup('ini', 'ReadOnly section=postgres file=/var/lib/irods/.odbc.ini') == 'no'
+          - "lookup('ini', 'Servername section=postgres file=/var/lib/irods/.odbc.ini') \
+               == 'localhost'"

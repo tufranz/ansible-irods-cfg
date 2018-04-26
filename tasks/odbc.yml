@@ -7,7 +7,7 @@
     unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
     unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
     unixodbc_cfg_sources:
-      "{{ _irods_cfg.catalog_database_type }}":
+      postgres:
         driver_file: /usr/pgsql-9.3/lib/psqlodbc.so
         driver_properties:
           CommLog: 0
@@ -15,5 +15,5 @@
           Debug: 0
           Ksqo: 0
           Port: "{{ _irods_cfg_icat.db_port }}"
-          ReadOnly: no
+          ReadOnly: 'no'
           Servername: "{{ _irods_cfg_icat.db_host }}"
