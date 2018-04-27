@@ -11,7 +11,7 @@ addons:
 
 install:
   # Install ansible
-  - pip install ansible jsonschema
+  - pip install ansible==2.4 jsonschema
 
   # Check ansible version
   - ansible --version

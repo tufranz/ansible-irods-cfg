@@ -5,7 +5,7 @@
     case '{{ _irods_cfg_icat.catalog_database_type }}' in
       mysql)
         if [ '{{ ansible_distribution }}' = CentOS \
-             -a "{{ ansible_distribution_version is version('7', '<') }}" = True ]
+             -a "{{ ansible_distribution_version is version_compare('7', '<') }}" = True ]
         then
           odbc=$(find /usr -name libmyodbc5.so | grep 64)
 
@@ -27,7 +27,7 @@
 
       postgres)
         if [ '{{ ansible_distribution }}' = CentOS \
-             -a "{{ ansible_distribution_version is version('6.2', '<') }}" = True ]
+             -a "{{ ansible_distribution_version is version_compare('6.2', '<') }}" = True ]
         then
           odbc=$(find /usr -name libodbcpsql.so | grep 64)
 
