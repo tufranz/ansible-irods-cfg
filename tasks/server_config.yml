@@ -14,7 +14,7 @@
       - _irods_cfg_default_hash_scheme in ['MD5', 'SHA256']
       - _irods_cfg_default_number_of_transfer_threads | int >= 0
       - "_irods_cfg_default_resource_directory == ''
-         or _irods_cfg_default_resource_directory | match('/.*')"
+         or _irods_cfg_default_resource_directory is match('/.*')"
       - _irods_cfg_default_temporary_password_lifetime | int > 0
       - _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes | int >= 1
       - _irods_cfg_maximum_size_for_single_buffer | int >= 0
@@ -49,7 +49,7 @@
          and (_irods_cfg_xmsg_port | int < _irods_cfg_server_port_range_start | int
               or _irods_cfg_xmsg_port | int > _irods_cfg_server_port_range_end | int)'
       - _irods_cfg_zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
-      - not _irods_cfg_zone_key | match('.*-.*')
+      - not _irods_cfg_zone_key is match('.*-.*')
       - '_irods_cfg_zone_port | int >= 1
          and _irods_cfg_zone_port | int <= 65535
          and _irods_cfg_zone_port != _irods_cfg_server_control_plane_port
