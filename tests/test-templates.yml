@@ -154,14 +154,13 @@
     - name: verify entries
       assert:
         that:
-          - database_config.catalog_database_type == 'mysql'
+          - database_config.catalog_database_type == 'postgres'
           - database_config.db_host == 'icat.domain'
           - database_config.db_name == 'db'
           - database_config.db_odbc_type == 'postgres'
           - database_config.db_password == 'secret'
           - database_config.db_port == 1
           - database_config.db_username == 'irodsuser'
-
 
 - name: test host_access_control_config options
   hosts: localhost

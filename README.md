@@ -126,7 +126,7 @@ The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the foll
 
 Field                   | Default      | Choices                 | Comments
 ----------------------- | ------------ | ----------------------- | --------
-`catalog_database_type` | postgres     | mysql, oracle, postgres | the type of database iRODS is using for the iCAT           
+`catalog_database_type` | postgres     | mysql, oracle, postgres | the type of database iRODS is using for the iCAT. _see below_           
 `db_host`               | localhost    |                         | the hostname of the DBMS
 `db_name`               | ICAT         |                         | the name of the database used as the iCAT
 `db_odbc_type`          | unix         |                         | the ODBC type
@@ -135,11 +135,13 @@ Field                   | Default      | Choices                 | Comments
 `db_username`           | irods        |                         | the database user name
 `odbc_driver`           | null         |                         | The absolute path to the ODBC driver file. If `null` the driver will be automatically determined
 
+For `catalog_database_type`, only `postgres` has been fully tested.
+
 
 Dependencies
 ------------
 
-None
+[CyVerse-Ansible.odbcini-cfg](https://galaxy.ansible.com/CyVerse-Ansible/unixodbc-cfg/)
 
 
 Example Playbooks

@@ -1,9 +1,9 @@
 ---
-- name: test that database_config.json is correctly placed
+- name: verify database_config.json and .odbc.ini are correct
   hosts: localhost
   become: true
   vars_files:
-    - vars/database_config_defaults.yml
+    - vars/database_config_opts.yml
   roles:
     - role: ../../ansible-irods-cfg
 
@@ -31,13 +31,13 @@
       assert:
         that:
           - odbcEncoded.content | b64decode | regex_search('^\\[postgres\\]\\n')
-          - "lookup('ini', 'driver section=postgres file=/var/lib/irods/.odbc.ini')
-               == '/usr/lib/x86_64-linux-gnu/odbc/psqlodbca.so'"
+          - "lookup('ini', 'driver section=postgres file=/var/lib/irods/.odbc.ini') \
+               == '/custom/odbc/driver'"
+          - lookup('ini', 'Database section=postgres file=/var/lib/irods/.odbc.ini') == 'db'
+          - lookup('ini', 'Port section=postgres file=/var/lib/irods/.odbc.ini') == '1'
+          - "lookup('ini', 'Servername section=postgres file=/var/lib/irods/.odbc.ini') \
+               == 'icat.domain'"
           - lookup('ini', 'CommLog section=postgres file=/var/lib/irods/.odbc.ini') == '0'
-          - lookup('ini', 'Database section=postgres file=/var/lib/irods/.odbc.ini') == 'ICAT'
           - lookup('ini', 'Debug section=postgres file=/var/lib/irods/.odbc.ini') == '0'
           - lookup('ini', 'Ksqo section=postgres file=/var/lib/irods/.odbc.ini') == '0'
-          - lookup('ini', 'Port section=postgres file=/var/lib/irods/.odbc.ini') == '5432'
           - lookup('ini', 'ReadOnly section=postgres file=/var/lib/irods/.odbc.ini') == 'no'
-          - "lookup('ini', 'Servername section=postgres file=/var/lib/irods/.odbc.ini') \
-               == 'localhost'"

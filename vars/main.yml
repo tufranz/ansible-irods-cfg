@@ -28,7 +28,7 @@ __irods_cfg_icat_guess:
       if irods_cfg_icat.db_username is defined and irods_cfg_icat.db_username else
     'irods' }}"
   odbc_driver: "{{
-    irod_cfg_icat.odbc_driver
+    irods_cfg_icat.odbc_driver
       if irods_cfg_icat.odbc_driver is defined and irods_cfg_icat.odbc_driver else
     None }}"
 
