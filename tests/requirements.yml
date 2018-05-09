@@ -1,4 +1,4 @@
 ---
 - name: cyverse.unixodbc-cfg
   src: CyVerse-Ansible.unixodbc-cfg
-  version: CORE-9045
+  version: master
