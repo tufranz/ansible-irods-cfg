@@ -44,7 +44,8 @@ script:
 
   # Idempotence test
   - >
-    ansible-playbook --inventory-file=tests/inventory tests/test-core-deposition.yml \
+    ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
+                     tests/test-core-deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)
@@ -53,7 +54,8 @@ script:
   - ansible-playbook --inventory-file=tests/inventory tests/test-ies-deposition.yml
 
   - >
-    ansible-playbook --inventory-file=tests/inventory tests/test-ies-deposition.yml \
+    ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory \
+                     tests/test-ies-deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)

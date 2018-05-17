@@ -11,3 +11,5 @@
     dest: /etc/irods/database_config.json
     owner: "{{ _irods_cfg_service_account_name }}"
     group: "{{ _irods_cfg_service_group_name }}"
+  notify:
+    - changed config

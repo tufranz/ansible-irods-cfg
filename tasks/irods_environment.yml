@@ -1,5 +1,5 @@
 ---
-- name: validate variables
+- name: validate variables for irods_environment
   assert:
     that:
       - _irods_cfg_client_server_negotiation in ['off', 'request_server_negotiation']
@@ -33,3 +33,5 @@
     dest: /var/lib/irods/.irods/irods_environment.json
     owner: "{{ _irods_cfg_service_account_name }}"
     group: "{{ _irods_cfg_service_group_name }}"
+  notify:
+    - changed config

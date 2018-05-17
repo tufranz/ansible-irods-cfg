@@ -144,6 +144,13 @@ Field                   | Default      | Choices                 | Comments
 For `catalog_database_type`, only `postgres` has been fully tested.
 
 
+Facts Set
+---------
+
+If any of the iRODS configuration files are changed, the fact
+`irods_cfg_made_changes` will be set to `true`.
+
+
 Dependencies
 ------------
 

@@ -1,2 +1,4 @@
 ---
-# handlers file for ansible-irods
+- name: changed config
+  set_fact:
+    irods_cfg_made_changes: true

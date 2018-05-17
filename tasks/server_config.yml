@@ -1,5 +1,5 @@
 ---
-- name: validate federation
+- name: validate federation for server_config
   with_items: "{{ _irods_cfg_federation }}"
   assert:
     that:
@@ -64,3 +64,5 @@
     dest: /etc/irods/server_config.json
     owner: "{{ _irods_cfg_service_account_name }}"
     group: "{{ _irods_cfg_service_group_name }}"
+  notify:
+    - changed config

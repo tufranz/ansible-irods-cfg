@@ -1,5 +1,5 @@
 ---
-- name: validate address type
+- name: validate address type for hosts_config
   with_items: "{{ _irods_cfg_host_entries }}"
   assert:
     that:
@@ -12,3 +12,5 @@
     dest: /etc/irods/hosts_config.json
     owner: "{{ _irods_cfg_service_account_name }}"
     group: "{{ _irods_cfg_service_group_name }}"
+  notify:
+    - changed config

@@ -41,3 +41,5 @@
           - lookup('ini', 'Debug section=postgres file=/var/lib/irods/.odbc.ini') == '0'
           - lookup('ini', 'Ksqo section=postgres file=/var/lib/irods/.odbc.ini') == '0'
           - lookup('ini', 'ReadOnly section=postgres file=/var/lib/irods/.odbc.ini') == 'no'
+
+    - include_tasks: tasks/verify_change_notified.yml

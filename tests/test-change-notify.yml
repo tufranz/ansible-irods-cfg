@@ -1,0 +1,10 @@
+---
+- name: test cfg file deposition individually
+  hosts: localhost
+  become: true
+  tasks:
+    - include_role:
+        name: ../../ansible-irods-cfg
+        tasks_from: database_config.yml
+
+    - include_tasks:  tasks/verify_change_notified.yml

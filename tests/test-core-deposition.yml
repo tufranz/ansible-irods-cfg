@@ -40,3 +40,5 @@
         not response.stat.exists or
         response.stat.pw_name != 'irods' or
         response.stat.gr_name != 'irods'
+
+    - include_tasks: tasks/verify_change_notified.yml

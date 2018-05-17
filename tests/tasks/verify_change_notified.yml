@@ -1,0 +1,5 @@
+---
+- name: verify that irods_cfg_made_changes is set correctly
+  assert:
+    that:
+      - irods_cfg_made_changes != (test_idempotent | default(false))
