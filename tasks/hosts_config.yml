@@ -14,3 +14,5 @@
     group: "{{ _irods_cfg_service_group_name }}"
   notify:
     - changed config
+
+- meta: flush_handlers
