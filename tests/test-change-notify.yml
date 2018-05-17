@@ -28,12 +28,6 @@
     - include_role:
         name: ../../ansible-irods-cfg
         tasks_from: host_access_control_config.yml
-      vars:
-        irods_cfg_access_entries:
-          - address: localhost
-            group:  group
-            mask: mask
-            user: user
 
   post_tasks:
     - include_tasks: tasks/verify_change_notified.yml
@@ -50,11 +44,6 @@
     - include_role:
         name: ../../ansible-irods-cfg
         tasks_from: hosts_config.yml
-      vars:
-        irods_cfg_host_entries:
-          - address_type: local
-            addresses:
-              - address
 
   post_tasks:
     - include_tasks: tasks/verify_change_notified.yml
@@ -71,8 +60,6 @@
     - include_role:
         name: ../../ansible-irods-cfg
         tasks_from: irods_environment.yml
-      vars:
-        irods_cfg_authentication_file: /tmp
 
   post_tasks:
     - include_tasks: tasks/verify_change_notified.yml
@@ -89,8 +76,6 @@
     - include_role:
         name: ../../ansible-irods-cfg
         tasks_from: server_config.yml
-      vars:
-        irods_cfg_default_number_of_transfer_threads: 1
 
   post_tasks:
     - include_tasks: tasks/verify_change_notified.yml
@@ -107,8 +92,6 @@
     - include_role:
         name: ../../ansible-irods-cfg
         tasks_from: service_account.yml
-      vars:
-        irods_cfg_service_account_name: root
 
   post_tasks:
     - include_tasks: tasks/verify_change_notified.yml
