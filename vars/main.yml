@@ -290,5 +290,3 @@ _irods_cfg_odbc_properties:
     Debug: 0
     Ksqo: 0
     ReadOnly: 'no'
-
-irods_cfg_made_changes: false
