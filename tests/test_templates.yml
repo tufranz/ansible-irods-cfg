@@ -339,7 +339,7 @@
   gather_facts: false
   vars_files:
     - ../defaults/main.yml
-    - vars/jinja2-quirks.yml
+    - vars/jinja2_quirks.yml
     - ../vars/main.yml
   vars:
     irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"

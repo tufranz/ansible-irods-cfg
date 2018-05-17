@@ -8,7 +8,7 @@
     - role: ../../ansible-irods-cfg
 
   post_tasks:
-    - include_tasks: tasks/validate-deposition.yml
+    - include_tasks: tasks/validate_deposition.yml
       vars:
         cfg_path: /etc/irods/{{ item }}
         schema: "{{ item }}"
@@ -29,7 +29,7 @@
       register: response
       failed_when: response.stat.exists
 
-    - include_tasks: tasks/validate-deposition.yml
+    - include_tasks: tasks/validate_deposition.yml
       vars:
         cfg_path: /var/lib/irods/.irods/irods_environment.json
         schema: service_account_environment.json

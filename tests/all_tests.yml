@@ -1,0 +1,5 @@
+---
+- import_playbook: test_templates.yml
+- import_playbook: test_core_deposition.yml
+- import_playbook: test_ies_deposition.yml
+- import_playbook: test_change_notify.yml

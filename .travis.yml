@@ -34,17 +34,17 @@ before_script:
 
 script:
   # Basic role syntax check
-  - ansible-playbook --syntax-check --inventory-file=tests/inventory tests/all-tests.yml
+  - ansible-playbook --syntax-check --inventory-file=tests/inventory tests/all_tests.yml
 
   # Test template expansion
-  - ansible-playbook --inventory-file=tests/inventory tests/test-templates.yml
+  - ansible-playbook --inventory-file=tests/inventory tests/test_templates.yml
 
   # Test core deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test-core-deposition.yml
+  - ansible-playbook --inventory-file=tests/inventory tests/test_core_deposition.yml
 
   - >
     ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
-                     tests/test-core-deposition.yml \
+                     tests/test_core_deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)
@@ -53,11 +53,11 @@ script:
   - sudo rm --force /etc/irods/* /var/lib/irods/.irods/* /var/lib/irods/.odbc.ini
 
   # Test IES specific deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test-ies-deposition.yml
+  - ansible-playbook --inventory-file=tests/inventory tests/test_ies_deposition.yml
 
   - >
     ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory \
-                     tests/test-ies-deposition.yml \
+                     tests/test_ies_deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)
@@ -66,7 +66,7 @@ script:
   - sudo rm --force /etc/irods/* /var/lib/irods/.irods/* /var/lib/irods/.odbc.ini
 
   # Test change notification
-  - ansible-playbook --inventory-file=tests/inventory tests/test-change-notify.yml
+  - ansible-playbook --inventory-file=tests/inventory tests/test_change_notify.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
