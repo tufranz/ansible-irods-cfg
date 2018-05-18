@@ -14,6 +14,7 @@ configuration files.
 * /etc/irods/service_account.config
 * /var/lib/irods/.irods/irods_environment.json
 * /var/lib/irods/.odbc.ini
+* /var/lib/irods/.pgpass
 
 This role contains one task file, `init_zone_user.yml`, that is not part of the
 main tasks. It can be used through `include_role` to initialize the iRODS zone
