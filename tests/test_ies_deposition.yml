@@ -1,5 +1,5 @@
 ---
-- name: verify database_config.json and .odbc.ini are correct
+- name: verify IES specific files are in place are correct
   hosts: localhost
   become: true
   vars:
@@ -15,6 +15,18 @@
         cfg_path: /etc/irods/database_config.json
         schema: database_config.json
 
+    - name: check .pgpass deposition
+      stat:
+        path: /var/lib/irods/.pgpass
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'irods' or
+        response.stat.gr_name != 'irods' or
+        not response.stat.rusr or
+        response.stat.rgrp or response.stat.wgrp or response.stat.xgrp or
+        response.stat.roth or response.stat.woth or response.stat.xoth
+        
     - name: check .odbc.ini deposition
       stat:
         path: /var/lib/irods/.odbc.ini

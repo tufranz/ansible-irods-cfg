@@ -1,0 +1,14 @@
+---
+- name: validate pgpass config params
+  assert:
+    that:
+      - _irods_cfg_icat.db_port | int >= 1 and _irods_cfg_icat.db_port | int <= 65535
+
+- name: generate .pgpass
+  template:
+    src: pgpass.j2
+    dest: /var/lib/irods/.pgpass
+    owner: "{{ _irods_cfg_service_account_name }}"
+    group: "{{ _irods_cfg_service_group_name }}"
+    mode: 'u+r,go='
+    

@@ -1,9 +1,12 @@
 ---
-- include_tasks: odbc.yml
-  when: _irods_cfg_icat is mapping
+- when: _irods_cfg_icat is mapping
+  block:
+    - include_tasks: odbc.yml
 
-- include_tasks: database_config.yml
-  when: _irods_cfg_icat is mapping
+    - when: _irods_cfg_icat.catalog_database_type == 'postgres'
+      include_tasks: pgpass.yml
+
+    - include_tasks: database_config.yml
 
 - import_tasks: host_access_control_config.yml
 - import_tasks: hosts_config.yml
