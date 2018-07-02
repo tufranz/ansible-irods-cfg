@@ -1,7 +1,7 @@
 irods-cfg
 ================
 [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg)
-[![Ansible Galaxy](https://img.shields.io/ansible/role/19612.svg)](https://galaxy.ansible.com/CyVerse_Ansible/irods-cfg/)
+[![Ansible Galaxy](https://img.shields.io/badge/role-CyVerse__Ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/CyVerse_Ansible/irods-cfg/)
 
 This role will eventually be able to be used to completely configure an iRODS
 server once iRODS is installed. At the moment, it can maintain the following
