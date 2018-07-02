@@ -2,7 +2,7 @@ galaxy_info:
   author: Tony Edgin
   description: An ansible role for configuring an iRODS server
   company: CyVerse
-  license: See license.md
+  license: See LICENSE.txt
   min_ansible_version: 2.4
 
   platforms:

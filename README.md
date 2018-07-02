@@ -218,7 +218,7 @@ Example Playbooks
 License
 -------
 
-See [license](/license.md)
+See [license](/LICENSE.txt).
 
 
 Author Information
