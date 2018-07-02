@@ -29,7 +29,7 @@ galaxy_info:
 
 dependencies:
   - name: cyverse.unixodbc-cfg
-    src: CyVerse-Ansible.unixodbc-cfg
+    src: cyverse_ansible.unixodbc-cfg
     version: master
     vars:
       unixodbc_cfg_defer: true

@@ -1,7 +1,7 @@
 irods-cfg
 ================
 [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg)
-[![Ansible Galaxy](https://img.shields.io/ansible/role/19612.svg)](https://galaxy.ansible.com/CyVerse-Ansible/irods-cfg/)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/19612.svg)](https://galaxy.ansible.com/CyVerse_Ansible/irods-cfg/)
 
 This role will eventually be able to be used to completely configure an iRODS
 server once iRODS is installed. At the moment, it can maintain the following
@@ -155,7 +155,7 @@ If any of the iRODS configuration files are changed, the fact
 Dependencies
 ------------
 
-[CyVerse-Ansible.odbcini-cfg](https://galaxy.ansible.com/CyVerse-Ansible/unixodbc-cfg/)
+[CyVerse_Ansible.odbcini-cfg](https://galaxy.ansible.com/CyVerse_Ansible/unixodbc-cfg/)
 
 
 Example Playbooks
@@ -163,7 +163,7 @@ Example Playbooks
     # IES
     - hosts: ies
       roles:
-        - role: CyVerse-Ansible.irods-cfg
+        - role: CyVerse_Ansible.irods-cfg
           vars:
             irods_cfg_default_hash_scheme: MD5
             irods_cfg_default_number_of_transfer_threads: 16
@@ -198,7 +198,7 @@ Example Playbooks
     # Resource Server
     - hosts: rs
       roles:
-        - role: CyVerse-Ansible.irods-cfg
+        - role: CyVerse_Ansible.irods-cfg
           vars:
             irods_cfg_default_hash_scheme: MD5
             irods_cfg_default_number_of_transfer_threads: 16
