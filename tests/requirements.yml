@@ -1,4 +1,4 @@
 ---
 - name: cyverse.unixodbc-cfg
-  src: CyVerse_Ansible.unixodbc-cfg
+  src: cyverse-ansible.unixodbc-cfg
   version: master
