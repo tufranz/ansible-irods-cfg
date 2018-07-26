@@ -21,13 +21,13 @@ install:
 
 before_script:
   # Create irods user
-  - sudo useradd --system --home-dir /var/lib/irods irods
+  - sudo useradd --create-home --system --home-dir /var/lib/irods irods
 
   # Create directories for irods user
-  - sudo mkdir --parents /etc/irods /var/lib/irods/.irods
+  - sudo mkdir --parents /etc/irods
 
   # Give irods ownership of its directories
-  - sudo chown --recursive irods:irods /etc/irods /var/lib/irods
+  - sudo chown --recursive irods:irods /etc/irods
 
   # Install dependent roles
   - ansible-galaxy install --role-file=tests/requirements.yml

@@ -27,6 +27,13 @@
          and _irods_cfg_zone_port != _irods_cfg_xmsg_port'
   ignore_errors: true
 
+- name: ensure /var/lib/irods/.irods exists
+  file:
+    dest: /var/lib/irods/.irods
+    state: directory
+    owner: "{{ _irods_cfg_service_account_name }}"
+    group: "{{ _irods_cfg_service_group_name }}"
+    
 - name: generate irods environment file
   template:
     src: irods_environment.json.j2
