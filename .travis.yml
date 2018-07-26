@@ -27,7 +27,7 @@ before_script:
   - sudo mkdir --parents /etc/irods
 
   # Give irods ownership of its directories
-  - sudo chown --recursive irods:irods /etc/irods
+  - sudo chown irods:irods /etc/irods
 
   # Install dependent roles
   - ansible-galaxy install --role-file=tests/requirements.yml
