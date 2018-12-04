@@ -1,70 +1,73 @@
 ---
-- name: locate ODBC driver file
-  when: not _irods_cfg_icat.odbc_driver
-  shell: |
-    case '{{ _irods_cfg_icat.catalog_database_type }}' in
-      mysql)
-        if [ '{{ ansible_distribution }}' = CentOS \
-             -a "{{ ansible_distribution_version is version_compare('7', '<') }}" = True ]
-        then
-          odbc=$(find /usr -name libmyodbc5.so | grep 64)
+- when: _irods_cfg_icat is mapping
+  block:
+    - name: locate ODBC driver file
+      when: not _irods_cfg_icat.odbc_driver
+      shell: |
+        case '{{ _irods_cfg_icat.catalog_database_type }}' in
+          mysql)
+            if [ '{{ ansible_distribution }}' = CentOS \
+                 -a "{{ ansible_distribution_version is version_compare('7', '<') }}" = True ]
+            then
+              odbc=$(find /usr -name libmyodbc5.so | grep 64)
 
-          if [ -z "$odbc" ]
-          then
-            odbc=$(find /usr -name 'libmyodbc*.so')
-          fi
-        fi
-        ;;
+              if [ -z "$odbc" ]
+              then
+                odbc=$(find /usr -name 'libmyodbc*.so')
+              fi
+            fi
+            ;;
 
-      oracle)
-        if [ -z "$ORACLE_HOME" ]
-        then
-          ORACLE_HOME=/usr/lib/oracle/11.2/client64
-        fi
+          oracle)
+            if [ -z "$ORACLE_HOME" ]
+            then
+              ORACLE_HOME=/usr/lib/oracle/11.2/client64
+            fi
 
-        odbc="$ORACLE_HOME"/lib/libsqora.so.11.1
-        ;;
+            odbc="$ORACLE_HOME"/lib/libsqora.so.11.1
+            ;;
 
-      postgres)
-        if [ '{{ ansible_distribution }}' = CentOS \
-             -a "{{ ansible_distribution_version is version_compare('6.2', '<') }}" = True ]
-        then
-          odbc=$(find /usr -name libodbcpsql.so | grep 64)
+          postgres)
+            if [ '{{ ansible_distribution }}' = CentOS \
+                 -a "{{ ansible_distribution_version is version_compare('6.2', '<') }}" = True ]
+            then
+              odbc=$(find /usr -name libodbcpsql.so | grep 64)
 
-          if [ -z "$odbc" ]
-          then
-            odbc=$(find /usr -name libodbcpsql.so)
-          fi
+              if [ -z "$odbc" ]
+              then
+                odbc=$(find /usr -name libodbcpsql.so)
+              fi
 
-          if [ -z "$odbc" ]
-          then
-            odbc=$(find /usr -name 'psqlodbc*.so')
-          fi
-        else
-          odbc=$(find /usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
-        fi
-        ;;
-      *)
-        ;;
-    esac
+              if [ -z "$odbc" ]
+              then
+                odbc=$(find /usr -name 'psqlodbc*.so')
+              fi
+            else
+              odbc=$(find /usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
+            fi
+            ;;
+          *)
+            ;;
+        esac
 
-    printf '%s' "$odbc" | head --lines 1
-  register: result
-  changed_when: false
+        printf '%s' "$odbc" | head --lines 1
+      register: result
+      changed_when: false
 
-- set_fact:
-    driver: "{{ _irods_cfg_icat.odbc_driver if _irods_cfg_icat.odbc_driver else result.stdout }}"
+    - set_fact:
+        driver: "{{ _irods_cfg_icat.odbc_driver if _irods_cfg_icat.odbc_driver else
+                    result.stdout }}"
 
-- include_role:
-    name: cyverse.unixodbc-cfg
-    tasks_from: odbc.yml
-  vars:
-    unixodbc_cfg_odbcini_path: /var/lib/irods
-    unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
-    unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
-    unixodbc_cfg_sources:
-      - source_name: "{{ _irods_cfg_icat.catalog_database_type }}"
-        driver_file: "{{ driver }}"
-        driver_properties: "{{
-          _irods_cfg_odbc_properties.base
-          | combine(_irods_cfg_odbc_properties[_irods_cfg_icat.catalog_database_type]) }}"
+    - include_role:
+        name: cyverse.unixodbc-cfg
+        tasks_from: odbc.yml
+      vars:
+        unixodbc_cfg_odbcini_path: /var/lib/irods
+        unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
+        unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
+        unixodbc_cfg_sources:
+          - source_name: "{{ _irods_cfg_icat.catalog_database_type }}"
+            driver_file: "{{ driver }}"
+            driver_properties: "{{
+              _irods_cfg_odbc_properties.base
+              | combine(_irods_cfg_odbc_properties[_irods_cfg_icat.catalog_database_type]) }}"
