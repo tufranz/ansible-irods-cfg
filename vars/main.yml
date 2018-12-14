@@ -75,6 +75,8 @@ _irods_cfg_client_server_policy: "{{
   irods_cfg_client_server_policy if irods_cfg_client_server_policy else
   'CS_NEG_REFUSE' }}"
 
+_irods_cfg_chown: "{{ irods_cfg_chown if irods_cfg_chown is defined else true }}"
+
 _irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _irods_cfg_home }}"
 
 _irods_cfg_debug: "{{ irods_cfg_debug if irods_cfg_debug else '' }}"
@@ -181,6 +183,10 @@ _irods_cfg_re_additional_function_name_mappings: "{{
 _irods_cfg_re_additional_rulebases: "{{
   irods_cfg_re_additional_rulebases if irods_cfg_re_additional_rulebases else
   [] }}"
+
+_irods_cfg_root_dir: "{{
+  (irods_cfg_root_dir | regex_replace('\\/$', '')) if irods_cfg_root_dir else
+  '' }}"
 
 _irods_cfg_schema_validation_base_uri: "{{
   irods_cfg_schema_validation_base_uri if irods_cfg_schema_validation_base_uri else

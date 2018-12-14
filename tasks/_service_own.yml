@@ -1,0 +1,10 @@
+---
+# Requires that the variable _service_own_path be set to the path to give the
+# service account ownership to
+
+- name: ensure service account owns {{ _service_own_path }}
+  when: _irods_cfg_chown
+  file:
+    dest: "{{ _service_own_path }}"
+    owner: "{{ _irods_cfg_service_account_name }}"
+    group: "{{ _irods_cfg_service_group_name }}"

@@ -6,13 +6,9 @@
       - item.address_type == 'local' or item.address_type == 'remote'
   ignore_errors: true
 
-- name: generate hosts_config.json
-  template:
-    src: hosts_config.json.j2
-    dest: /etc/irods/hosts_config.json
-    owner: "{{ _irods_cfg_service_account_name }}"
-    group: "{{ _irods_cfg_service_group_name }}"
-  notify:
-    - changed config
+- include_tasks: _cfg_template.yml
+  vars:
+    _cfg_template_dest_dir: etc/irods
+    _cfg_template_dest_name: hosts_config.json
 
 - meta: flush_handlers

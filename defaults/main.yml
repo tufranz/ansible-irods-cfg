@@ -9,6 +9,7 @@ irods_cfg_clerver_encryption_num_hash_rounds: null
 irods_cfg_clerver_encryption_salt_size: null
 irods_cfg_client_server_negotiation: null
 irods_cfg_client_server_policy: null
+irods_cfg_chown: true
 irods_cfg_cwd: null
 irods_cfg_debug: null
 irods_cfg_default_dir_mode: null
@@ -40,6 +41,7 @@ irods_cfg_pam_password_min_time: null
 irods_cfg_re_additional_data_variable_mappings: null
 irods_cfg_re_additional_function_name_mappings: null
 irods_cfg_re_additional_rulebases: null
+irods_cfg_root_dir: null
 irods_cfg_schema_validation_base_uri: null
 irods_cfg_server_control_plane_encryption_algorithm: null
 irods_cfg_server_control_plane_encryption_num_hash_rounds: null

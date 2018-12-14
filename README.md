@@ -7,14 +7,14 @@ This role will eventually be able to be used to completely configure an iRODS
 server once iRODS is installed. At the moment, it can maintain the following
 configuration files.
 
-* /etc/irods/database_config.json
-* /etc/irods/host_access_control_config.json
-* /etc/irods/hosts_config.json
-* /etc/irods/server_config.json
-* /etc/irods/service_account.config
-* /var/lib/irods/.irods/irods_environment.json
-* /var/lib/irods/.odbc.ini
-* /var/lib/irods/.pgpass
+* etc/irods/database_config.json
+* etc/irods/host_access_control_config.json
+* etc/irods/hosts_config.json
+* etc/irods/server_config.json
+* etc/irods/service_account.config
+* var/lib/irods/.irods/irods_environment.json
+* var/lib/irods/.odbc.ini
+* var/lib/irods/.pgpass
 
 This role contains one task file, `init_zone_user.yml`, that is not part of the
 main tasks. It can be used through `include_role` to initialize the iRODS zone
@@ -44,6 +44,7 @@ Variable                                                              | Default 
 `irods_cfg_clerver_encryption_salt_size`                              | 8                                                           |                                                  | salt size for parallel transfer encryption
 `irods_cfg_client_server_negotiation`                                 | request_server_negotiation                                  | none, request_server_negotiation                 | whether or not advanced negotiation is desired for the clerver
 `irods_cfg_client_server_policy`                                      | CS_NEG_DONT_CARE                                            | CS_NEG_DONT_CARE, CS_NEG_REFUSE, CS_NEG_REQUIRE  | which SSL policy for the clerver to use
+`irods_cfg_chown`                                                     | true                                                        |                                                  | whether or not to make the service account the owner of the generate files
 `irods_cfg_cwd`                                                       | `irods_cfg_home`                                            |                                                  | the initial working collection for the admin user
 `irods_cfg_debug`                                                     | ''                                                          | '' or any combination of 'CAT', 'RDA', and 'SQL' | desired verbosity of the debug logging level for clerver. e.g., 'CATRDA' means include CAT and RDA debugging in debug log messages
 `irods_cfg_default_dir_mode`                                          | 0750                                                        |                                                  | the Unix file system octal permission mode for a newly created directory
@@ -75,6 +76,7 @@ Variable                                                              | Default 
 `irods_cfg_re_additional_data_variable_mappings`                      | []                                                          |                                                  | an array of file names (without the .dvm extension) that will be loaded in order before core.dvm is loaded
 `irods_cfg_re_additional_function_name_mappings`                      | []                                                          |                                                  | an array of file names (without the .fnm extension) that will be loaded in order before core.fnm is loaded
 `irods_cfg_re_additional_rulebases`                                   | []                                                          |                                                  | an array of file names (without the .re extension) that will be loaded in order before core.re is loaded
+`irods_cfg_root_dir`                                                  | /                                                           |                                                  | The root directory where all depositions are relative to
 `irods_cfg_schema_validation_base_uri`                                | https://schemas.irods.org/configuration                     | a URI or 'off'                                   | the URI against which the iRODS server configuration is validated. 'off' means to skip validation
 `irods_cfg_server_control_plane_encryption_algorithm`                 | AES-256-CBC                                                 |                                                  | the algorithm used to encrypt control plane communications
 `irods_cfg_server_control_plane_encryption_num_hash_rounds`           | 16                                                          |                                                  | the number of hash rounds used in the control plane communications

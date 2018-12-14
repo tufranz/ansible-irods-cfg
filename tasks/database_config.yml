@@ -7,13 +7,9 @@
           - _irods_cfg_icat.catalog_database_type in ('mysql', 'oracle', 'postgres')
           - _irods_cfg_icat.db_port | int >= 1 and _irods_cfg_icat.db_port | int <= 65535
 
-    - name: generate database_config.json
-      template:
-        src: database_config.json.j2
-        dest: /etc/irods/database_config.json
-        owner: "{{ _irods_cfg_service_account_name }}"
-        group: "{{ _irods_cfg_service_group_name }}"
-      notify:
-        - changed config
+    - include_tasks: _cfg_template.yml
+      vars:
+        _cfg_template_dest_dir: etc/irods
+        _cfg_template_dest_name: database_config.json
 
 - meta: flush_handlers

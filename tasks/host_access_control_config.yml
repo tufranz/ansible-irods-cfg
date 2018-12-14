@@ -1,11 +1,7 @@
 ---
-- name: generate host_access_control_config.json
-  template:
-    src: host_access_control_config.json.j2
-    dest: /etc/irods/host_access_control_config.json
-    owner: "{{ _irods_cfg_service_account_name }}"
-    group: "{{ _irods_cfg_service_group_name }}"
-  notify:
-    - changed config
+- include_tasks: _cfg_template.yml
+  vars:
+    _cfg_template_dest_dir: etc/irods
+    _cfg_template_dest_name: host_access_control_config.json
 
 - meta: flush_handlers

@@ -9,11 +9,11 @@
             if [ '{{ ansible_distribution }}' = CentOS \
                  -a "{{ ansible_distribution_version is version_compare('7', '<') }}" = True ]
             then
-              odbc=$(find /usr -name libmyodbc5.so | grep 64)
+              odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name libmyodbc5.so | grep 64)
 
               if [ -z "$odbc" ]
               then
-                odbc=$(find /usr -name 'libmyodbc*.so')
+                odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name 'libmyodbc*.so')
               fi
             fi
             ;;
@@ -21,7 +21,7 @@
           oracle)
             if [ -z "$ORACLE_HOME" ]
             then
-              ORACLE_HOME=/usr/lib/oracle/11.2/client64
+              ORACLE_HOME='{{ _irods_cfg_root_dir }}'/usr/lib/oracle/11.2/client64
             fi
 
             odbc="$ORACLE_HOME"/lib/libsqora.so.11.1
@@ -31,19 +31,20 @@
             if [ '{{ ansible_distribution }}' = CentOS \
                  -a "{{ ansible_distribution_version is version_compare('6.2', '<') }}" = True ]
             then
-              odbc=$(find /usr -name libodbcpsql.so | grep 64)
+              odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name libodbcpsql.so | grep 64)
 
               if [ -z "$odbc" ]
               then
-                odbc=$(find /usr -name libodbcpsql.so)
+                odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name libodbcpsql.so)
               fi
 
               if [ -z "$odbc" ]
               then
-                odbc=$(find /usr -name 'psqlodbc*.so')
+                odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name 'psqlodbc*.so')
               fi
             else
-              odbc=$(find /usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
+              odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name 'psqlodbc*.so' \
+                       | grep --invert-match 'w\.so')
             fi
             ;;
           *)
@@ -62,9 +63,9 @@
         name: cyverse.unixodbc-cfg
         tasks_from: odbc.yml
       vars:
-        unixodbc_cfg_odbcini_path: /var/lib/irods
-        unixodbc_cfg_user: "{{ _irods_cfg_service_account_name }}"
-        unixodbc_cfg_group: "{{ _irods_cfg_service_group_name }}"
+        unixodbc_cfg_odbcini_path: "{{ _irods_cfg_root_dir }}/var/lib/irods"
+        unixodbc_cfg_user: "{{ _irods_cfg_service_account_name if _irods_cfg_chown else None }}"
+        unixodbc_cfg_group: "{{ _irods_cfg_service_group_name if _irods_cfg_chown else None }}"
         unixodbc_cfg_sources:
           - source_name: "{{ _irods_cfg_icat.catalog_database_type }}"
             driver_file: "{{ driver }}"

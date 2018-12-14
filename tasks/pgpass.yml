@@ -6,10 +6,12 @@
         that:
           - _irods_cfg_icat.db_port | int >= 1 and _irods_cfg_icat.db_port | int <= 65535
 
-    - name: generate .pgpass
-      template:
-        src: pgpass.j2
-        dest: /var/lib/irods/.pgpass
-        owner: "{{ _irods_cfg_service_account_name }}"
-        group: "{{ _irods_cfg_service_group_name }}"
+    - include_tasks: _cfg_template.yml
+      vars:
+        _cfg_template_dest_dir: var/lib/irods
+        _cfg_template_dest_name: .pgpass
+        _cfg_template_name: pgpass.j2
+
+    - file:
+        dest: "{{ _irods_cfg_root_dir }}/var/lib/irods/.pgpass"
         mode: 'u+r,go='
