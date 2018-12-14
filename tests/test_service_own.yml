@@ -1,0 +1,20 @@
+---
+- name: test service not given ownership by when flag set
+  hosts: localhost
+  become: true
+  tasks:
+    - file:
+        dest: /etc/irods/owner_test
+        state: touch
+
+    - include_role:
+        name: ../../ansible-irods-cfg
+        tasks_from: _service_own.yml
+      vars:
+        irods_cfg_chown: false
+        _service_own_path: /etc/irods/owner_test
+
+    - stat:
+        path: /etc/irods/owner_test
+      register: response
+      failed_when: response.stat.pw_name == 'irods' or response.stat.gr_name == 'irods'

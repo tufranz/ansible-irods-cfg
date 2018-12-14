@@ -68,5 +68,8 @@ script:
   # Test change notification
   - ansible-playbook --inventory-file=tests/inventory tests/test_change_notify.yml
 
+  # Test service ownership flag
+  - ansible-playbook --inventory-file=tests/inventory tests/test_service_own.yml
+
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
