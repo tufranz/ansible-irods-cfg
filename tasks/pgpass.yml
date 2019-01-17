@@ -12,6 +12,7 @@
         _cfg_template_dest_name: .pgpass
         _cfg_template_name: pgpass.j2
 
-    - file:
+    - name: assign correct permissions to .pgpass
+      file:
         dest: "{{ _irods_cfg_root_dir }}/var/lib/irods/.pgpass"
         mode: 'u+r,go='
