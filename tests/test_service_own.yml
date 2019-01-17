@@ -1,9 +1,10 @@
 ---
-- name: test service not given ownership by when flag set
+- name: test service ownership assignment
   hosts: localhost
   become: true
   tasks:
-    - file:
+    - name: create file that should not be given ownership
+      file:
         dest: /etc/irods/not_owner_test
         state: touch
 
@@ -14,12 +15,14 @@
         irods_cfg_chown: false
         _service_own_path: /etc/irods/not_owner_test
 
-    - stat:
+    - name: verify file not owned
+      stat:
         path: /etc/irods/not_owner_test
       register: response
       failed_when: response.stat.pw_name == 'irods' or response.stat.gr_name == 'irods'
 
-    - file:
+    - name: create file that should be given ownership
+      file:
         dest: /etc/irods/owner_test
         state: touch
 
@@ -30,7 +33,8 @@
         irods_cfg_chown: true
         _service_own_path: /etc/irods/owner_test
 
-    - stat:
+    - name: verify file is owned
+      stat:
         path: /etc/irods/owner_test
       register: response
       failed_when: response.stat.pw_name != 'irods' or response.stat.gr_name != 'irods'
