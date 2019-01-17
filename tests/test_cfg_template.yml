@@ -7,7 +7,7 @@
         name: ../../ansible-irods-cfg
         tasks_from: _cfg_template.yml
       vars:
-        _cfg_template_dist_dir: /var/lib/irods/deposit
+        _cfg_template_dest_dir: /var/lib/irods/deposit
         _cfg_template_dest_name: irods_environment.json
 
     - name: test ensure /var/lib/irods/deposit exists
@@ -21,7 +21,7 @@
 
     - name: test generate irods_environment.json
       stat:
-        path: /var/lib/irods/deposit/var/lib/irods/.irods/irods_environment.json
+        path: /var/lib/irods/deposit/irods_environment.json
       register: response
       failed_when: >
         not response.stat.exists or

@@ -39,6 +39,18 @@ script:
   # Test template expansion
   - ansible-playbook --inventory-file=tests/inventory tests/test_templates.yml
 
+  # Test service ownership flag
+  - ansible-playbook --inventory-file=tests/inventory tests/test_service_own.yml
+
+  # Remove test artifacts
+  - sudo rm --force /etc/irods/*
+
+  # Test config placement
+  - ansible-playbook --inventory-file=tests/inventory tests/test_cfg_template.yml
+
+  # Remove test artifacts
+  - sudo rm --force --recursive /var/lib/irods/deposit
+
   # Test core deposition
   - ansible-playbook --inventory-file=tests/inventory tests/test_core_deposition.yml
 
@@ -68,8 +80,6 @@ script:
   # Test change notification
   - ansible-playbook --inventory-file=tests/inventory tests/test_change_notify.yml
 
-  # Test service ownership flag
-  - ansible-playbook --inventory-file=tests/inventory tests/test_service_own.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
