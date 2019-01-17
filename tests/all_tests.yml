@@ -3,3 +3,4 @@
 - import_playbook: test_core_deposition.yml
 - import_playbook: test_ies_deposition.yml
 - import_playbook: test_change_notify.yml
+- import_playbook: test_service_own.yml
