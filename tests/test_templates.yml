@@ -33,7 +33,7 @@
           - irods_environment.irods_authentication_file == '/var/lib/irods/.irods/.irodsA'
           - irods_environment.irods_authentication_scheme == 'native'
           - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
-          - irods_environment.irods_client_server_policy == 'CS_NEG_REFUSE'
+          - irods_environment.irods_client_server_policy == 'CS_NEG_DONT_CARE'
           - irods_environment.irods_cwd == '/tempZone/home/rods'
           - irods_environment.irods_debug == ''
           - irods_environment.irods_default_hash_scheme == 'SHA256'

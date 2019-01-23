@@ -73,7 +73,7 @@ _irods_cfg_client_server_negotiation: "{{
 
 _irods_cfg_client_server_policy: "{{
   irods_cfg_client_server_policy if irods_cfg_client_server_policy else
-  'CS_NEG_REFUSE' }}"
+  'CS_NEG_DONT_CARE' }}"
 
 _irods_cfg_chown: "{{ irods_cfg_chown if irods_cfg_chown is defined else true }}"
 
