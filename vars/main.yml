@@ -263,6 +263,8 @@ _irods_cfg_transfer_chunk_size_for_parallel_transfer: "{{
     if irods_cfg_transfer_chunk_size_for_parallel_transfer else
   40 }}"
 
+_irods_cfg_validate: "{{ irods_cfg_validate if irods_cfg_validate else false }}"
+
 _irods_cfg_xmsg_host: "{{ irods_cfg_xmsg_host if irods_cfg_xmsg_host else None }}"
 
 _irods_cfg_xmsg_port: "{{ irods_cfg_xmsg_port if irods_cfg_xmsg_port else 1279 }}"

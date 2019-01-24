@@ -2,6 +2,7 @@
 - when: _irods_cfg_icat is mapping and  _irods_cfg_icat.catalog_database_type == 'postgres'
   block:
     - name: validate pgpass config params
+      when: _irods_cfg_validate
       assert:
         that:
           - _irods_cfg_icat.db_port | int >= 1 and _irods_cfg_icat.db_port | int <= 65535

@@ -60,6 +60,7 @@ irods_cfg_ssl_dh_params_file: null
 irods_cfg_ssl_verify_server: null
 irods_cfg_transfer_buffer_size_for_parallel_transfer: null
 irods_cfg_transfer_chunk_size_for_parallel_transfer: null
+irods_cfg_validate: true
 irods_cfg_xmsg_host: null
 irods_cfg_xmsg_port: null
 irods_cfg_zone_auth_scheme: null

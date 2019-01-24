@@ -2,6 +2,7 @@
 - when: _irods_cfg_icat is mapping
   block:
     - name: validate database config params
+      when: _irods_cfg_validate
       assert:
         that:
           - _irods_cfg_icat.catalog_database_type in ('mysql', 'oracle', 'postgres')

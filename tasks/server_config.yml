@@ -1,5 +1,6 @@
 ---
 - name: validate federation for server_config
+  when: _irods_cfg_validate
   with_items: "{{ _irods_cfg_federation }}"
   assert:
     that:
@@ -9,6 +10,7 @@
   ignore_errors: true
 
 - name: validate other server configuration parameters
+  when: _irods_cfg_validate
   assert:
     that:
       - _irods_cfg_default_hash_scheme in ['MD5', 'SHA256']

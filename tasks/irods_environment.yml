@@ -1,5 +1,6 @@
 ---
 - name: validate variables for irods_environment
+  when: _irods_cfg_validate
   assert:
     that:
       - _irods_cfg_client_server_negotiation in ['off', 'request_server_negotiation']
