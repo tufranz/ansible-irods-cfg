@@ -35,8 +35,7 @@ __irods_cfg_icat_guess:
 _irods_cfg_access_entries: "{{ irods_cfg_access_entries if irods_cfg_access_entries else [] }}"
 
 _irods_cfg_authentication_file: "{{
-  irods_cfg_authentication_file if irods_cfg_authentication_file else
-  '/var/lib/irods/.irods/.irodsA' }}"
+  irods_cfg_authentication_file if irods_cfg_authentication_file else None }}"
 
 _irods_cfg_clerver_default_hash_scheme: "{{
   irods_cfg_clerver_default_hash_scheme if irods_cfg_clerver_default_hash_scheme else
@@ -68,7 +67,8 @@ _irods_cfg_clerver_encryption_salt_size: "{{
 
 _irods_cfg_client_server_negotiation: "{{
   irods_cfg_client_server_negotiation if irods_cfg_client_server_negotiation else
-  'off' if irods_cfg_client_server_negotiation == False else None }}"
+  'off' if irods_cfg_client_server_negotiation == False else
+  'request_server_negotiation' }}"
 
 _irods_cfg_client_server_policy: "{{
   irods_cfg_client_server_policy if irods_cfg_client_server_policy else
@@ -130,7 +130,7 @@ _irods_cfg_icat_host: "{{ irods_cfg_icat_host if irods_cfg_icat_host else _irods
 
 _irods_cfg_kerberos_name: "{{ irods_cfg_kerberos_name if irods_cfg_kerberos_name else None }}"
 
-_irods_cfg_log_level: "{{ irods_cfg_log_level if irods_cfg_log_level else 5 }}"
+_irods_cfg_log_level: "{{ irods_cfg_log_level if irods_cfg_log_level else None }}"
 
 _irods_cfg_match_hash_policy: "{{ irods_cfg_match_hash_policy if irods_cfg_match_hash_policy else
                                   'compatible' }}"
@@ -203,12 +203,10 @@ _irods_cfg_server_control_plane_encryption_num_hash_rounds: "{{
   16 }}"
 
 _irods_cfg_server_control_plane_key: "{{
-  irods_cfg_server_control_plane_key if irods_cfg_server_control_plane_key else
-  'TEMPORARY__32byte_ctrl_plane_key' }}"
+  irods_cfg_server_control_plane_key if irods_cfg_server_control_plane_key else None }}"
 
 _irods_cfg_server_control_plane_port: "{{
-  irods_cfg_server_control_plane_port if irods_cfg_server_control_plane_port else
-  1248 }}"
+  irods_cfg_server_control_plane_port if irods_cfg_server_control_plane_port else None }}"
 
 _irods_cfg_server_control_plane_timeout: "{{
   irods_cfg_server_control_plane_timeout if irods_cfg_server_control_plane_timeout else
@@ -246,11 +244,11 @@ _irods_cfg_ssl_certificate_key_file: "{{
   irods_cfg_ssl_certificate_key_file if irods_cfg_ssl_certificate_key_file else
   None }}"
 
-_irods_cfg_ssl_dh_params_file: "{{ irods_cfg_ssl_dh_params_file if irods_cfg_ssl_dh_params_file else
-                                   None }}"
+_irods_cfg_ssl_dh_params_file: "{{
+  irods_cfg_ssl_dh_params_file if irods_cfg_ssl_dh_params_file else None }}"
 
-_irods_cfg_ssl_verify_server: "{{ irods_cfg_ssl_verify_server if irods_cfg_ssl_verify_server else
-                                  'hostname' }}"
+_irods_cfg_ssl_verify_server: "{{
+  irods_cfg_ssl_verify_server if irods_cfg_ssl_verify_server else None }}"
 
 _irods_cfg_transfer_buffer_size_for_parallel_transfer: "{{
   irods_cfg_transfer_buffer_size_for_parallel_transfer
@@ -266,10 +264,10 @@ _irods_cfg_validate: "{{ irods_cfg_validate if irods_cfg_validate else false }}"
 
 _irods_cfg_xmsg_host: "{{ irods_cfg_xmsg_host if irods_cfg_xmsg_host else None }}"
 
-_irods_cfg_xmsg_port: "{{ irods_cfg_xmsg_port if irods_cfg_xmsg_port else 1279 }}"
+_irods_cfg_xmsg_port: "{{ irods_cfg_xmsg_port if irods_cfg_xmsg_port else None }}"
 
 _irods_cfg_zone_auth_scheme: "{{ irods_cfg_zone_auth_scheme if irods_cfg_zone_auth_scheme else
-                                 'native' }}"
+                                 None }}"
 
 _irods_cfg_zone_key: "{{ irods_cfg_zone_key if irods_cfg_zone_key else 'TEMPORARY_zone_key' }}"
 

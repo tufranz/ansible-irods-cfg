@@ -3,7 +3,7 @@
   when: _irods_cfg_validate
   assert:
     that:
-      - _irods_cfg_client_server_negotiation in ['', 'off', 'request_server_negotiation']
+      - _irods_cfg_client_server_negotiation in ['off', 'request_server_negotiation']
       - _irods_cfg_client_server_policy in ['CS_NEG_DONT_CARE', 'CS_NEG_REFUSE', 'CS_NEG_REQUIRE']
       - _irods_cfg_clerver_default_hash_scheme in ['MD5', 'SHA256']
       - _irods_cfg_clerver_encryption_key_size | int >= 0
@@ -11,16 +11,21 @@
       - _irods_cfg_clerver_encryption_salt_size | int >= 0
       - _irods_cfg_cwd is match('^/..*')
       - _irods_cfg_home is match('/..*')
-      - _irods_cfg_log_level | int >= 1 and _irods_cfg_log_level | int <= 10
+      - "_irods_cfg_log_level == ''
+         or (_irods_cfg_log_level | int >= 1 and _irods_cfg_log_level | int <= 10)"
       - _irods_cfg_match_hash_policy in ['compatible', 'strict']
       - _irods_cfg_server_control_plane_key | length == 32
-      - '_irods_cfg_server_control_plane_port | int >= 1
-         and _irods_cfg_server_control_plane_port | int <= 65535'
+      - "_irods_cfg_server_control_plane_port == ''
+         or (_irods_cfg_server_control_plane_port | int >= 1
+             and _irods_cfg_server_control_plane_port | int <= 65535)"
       - _irods_cfg_ssl_verify_server in ['cert', 'hostname', 'none']
-      - '_irods_cfg_xmsg_port | int >= 1
-         and _irods_cfg_xmsg_port | int <= 65535
-         and _irods_cfg_xmsg_port != _irods_cfg_server_control_plane_port'
-      - _irods_cfg_zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
+      - "_irods_cfg_xmsg_port == ''
+         or (_irods_cfg_xmsg_port | int >= 1
+              and _irods_cfg_xmsg_port | int <= 65535
+              and _irods_cfg_xmsg_port != _irods_cfg_server_control_plane_port
+              and (_irods_cfg_xmsg_port | int < _irods_cfg_server_port_range_start | int
+                   or _irods_cfg_xmsg_port | int > _irods_cfg_server_port_range_end | int))"
+      - _irods_cfg_zone_auth_scheme in ['', 'gsi', 'krb', 'native', 'pam']
       - '_irods_cfg_zone_port | int >= 1
          and _irods_cfg_zone_port | int <= 65535
          and _irods_cfg_zone_port != _irods_cfg_server_control_plane_port

@@ -30,12 +30,12 @@
     - name: verify irods_environment.json expands correctly
       assert:
         that:
-          - irods_environment.irods_authentication_file == '/var/lib/irods/.irods/.irodsA'
-          - irods_environment.irods_authentication_scheme == 'native'
+          - irods_environment.irods_authentication_file is not defined
+          - irods_environment.irods_authentication_scheme is not defined
           - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
           - irods_environment.irods_client_server_policy == 'CS_NEG_DONT_CARE'
-          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
-          - irods_environment.irods_control_plane_port == 1248
+          - irods_environment.irods_control_plane_key is not defined
+          - irods_environment.irods_control_plane_port is not defined
           - irods_environment.irods_cwd == '/tempZone/home/rods'
           - irods_environment.irods_debug is not defined
           - irods_environment.irods_default_hash_scheme == 'SHA256'
@@ -47,7 +47,7 @@
           - irods_environment.irods_gsi_server_dn is not defined
           - irods_environment.irods_home == '/tempZone/home/rods'
           - irods_environment.irods_host == 'localhost'
-          - irods_environment.irods_log_level == 5
+          - irods_environment.irods_log_level is not defined
           - irods_environment.irods_match_hash_policy == 'compatible'
           - irods_environment.irods_port == 1247
           - irods_environment.irods_ssl_ca_certificate_file is not defined
@@ -55,10 +55,10 @@
           - irods_environment.irods_ssl_certificate_chain_file is not defined
           - irods_environment.irods_ssl_certificate_key_file is not defined
           - irods_environment.irods_ssl_dh_params_file is not defined
-          - irods_environment.irods_ssl_verify_server == 'hostname'
+          - irods_environment.irods_ssl_verify_server is not defined
           - irods_environment.irods_user_name == 'rods'
           - irods_environment.irods_xmsg_host is not defined
-          - irods_environment.irods_xmsg_port == 1279
+          - irods_environment.irods_xmsg_port is not defined
           - irods_environment.irods_zone_name == 'tempZone'
 
     - name: verify server_config.json is correct

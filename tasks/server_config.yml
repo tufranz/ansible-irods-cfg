@@ -33,9 +33,10 @@
                if _irods_cfg_pam_password_max_time else
              (_irods_cfg_pam_password_min_time | int > 0))'
       - _irods_cfg_server_control_plane_encryption_num_hash_rounds | int >= 0
-      - _irods_cfg_server_control_plane_key | length == 32
-      - '_irods_cfg_server_control_plane_port | int >= 1
-         and _irods_cfg_server_control_plane_port | int <= 65535'
+      - _irods_cfg_server_control_plane_key | length in [0, 32]
+      - "_irods_cfg_server_control_plane_port == ''
+         or (_irods_cfg_server_control_plane_port | int >= 1
+             and _irods_cfg_server_control_plane_port | int <= 65535)"
       - _irods_cfg_server_control_plane_timeout | int > 0
       - '_irods_cfg_server_port_range_end | int >= 1
          and _irods_cfg_server_port_range_end | int <= 65535'
@@ -45,12 +46,13 @@
          or _irods_cfg_server_control_plane_port | int > _irods_cfg_server_port_range_end | int'
       - _irods_cfg_transfer_buffer_size_for_parallel_transfer | int > 0
       - _irods_cfg_transfer_chunk_size_for_parallel_transfer | int > 0
-      - '_irods_cfg_xmsg_port | int >= 1
-         and _irods_cfg_xmsg_port | int <= 65535
-         and _irods_cfg_xmsg_port != _irods_cfg_server_control_plane_port
-         and (_irods_cfg_xmsg_port | int < _irods_cfg_server_port_range_start | int
-              or _irods_cfg_xmsg_port | int > _irods_cfg_server_port_range_end | int)'
-      - _irods_cfg_zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
+      - "_irods_cfg_xmsg_port == ''
+         or (_irods_cfg_xmsg_port | int >= 1
+              and _irods_cfg_xmsg_port | int <= 65535
+              and _irods_cfg_xmsg_port != _irods_cfg_server_control_plane_port
+              and (_irods_cfg_xmsg_port | int < _irods_cfg_server_port_range_start | int
+                   or _irods_cfg_xmsg_port | int > _irods_cfg_server_port_range_end | int))"
+      - _irods_cfg_zone_auth_scheme in ['', 'gsi', 'krb', 'native', 'pam']
       - not _irods_cfg_zone_key is match('.*-.*')
       - '_irods_cfg_zone_port | int >= 1
          and _irods_cfg_zone_port | int <= 65535
