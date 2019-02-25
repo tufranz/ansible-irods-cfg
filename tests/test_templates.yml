@@ -1,5 +1,56 @@
 ---
-- name: test default variable generate correct configuration files
+- name: test default variables generate correct server_config
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - ../vars/main.yml
+    - ../vars/server_config.yml
+  vars:
+    server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
+  tasks:
+    - name: verify server_config.json is correct
+      assert:
+        that:
+          - server_config.advanced_settings is not defined
+          - server_config.default_dir_mode == '0750'
+          - server_config.default_file_mode == '0600'
+          - server_config.default_hash_scheme == 'SHA256'
+          - server_config.default_resource_directory is not defined
+          - server_config.default_resource_name is not defined
+          - server_config.environment_variables == {}
+          - server_config.federation | length == 0
+          - server_config.icat_host == 'localhost'
+          - server_config.kerberos_name is not defined
+          - server_config.match_hash_policy == 'compatible'
+          - server_config.negotiation_key == 'TEMPORARY_32byte_negotiation_key'
+          - server_config.pam_no_extend is not defined
+          - server_config.pam_password_length is not defined
+          - server_config.pam_password_max_time is not defined
+          - server_config.pam_password_min_time is not defined
+          - server_config.re_data_variable_mapping_set | length == 1
+          - server_config.re_data_variable_mapping_set[0].filename == 'core'
+          - server_config.re_function_name_mapping_set | length == 1
+          - server_config.re_function_name_mapping_set[0].filename == 'core'
+          - server_config.re_rulebase_set | length == 1
+          - server_config.re_rulebase_set[0].filename == 'core'
+          - server_config.schema_validation_base_uri == 'https://schemas.irods.org/configuration'
+          - server_config.server_control_plane_encryption_algorithm == 'AES-256-CBC'
+          - server_config.server_control_plane_encryption_num_hash_rounds == 16
+          - server_config.server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
+          - server_config.server_control_plane_port == 1248
+          - server_config.server_control_plane_timeout_milliseconds == 10000
+          - server_config.server_port_range_start == 20000
+          - server_config.server_port_range_end == 20199
+          - server_config.xmsg_port is not defined
+          - server_config.zone_auth_scheme == 'native'
+          - server_config.zone_key == 'TEMPORARY_zone_key'
+          - server_config.zone_name == 'tempZone'
+          - server_config.zone_port == 1247
+          - server_config.zone_user == 'rods'
+
+
+- name: test default variables generate correct remaining configuration files
   hosts: localhost
   gather_facts: false
   vars_files:
@@ -9,7 +60,6 @@
     hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
     irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
-    server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
     - name: verify that derived irods_cfg_icat is null
@@ -60,46 +110,6 @@
           - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port is not defined
           - irods_environment.irods_zone_name == 'tempZone'
-
-    - name: verify server_config.json is correct
-      assert:
-        that:
-          - server_config.advanced_settings is not defined
-          - server_config.default_dir_mode == '0750'
-          - server_config.default_file_mode == '0600'
-          - server_config.default_hash_scheme == 'SHA256'
-          - server_config.default_resource_directory is not defined
-          - server_config.default_resource_name is not defined
-          - server_config.environment_variables == {}
-          - server_config.federation | length == 0
-          - server_config.icat_host == 'localhost'
-          - server_config.kerberos_name is not defined
-          - server_config.match_hash_policy == 'compatible'
-          - server_config.negotiation_key == 'TEMPORARY_32byte_negotiation_key'
-          - server_config.pam_no_extend is not defined
-          - server_config.pam_password_length is not defined
-          - server_config.pam_password_max_time is not defined
-          - server_config.pam_password_min_time is not defined
-          - server_config.re_data_variable_mapping_set | length == 1
-          - server_config.re_data_variable_mapping_set[0].filename == 'core'
-          - server_config.re_function_name_mapping_set | length == 1
-          - server_config.re_function_name_mapping_set[0].filename == 'core'
-          - server_config.re_rulebase_set | length == 1
-          - server_config.re_rulebase_set[0].filename == 'core'
-          - server_config.schema_validation_base_uri == 'https://schemas.irods.org/configuration'
-          - server_config.server_control_plane_encryption_algorithm == 'AES-256-CBC'
-          - server_config.server_control_plane_encryption_num_hash_rounds == 16
-          - server_config.server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
-          - server_config.server_control_plane_port == 1248
-          - server_config.server_control_plane_timeout_milliseconds == 10000
-          - server_config.server_port_range_start == 20000
-          - server_config.server_port_range_end == 20199
-          - server_config.xmsg_port is not defined
-          - server_config.zone_auth_scheme == 'native'
-          - server_config.zone_key == 'TEMPORARY_zone_key'
-          - server_config.zone_name == 'tempZone'
-          - server_config.zone_port == 1247
-          - server_config.zone_user == 'rods'
 
     - name: verify service_account.config is correct
       assert:
@@ -258,6 +268,7 @@
     - ../defaults/main.yml
     - vars/server_config_opts.yml
     - ../vars/main.yml
+    - ../vars/server_config.yml
   vars:
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
   tasks:
@@ -341,6 +352,7 @@
     - ../defaults/main.yml
     - vars/jinja2_quirks.yml
     - ../vars/main.yml
+    - ../vars/server_config.yml
   vars:
     irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
     server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"

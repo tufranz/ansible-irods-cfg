@@ -1,4 +1,6 @@
 ---
+- include_vars: server_config.yml
+
 - when: _irods_cfg_validate
   ignore_errors: true
   block:

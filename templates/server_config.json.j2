@@ -74,19 +74,15 @@
     _irods_cfg_server_control_plane_encryption_algorithm }}",
   "server_control_plane_encryption_num_hash_rounds": {{
     _irods_cfg_server_control_plane_encryption_num_hash_rounds }},
-  "server_control_plane_key": "{{
-    _irods_cfg_server_control_plane_key if _irods_cfg_server_control_plane_key else
-    'TEMPORARY__32byte_ctrl_plane_key' }}",
-  "server_control_plane_port": {{
-    _irods_cfg_server_control_plane_port if _irods_cfg_server_control_plane_port else 1248 }},
+  "server_control_plane_key": "{{ _irods_cfg_server_control_plane_key }}",
+  "server_control_plane_port": {{ _irods_cfg_server_control_plane_port }},
   "server_control_plane_timeout_milliseconds": {{ _irods_cfg_server_control_plane_timeout }},
   "server_port_range_end": {{ _irods_cfg_server_port_range_end }},
   "server_port_range_start": {{ _irods_cfg_server_port_range_start }},
 {% if _irods_cfg_xmsg_port %}
   "xmsg_port": {{ _irods_cfg_xmsg_port }},
 {% endif %}
-  "zone_auth_scheme": "{{
-    _irods_cfg_zone_auth_scheme if _irods_cfg_zone_auth_scheme else 'native' }}",
+  "zone_auth_scheme": "{{ _irods_cfg_zone_auth_scheme }}",
   "zone_key": "{{ _irods_cfg_zone_key }}",
   "zone_name": "{{ _irods_cfg_zone_name }}",
   "zone_port": {{ _irods_cfg_zone_port }},

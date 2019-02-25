@@ -19,7 +19,8 @@
       - 'not _irods_cfg_server_control_plane_port
          or (_irods_cfg_server_control_plane_port | int >= 1
              and _irods_cfg_server_control_plane_port | int <= 65535)'
-      - _irods_cfg_ssl_verify_server in ['cert', 'hostname', 'none']
+      - "not _irods_cfg_ssl_verify_server
+         or _irods_cfg_ssl_verify_server in ['cert', 'hostname', 'none']"
       - 'not _irods_cfg_xmsg_port
          or (_irods_cfg_xmsg_port | int >= 1
               and _irods_cfg_xmsg_port | int <= 65535
