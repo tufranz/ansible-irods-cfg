@@ -68,8 +68,7 @@ _irods_cfg_clerver_encryption_salt_size: "{{
 
 _irods_cfg_client_server_negotiation: "{{
   irods_cfg_client_server_negotiation if irods_cfg_client_server_negotiation else
-  'off' if irods_cfg_client_server_negotiation == False else
-  'request_server_negotiation' }}"
+  'off' if irods_cfg_client_server_negotiation == False else None }}"
 
 _irods_cfg_client_server_policy: "{{
   irods_cfg_client_server_policy if irods_cfg_client_server_policy else
@@ -79,7 +78,7 @@ _irods_cfg_chown: "{{ irods_cfg_chown if irods_cfg_chown is defined else true }}
 
 _irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _irods_cfg_home }}"
 
-_irods_cfg_debug: "{{ irods_cfg_debug if irods_cfg_debug else '' }}"
+_irods_cfg_debug: "{{ irods_cfg_debug if irods_cfg_debug else None }}"
 
 _irods_cfg_default_dir_mode: "{{ irods_cfg_default_dir_mode if irods_cfg_default_dir_mode else
                                  '0750' }}"

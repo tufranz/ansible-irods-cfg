@@ -15,8 +15,6 @@ irods_cfg_home: /zone/home
 irods_cfg_host: host
 irods_cfg_log_level: 4
 irods_cfg_match_hash_policy: strict
-irods_cfg_server_control_plane_encryption_algorithm: scp_alg
-irods_cfg_server_control_plane_encryption_num_hash_rounds: 15
 irods_cfg_server_control_plane_key: TEMPORARY__32byte_ctrl_plane_ke1
 irods_cfg_server_control_plane_port: 5
 irods_cfg_service_account_name: root
