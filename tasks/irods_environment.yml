@@ -1,4 +1,5 @@
 ---
+TODO verify that server defaults are correct
 - name: validate variables for irods_environment
   when: _irods_cfg_validate
   assert:
@@ -13,10 +14,9 @@
       - _irods_cfg_home is match('/..*')
       - _irods_cfg_log_level | int >= 1 and _irods_cfg_log_level | int <= 10
       - _irods_cfg_match_hash_policy in ['compatible', 'strict']
-      - _irods_cfg_server_control_plane_encryption_num_hash_rounds | int >= 0
       - _irods_cfg_server_control_plane_key | length == 32
       - '_irods_cfg_server_control_plane_port | int >= 1
-          and _irods_cfg_server_control_plane_port | int <= 65535'
+         and _irods_cfg_server_control_plane_port | int <= 65535'
       - _irods_cfg_ssl_verify_server in ['cert', 'hostname', 'none']
       - '_irods_cfg_xmsg_port | int >= 1
          and _irods_cfg_xmsg_port | int <= 65535

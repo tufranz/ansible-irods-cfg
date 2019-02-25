@@ -34,8 +34,10 @@
           - irods_environment.irods_authentication_scheme == 'native'
           - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
           - irods_environment.irods_client_server_policy == 'CS_NEG_DONT_CARE'
+          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
+          - irods_environment.irods_control_plane_port == 1248
           - irods_environment.irods_cwd == '/tempZone/home/rods'
-          - irods_environment.irods_debug == ''
+          - irods_environment.irods_debug is not defined
           - irods_environment.irods_default_hash_scheme == 'SHA256'
           - irods_environment.irods_default_resource == 'demoResc'
           - irods_environment.irods_encryption_algorithm == 'AES-256-CBC'
@@ -48,18 +50,14 @@
           - irods_environment.irods_log_level == 5
           - irods_environment.irods_match_hash_policy == 'compatible'
           - irods_environment.irods_port == 1247
-          - irods_environment.irods_server_control_plane_encryption_algorithm == 'AES-256-CBC'
-          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 16
-          - irods_environment.irods_server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
-          - irods_environment.irods_server_control_plane_port == 1248
-          - irods_environment.irods_ssl_ca_certificate_file == ''
-          - irods_environment.irods_ssl_ca_certificate_path == ''
-          - irods_environment.irods_ssl_certificate_chain_file == ''
-          - irods_environment.irods_ssl_certificate_key_file == ''
-          - irods_environment.irods_ssl_dh_params_file == ''
+          - irods_environment.irods_ssl_ca_certificate_file is not defined
+          - irods_environment.irods_ssl_ca_certificate_path is not defined
+          - irods_environment.irods_ssl_certificate_chain_file is not defined
+          - irods_environment.irods_ssl_certificate_key_file is not defined
+          - irods_environment.irods_ssl_dh_params_file is not defined
           - irods_environment.irods_ssl_verify_server == 'hostname'
           - irods_environment.irods_user_name == 'rods'
-          - irods_environment.irods_xmsg_host == ''
+          - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port == 1279
           - irods_environment.irods_zone_name == 'tempZone'
 
@@ -234,6 +232,8 @@
           - irods_environment.irods_authentication_scheme == 'gsi'
           - irods_environment.irods_client_server_negotiation == 'off'
           - irods_environment.irods_client_server_policy == 'CS_NEG_REFUSE'
+          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_ke1'
+          - irods_environment.irods_control_plane_port == 5
           - irods_environment.irods_cwd == '/zone'
           - irods_environment.irods_debug == 'CAT'
           - irods_environment.irods_default_hash_scheme == 'MD5'
@@ -248,10 +248,6 @@
           - irods_environment.irods_log_level == 4
           - irods_environment.irods_match_hash_policy == 'strict'
           - irods_environment.irods_port == 7
-          - irods_environment.irods_server_control_plane_encryption_algorithm == 'scp_alg'
-          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 15
-          - irods_environment.irods_server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_ke1'
-          - irods_environment.irods_server_control_plane_port == 5
           - irods_environment.irods_ssl_ca_certificate_file == 'certificate_file'
           - irods_environment.irods_ssl_ca_certificate_path == '/path/to/certificates'
           - irods_environment.irods_ssl_certificate_chain_file == 'chain'
@@ -365,7 +361,6 @@
           - irods_environment.irods_encryption_key_size == 0
           - irods_environment.irods_encryption_num_hash_rounds == 0
           - irods_environment.irods_encryption_salt_size == 0
-          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 0
 
     - name: verify server_config.json is correct
       assert:
