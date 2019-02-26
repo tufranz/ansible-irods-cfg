@@ -76,7 +76,7 @@ _irods_cfg_client_server_policy: "{{
 
 _irods_cfg_chown: "{{ irods_cfg_chown if irods_cfg_chown or irods_cfg_chown == false else true }}"
 
-_irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _irods_cfg_home }}"
+_irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _irods_cfg_cwd_default | default(none) }}"
 
 _irods_cfg_debug: "{{ irods_cfg_debug if irods_cfg_debug else none }}"
 
@@ -110,6 +110,8 @@ _irods_cfg_environment_variables: "{{
   irods_cfg_environment_variables if irods_cfg_environment_variables else {} }}"
 
 _irods_cfg_federation: "{{ irods_cfg_federation if irods_cfg_federation else [] }}"
+
+_irods_cfg_for_server: "{{ irods_cfg_for_server if irods_cfg_for_server else false }}"
 
 _irods_cfg_gsi_server_dn: "{{ irods_cfg_gsi_server_dn if irods_cfg_gsi_server_dn else none }}"
 
