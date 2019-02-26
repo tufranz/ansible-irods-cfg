@@ -7,8 +7,7 @@
         name: ../../ansible-irods-cfg
         tasks_from: _cfg_template.yml
       vars:
-        irods_cfg_root_dir: /var/lib/irods
-        _cfg_template_dest_dir: deposit
+        _cfg_template_dest_dir: /var/lib/irods/deposit
         _cfg_template_dest_name: irods_environment.json
 
     - name: test ensure /var/lib/irods/deposit exists

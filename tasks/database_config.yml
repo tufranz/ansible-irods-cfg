@@ -10,7 +10,7 @@
 
     - include_tasks: _cfg_template.yml
       vars:
-        _cfg_template_dest_dir: etc/irods
+        _cfg_template_dest_dir: "{{ _irods_cfg_root_dir }}/etc/irods"
         _cfg_template_dest_name: database_config.json
 
 - meta: flush_handlers
