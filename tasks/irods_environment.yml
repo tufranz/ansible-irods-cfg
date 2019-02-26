@@ -44,7 +44,6 @@
 
 - include_tasks: _cfg_template.yml
   vars:
-    _cfg_template_dest_dir: "{{ _irods_cfg_environment_file | dirname }}"
-    _cfg_template_dest_name: "{{ _irods_cfg_environment_file | basename }}"
+    _cfg_template_dest_file: "{{ _irods_cfg_environment_file }}"
 
 - meta: flush_handlers

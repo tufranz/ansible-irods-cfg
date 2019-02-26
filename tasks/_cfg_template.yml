@@ -1,28 +1,26 @@
 ---
 # Variables:
-#   _cfg_template_dest_dir   The directory where the template will be deposited
-#                            relative to the root directory
-#   _cfg_template_dest_name  The name of the generated config file.
+#   _cfg_template_dest_file  The path of the generated config file relative to 
+#                            then root directory
 #   _cfg_template_name       (OPTIONAL) The name of the source template. The
 #                            default is {{ _cfg_template_dest_name }}.j2
 
-- name: ensure {{ _cfg_template_dest_dir  }} exists
+- name: ensure parent directory exists exists
   file:
-    dest: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_dir }}"
+    dest: "{{ (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
     state: directory
 
 - include_tasks: _service_own.yml
   vars:
-    _service_own_path: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_dir }}"
+    _service_own_path: "{{ (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
 
 - name: generate {{ _cfg_template_dest_name }}
   template:
-    src: "{{ _cfg_template_name | default(_cfg_template_dest_name ~ '.j2') }}"
-    dest: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_dir }}/{{ _cfg_template_dest_name }}"
+    src: "{{ _cfg_template_name | default((_cfg_template_dest_file | basename) ~ '.j2') }}"
+    dest: "{{ _irods_cfg_root_dir }}/{{ _cfg_template_dest_file }}"
   notify:
     - changed config
 
 - include_tasks: _service_own.yml
   vars:
-    _service_own_path: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_dir }}/{{
-                           _cfg_template_dest_name }}"
+    _service_own_path: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_file }}"

@@ -74,7 +74,6 @@
 
 - include_tasks: _cfg_template.yml
   vars:
-    _cfg_template_dest_dir: etc/irods
-    _cfg_template_dest_name: server_config.json
+    _cfg_template_dest_file: etc/irods/server_config.json
 
 - meta: flush_handlers

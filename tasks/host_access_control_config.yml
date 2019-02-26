@@ -1,7 +1,6 @@
 ---
 - include_tasks: _cfg_template.yml
   vars:
-    _cfg_template_dest_dir: etc/irods
-    _cfg_template_dest_name: host_access_control_config.json
+    _cfg_template_dest_file: etc/irods/host_access_control_config.json
 
 - meta: flush_handlers

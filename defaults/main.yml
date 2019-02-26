@@ -19,6 +19,7 @@ irods_cfg_default_number_of_transfer_threads:
 irods_cfg_default_resource_directory:
 irods_cfg_default_resource_name:
 irods_cfg_default_temporary_password_lifetime:
+irods_cfg_environment_file:
 irods_cfg_environment_variables:
 irods_cfg_federation:
 irods_cfg_for_server:

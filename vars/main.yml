@@ -107,7 +107,7 @@ _irods_cfg_default_temporary_password_lifetime: "{{
   none }}"
 
 _irods_cfg_environment_file: "{{
-  _irods_cfg_environment_file if _irods_cfg_environment_file else
+  irods_cfg_environment_file if irods_cfg_environment_file else
   'var/lib/irods/.irods/irods_environment.json' }}"
 
 _irods_cfg_environment_variables: "{{
