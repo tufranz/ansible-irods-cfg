@@ -17,7 +17,9 @@
 {% if _irods_cfg_server_control_plane_port %}
   "irods_control_plane_port": {{ _irods_cfg_server_control_plane_port }},
 {% endif %}
+{% if _irods_cfg_cwd %}
   "irods_cwd": "{{ _irods_cfg_cwd }}",
+{% endif %}
 {% if _irods_cfg_debug %}
   "irods_debug": "{{ _irods_cfg_debug }}",
 {% endif %}

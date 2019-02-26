@@ -21,6 +21,7 @@ irods_cfg_default_resource_name:
 irods_cfg_default_temporary_password_lifetime:
 irods_cfg_environment_variables:
 irods_cfg_federation:
+irods_cfg_for_server:
 irods_cfg_gsi_server_dn:
 irods_cfg_home:
 irods_cfg_host:

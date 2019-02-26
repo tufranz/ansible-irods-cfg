@@ -1,4 +1,92 @@
 ---
+- name: test default variables generate correct client side irods_environment
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - ../vars/main.yml
+  vars:
+    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+  tasks:
+    - name: verify irods_environment.json expands correctly
+      assert:
+        that:
+          - irods_environment.irods_authentication_file is not defined
+          - irods_environment.irods_authentication_scheme is not defined
+          - irods_environment.irods_client_server_negotiation is not defined
+          - irods_environment.irods_client_server_policy is not defined
+          - irods_environment.irods_control_plane_key is not defined
+          - irods_environment.irods_control_plane_port is not defined
+          - irods_environment.irods_cwd is not defined
+          - irods_environment.irods_debug is not defined
+          - irods_environment.irods_default_hash_scheme is not defined
+          - irods_environment.irods_default_resource is not defined
+          - irods_environment.irods_encryption_algorithm is not defined
+          - irods_environment.irods_encryption_key_size is not defined
+          - irods_environment.irods_encryption_num_hash_rounds is not defined
+          - irods_environment.irods_encryption_salt_size is not defined
+          - irods_environment.irods_gsi_server_dn is not defined
+          - irods_environment.irods_home is not defined
+          - irods_environment.irods_host == 'localhost'
+          - irods_environment.irods_log_level is not defined
+          - irods_environment.irods_match_hash_policy is not defined
+          - irods_environment.irods_port == 1247
+          - irods_environment.irods_ssl_ca_certificate_file is not defined
+          - irods_environment.irods_ssl_ca_certificate_path is not defined
+          - irods_environment.irods_ssl_certificate_chain_file is not defined
+          - irods_environment.irods_ssl_certificate_key_file is not defined
+          - irods_environment.irods_ssl_dh_params_file is not defined
+          - irods_environment.irods_ssl_verify_server is not defined
+          - irods_environment.irods_user_name == 'rods'
+          - irods_environment.irods_xmsg_host is not defined
+          - irods_environment.irods_xmsg_port is not defined
+          - irods_environment.irods_zone_name == 'tempZone'
+
+- name: test default variables generate correct server side irods_environment
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+    - ../vars/main.yml
+    - ../vars/irods_environment_server.yml
+  vars:
+    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+  tasks:
+    - name: verify irods_environment.json expands correctly
+      assert:
+        that:
+          - irods_environment.irods_authentication_file is not defined
+          - irods_environment.irods_authentication_scheme is not defined
+          - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
+          - irods_environment.irods_client_server_policy == 'CS_NEG_DONT_CARE'
+          - irods_environment.irods_control_plane_key is not defined
+          - irods_environment.irods_control_plane_port is not defined
+          - irods_environment.irods_cwd == '/tempZone/home/rods'
+          - irods_environment.irods_debug is not defined
+          - irods_environment.irods_default_hash_scheme == 'SHA256'
+          - irods_environment.irods_default_resource == 'demoResc'
+          - irods_environment.irods_encryption_algorithm == 'AES-256-CBC'
+          - irods_environment.irods_encryption_key_size == 32
+          - irods_environment.irods_encryption_num_hash_rounds == 16
+          - irods_environment.irods_encryption_salt_size == 8
+          - irods_environment.irods_gsi_server_dn is not defined
+          - irods_environment.irods_home == '/tempZone/home/rods'
+          - irods_environment.irods_host == 'localhost'
+          - irods_environment.irods_log_level is not defined
+          - irods_environment.irods_match_hash_policy == 'compatible'
+          - irods_environment.irods_port == 1247
+          - irods_environment.irods_ssl_ca_certificate_file is not defined
+          - irods_environment.irods_ssl_ca_certificate_path is not defined
+          - irods_environment.irods_ssl_certificate_chain_file is not defined
+          - irods_environment.irods_ssl_certificate_key_file is not defined
+          - irods_environment.irods_ssl_dh_params_file is not defined
+          - irods_environment.irods_ssl_verify_server is not defined
+          - irods_environment.irods_user_name == 'rods'
+          - irods_environment.irods_xmsg_host is not defined
+          - irods_environment.irods_xmsg_port is not defined
+          - irods_environment.irods_zone_name == 'tempZone'
+
+
 - name: test default variables generate correct server_config
   hosts: localhost
   gather_facts: false
@@ -67,11 +155,9 @@
   vars_files:
     - ../defaults/main.yml
     - ../vars/main.yml
-    - ../vars/irods_environment_server.yml
   vars:
     hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
-    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
   tasks:
     - name: verify that derived irods_cfg_icat is null
@@ -88,40 +174,6 @@
       assert:
         that:
           - hosts_config.host_entries | length == 0
-
-    - name: verify irods_environment.json expands correctly
-      assert:
-        that:
-          - irods_environment.irods_authentication_file is not defined
-          - irods_environment.irods_authentication_scheme is not defined
-          - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
-          - irods_environment.irods_client_server_policy == 'CS_NEG_DONT_CARE'
-          - irods_environment.irods_control_plane_key is not defined
-          - irods_environment.irods_control_plane_port is not defined
-          - irods_environment.irods_cwd == '/tempZone/home/rods'
-          - irods_environment.irods_debug is not defined
-          - irods_environment.irods_default_hash_scheme == 'SHA256'
-          - irods_environment.irods_default_resource == 'demoResc'
-          - irods_environment.irods_encryption_algorithm == 'AES-256-CBC'
-          - irods_environment.irods_encryption_key_size == 32
-          - irods_environment.irods_encryption_num_hash_rounds == 16
-          - irods_environment.irods_encryption_salt_size == 8
-          - irods_environment.irods_gsi_server_dn is not defined
-          - irods_environment.irods_home == '/tempZone/home/rods'
-          - irods_environment.irods_host == 'localhost'
-          - irods_environment.irods_log_level is not defined
-          - irods_environment.irods_match_hash_policy == 'compatible'
-          - irods_environment.irods_port == 1247
-          - irods_environment.irods_ssl_ca_certificate_file is not defined
-          - irods_environment.irods_ssl_ca_certificate_path is not defined
-          - irods_environment.irods_ssl_certificate_chain_file is not defined
-          - irods_environment.irods_ssl_certificate_key_file is not defined
-          - irods_environment.irods_ssl_dh_params_file is not defined
-          - irods_environment.irods_ssl_verify_server is not defined
-          - irods_environment.irods_user_name == 'rods'
-          - irods_environment.irods_xmsg_host is not defined
-          - irods_environment.irods_xmsg_port is not defined
-          - irods_environment.irods_zone_name == 'tempZone'
 
     - name: verify service_account.config is correct
       assert:
