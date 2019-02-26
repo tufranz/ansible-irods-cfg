@@ -1,7 +1,10 @@
 ---
 # These are the config file specific defaults for the server_config.json
 
+_irods_cfg_match_hash_policy_default: compatible
+
 _irods_cfg_server_control_plane_key_default: TEMPORARY__32byte_ctrl_plane_key
+
 _irods_cfg_server_control_plane_port_default: 1248
 
 _irods_cfg_zone_auth_scheme_default: native

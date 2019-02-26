@@ -1,4 +1,6 @@
 ---
+- include_vars: irods_environment_server.yml
+
 - name: validate variables for irods_environment
   when: _irods_cfg_validate
   assert:

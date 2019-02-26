@@ -1,9 +1,16 @@
 ---
 - import_tasks: odbc.yml
+
 - import_tasks: pgpass.yml
+
 - import_tasks: database_config.yml
+
 - import_tasks: host_access_control_config.yml
+
 - import_tasks: hosts_config.yml
+
 - import_tasks: irods_environment.yml
+    
 - import_tasks: server_config.yml
+
 - import_tasks: service_account.yml

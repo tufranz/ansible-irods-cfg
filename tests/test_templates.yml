@@ -67,6 +67,7 @@
   vars_files:
     - ../defaults/main.yml
     - ../vars/main.yml
+    - ../vars/irods_environment_server.yml
   vars:
     hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
     hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
