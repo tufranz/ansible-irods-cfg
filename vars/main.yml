@@ -88,11 +88,22 @@ _irods_cfg_default_file_mode: "{{
 _irods_cfg_default_hash_scheme: "{{
   irods_cfg_default_hash_scheme if irods_cfg_default_hash_scheme else 'SHA256' }}"
 
+_irods_cfg_default_number_of_transfer_threads: "{{
+  irods_cfg_default_number_of_transfer_threads
+    if irods_cfg_default_number_of_transfer_threads
+       or irods_cfg_default_number_of_transfer_threads == 0 else
+  None }}"
+
 _irods_cfg_default_resource_directory: "{{
   irods_cfg_default_resource_directory if irods_cfg_default_resource_directory else None }}"
 
 _irods_cfg_default_resource_name: "{{
   irods_cfg_default_resource_name if irods_cfg_default_resource_name else None }}"
+
+_irods_cfg_default_temporary_password_lifetime: "{{
+  irods_cfg_default_temporary_password_lifetime
+    if irods_cfg_default_temporary_password_lifetime else
+  None }}"
 
 _irods_cfg_environment_variables: "{{
   irods_cfg_environment_variables if irods_cfg_environment_variables else {} }}"
@@ -119,6 +130,22 @@ _irods_cfg_log_level: "{{ irods_cfg_log_level if irods_cfg_log_level else None }
 
 _irods_cfg_match_hash_policy: "{{
   irods_cfg_match_hash_policy if irods_cfg_match_hash_policy else 'compatible' }}"
+
+_irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes: "{{
+  irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes
+    if irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes else
+  None }}"
+
+_irods_cfg_maximum_size_for_single_buffer: "{{
+  irods_cfg_maximum_size_for_single_buffer
+    if irods_cfg_maximum_size_for_single_buffer
+       or irods_cfg_maximum_size_for_single_buffer == 0 else
+  None }}"
+
+_irods_cfg_maximum_temporary_password_lifetime: "{{
+  irods_cfg_maximum_temporary_password_lifetime
+    if irods_cfg_maximum_temporary_password_lifetime else
+  1000 }}"
 
 _irods_cfg_negotiation_key: "{{
   irods_cfg_negotiation_key if irods_cfg_negotiation_key else 'TEMPORARY_32byte_negotiation_key' }}"
@@ -210,6 +237,16 @@ _irods_cfg_ssl_dh_params_file: "{{
 _irods_cfg_ssl_verify_server: "{{
   irods_cfg_ssl_verify_server if irods_cfg_ssl_verify_server else None }}"
 
+_irods_cfg_transfer_buffer_size_for_parallel_transfer: "{{
+  irods_cfg_transfer_buffer_size_for_parallel_transfer
+    if irods_cfg_transfer_buffer_size_for_parallel_transfer else
+  None }}"
+
+_irods_cfg_transfer_chunk_size_for_parallel_transfer: "{{
+  irods_cfg_transfer_chunk_size_for_parallel_transfer
+    if irods_cfg_transfer_chunk_size_for_parallel_transfer else
+  None }}"
+
 _irods_cfg_validate: "{{ irods_cfg_validate if irods_cfg_validate else false }}"
 
 _irods_cfg_xmsg_host: "{{ irods_cfg_xmsg_host if irods_cfg_xmsg_host else None }}"
@@ -229,38 +266,6 @@ _irods_cfg_zone_password: "{{ irods_cfg_zone_password if irods_cfg_zone_password
 _irods_cfg_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }}"
 
 _irods_cfg_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"
-
-_irods_cfg_advanced_settings:
-  default_number_of_transfer_threads: "{{
-    irods_cfg_default_number_of_transfer_threads
-      if irods_cfg_default_number_of_transfer_threads
-         or irods_cfg_default_number_of_transfer_threads == 0 else
-    None }}"
-  default_temporary_password_lifetime_in_seconds: "{{
-    irods_cfg_default_temporary_password_lifetime
-      if irods_cfg_default_temporary_password_lifetime else
-    None }}"
-  maximum_number_of_concurrent_rule_engine_server_processes: "{{
-    irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes
-      if irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes else
-    None }}"
-  maximum_size_for_single_buffer_in_megabytes: "{{
-    irods_cfg_maximum_size_for_single_buffer
-      if irods_cfg_maximum_size_for_single_buffer
-         or irods_cfg_maximum_size_for_single_buffer == 0 else
-    None }}"
-  maximum_temporary_password_lifetime_in_seconds: "{{
-    irods_cfg_maximum_temporary_password_lifetime
-      if irods_cfg_maximum_temporary_password_lifetime else
-    None }}"
-  transfer_buffer_size_for_parallel_transfer_in_megabytes: "{{
-    irods_cfg_transfer_buffer_size_for_parallel_transfer
-      if irods_cfg_transfer_buffer_size_for_parallel_transfer else
-    None }}"
-  transfer_chunk_size_for_parallel_transfer_in_megabytes: "{{
-    irods_cfg_transfer_chunk_size_for_parallel_transfer
-      if irods_cfg_transfer_chunk_size_for_parallel_transfer else
-    None }}"
 
 _irods_cfg_odbc_properties:
   base:

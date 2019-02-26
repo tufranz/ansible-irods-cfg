@@ -1,15 +1,31 @@
 {
-{% for setting in _irods_cfg_advanced_settings | dict2items | selectattr("value") %}
-{%   if loop.first %}
   "advanced_settings": {
-{%   endif %}
-    "{{ setting.key }}": {{ setting.value }}
-{%-  if not loop.last %},
-{%   else %}
-
+{% if _irods_cfg_maximum_size_for_single_buffer %}
+    "maximum_size_for_single_buffer_in_megabytes": {{ _irods_cfg_maximum_size_for_single_buffer }},
+{% endif %}
+{% if _irods_cfg_transfer_buffer_size_for_parallel_transfer %}
+    "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
+      _irods_cfg_transfer_buffer_size_for_parallel_transfer }},
+{% endif %}
+{% if _irods_cfg_transfer_chunk_size_for_parallel_transfer %}
+    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{
+      _irods_cfg_transfer_chunk_size_for_parallel_transfer }},
+{% endif %}
+{% if _irods_cfg_default_number_of_transfer_threads %}
+    "default_number_of_transfer_threads": {{ _irods_cfg_default_number_of_transfer_threads }},
+{% endif %}
+{% if _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes %}
+    "maximum_number_of_concurrent_rule_engine_server_processes": {{
+      _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes }},
+{% endif %}
+{% if _irods_cfg_default_temporary_password_lifetime %}
+    "default_temporary_password_lifetime_in_seconds": {{
+      _irods_cfg_default_temporary_password_lifetime }},
+{% endif %}
+{# This is required even though the schema doesn't mention it. #}
+    "maximum_temporary_password_lifetime_in_seconds": {{
+      _irods_cfg_maximum_temporary_password_lifetime }}
   },
-{%   endif %}
-{% endfor %}
   "default_dir_mode": "{{ _irods_cfg_default_dir_mode }}",
   "default_file_mode": "{{ _irods_cfg_default_file_mode }}",
   "default_hash_scheme": "{{ _irods_cfg_default_hash_scheme }}",

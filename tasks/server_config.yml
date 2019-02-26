@@ -15,34 +15,21 @@
     - name: validate other server configuration parameters
       assert:
         that:
-          - 'not _irods_cfg_advanced_settings.default_number_of_transfer_threads
-             or _irods_cfg_advanced_settings.default_number_of_transfer_threads | int >= 0'
-          - 'not _irods_cfg_advanced_settings.default_temporary_password_lifetime_in_seconds
-             or _irods_cfg_advanced_settings.default_temporary_password_lifetime_in_seconds | int
-                > 0'
-          - 'not
-               _irods_cfg_advanced_settings.maximum_number_of_concurrent_rule_engine_server_processes
-             or
-               _irods_cfg_advanced_settings.maximum_number_of_concurrent_rule_engine_server_processes
-                 | int
-               >= 1'
-          - 'not _irods_cfg_advanced_settings.maximum_size_for_single_buffer_in_megabytes
-             or _irods_cfg_advanced_settings.maximum_size_for_single_buffer_in_megabytes | int >= 0'
-          - 'not _irods_cfg_advanced_settings.maximum_temporary_password_lifetime_in_seconds
-             or _irods_cfg_advanced_settings.maximum_temporary_password_lifetime_in_seconds | int
-                >= _irods_cfg_advanced_settings.default_temporary_password_lifetime_in_seconds
-                     | int'
-          - 'not
-               _irods_cfg_advanced_settings.transfer_buffer_size_for_parallel_transfer_in_megabytes
-             or
-               _irods_cfg_advanced_settings.transfer_buffer_size_for_parallel_transfer_in_megabytes
-                 | int
-               > 0'
-          - 'not _irods_cfg_advanced_settings.transfer_chunk_size_for_parallel_transfer_in_megabytes
-             or
-               _irods_cfg_advanced_settings.transfer_chunk_size_for_parallel_transfer_in_megabytes
-                 | int
-               > 0'
+          - 'not _irods_cfg_default_number_of_transfer_threads
+             or _irods_cfg_default_number_of_transfer_threads | int >= 0'
+          - 'not _irods_cfg_default_temporary_password_lifetime
+             or (_irods_cfg_default_temporary_password_lifetime | int > 0
+                 and _irods_cfg_default_temporary_password_lifetime | int
+                       <= _irods_cfg_maximum_temporary_password_lifetime | int)'
+          - 'not _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes
+             or _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes | int >= 1'
+          - 'not _irods_cfg_maximum_size_for_single_buffer
+             or _irods_cfg_maximum_size_for_single_buffer | int >= 0'
+          - _irods_cfg_maximum_temporary_password_lifetime | int > 0
+          - 'not _irods_cfg_transfer_buffer_size_for_parallel_transfer
+             or _irods_cfg_transfer_buffer_size_for_parallel_transfer | int > 0'
+          - 'not _irods_cfg_transfer_chunk_size_for_parallel_transfer
+             or _irods_cfg_transfer_chunk_size_for_parallel_transfer | int > 0'
           - _irods_cfg_default_hash_scheme in ['MD5', 'SHA256']
           - "not _irods_cfg_default_resource_directory
              or _irods_cfg_default_resource_directory is match('/.*')"
