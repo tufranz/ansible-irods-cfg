@@ -3,10 +3,12 @@
 {%   if loop.first %}
   "advanced_settings": {
 {%   endif %}
-    "{{ setting.key }}": {{ setting.value }}{% if not loop.last %},
-{%                                             else %}
+    "{{ setting.key }}": {{ setting.value }}
+{%-  if not loop.last %},
+{%   else %}
+
   },
-{%                                             endif %}
+{%   endif %}
 {% endfor %}
   "default_dir_mode": "{{ _irods_cfg_default_dir_mode }}",
   "default_file_mode": "{{ _irods_cfg_default_file_mode }}",
@@ -19,9 +21,11 @@
 {% endif %}
   "environment_variables": {
 {% for key, value in _irods_cfg_environment_variables.iteritems() %}
-    "{{ key }}": "{{ value }}"{% if not loop.last %},
-{% endif %}
+    "{{ key }}": "{{ value }}"
+{%-  if not loop.last %},
+{%   endif %}
 {% endfor %}
+
   },
   "federation": [
 {% for federate in _irods_cfg_federation %}
@@ -32,6 +36,7 @@
       "negotiation_key": "{{ federate.negotiation_key }}"
     }{% if not loop.last %},{% endif %}
 {% endfor %}
+
   ],
   "icat_host": "{{ _irods_cfg_icat_host }}",
 {% if _irods_cfg_kerberos_name %}
