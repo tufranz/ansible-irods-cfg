@@ -45,5 +45,6 @@
 - include_tasks: _cfg_template.yml
   vars:
     _cfg_template_dest_file: "{{ _irods_cfg_environment_file }}"
+    _cfg_template_name: irods_environment.json.j2
 
 - meta: flush_handlers

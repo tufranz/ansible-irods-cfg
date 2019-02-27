@@ -23,6 +23,8 @@ _irods_cfg_client_server_policy_default: CS_NEG_DONT_CARE
 
 _irods_cfg_cwd_default: "{{ _irods_cfg_home }}"
 
+_irods_cfg_environment_file_default: var/lib/irods/.irods/irods_environment.json
+
 _irods_cfg_home_default: "{{ '/' ~ _irods_cfg_zone_name ~ '/home/' ~ _irods_cfg_zone_user }}"
 
 _irods_cfg_match_hash_policy_default: compatible

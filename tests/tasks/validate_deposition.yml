@@ -4,9 +4,9 @@
     path: "{{ cfg_path }}"
   register: response
   failed_when: >
-    not response.stat.exists or
-    response.stat.pw_name != 'irods' or
-    response.stat.gr_name != 'irods'
+    not response.stat.exists
+    or response.stat.pw_name != 'irods'
+    or response.stat.gr_name != 'irods'
 
 - name: download {{ schema }} schema
   get_url:

@@ -21,13 +21,13 @@ install:
 
 before_script:
   # Create irods user
-  - sudo useradd --create-home --system --home-dir /var/lib/irods irods
+  - sudo useradd --create-home irods
 
   # Create directories for irods user
-  - sudo mkdir --parents /etc/irods
+  - sudo mkdir --parents /etc/irods /var/lib/irods
 
   # Give irods ownership of its directories
-  - sudo chown irods:irods /etc/irods
+  - sudo chown irods:irods /etc/irods /var/lib/irods
 
   # Install dependent roles
   - ansible-galaxy install --role-file=tests/requirements.yml
@@ -51,12 +51,25 @@ script:
   # Remove test artifacts
   - sudo rm --force --recursive /var/lib/irods/deposit
 
-  # Test core deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test_core_deposition.yml
+  # Test client deposition
+  - ansible-playbook --inventory-file=tests/inventory tests/test_client_deposition.yml
 
   - >
     ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
-                     tests/test_core_deposition.yml \
+                     tests/test_client_deposition.yml \
+      | grep --quiet 'changed=0.*failed=0' \
+        && (echo 'Idempotence test: pass' && exit 0) \
+        || (echo 'Idempotence test: fail' && exit 1)
+
+  # Remove test artifacts
+  - sudo rm --force --recursive /home/irods/.irods /tmp/ie.json
+
+  # Test core deposition
+  - ansible-playbook --inventory-file=tests/inventory tests/test_core_server_deposition.yml
+
+  - >
+    ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
+                     tests/test_core_server_deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
         && (echo 'Idempotence test: pass' && exit 0) \
         || (echo 'Idempotence test: fail' && exit 1)

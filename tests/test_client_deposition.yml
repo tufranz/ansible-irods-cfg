@@ -1,0 +1,36 @@
+---
+- name: test that client configuration file is placed correctly by default
+  hosts: localhost
+  become: true
+  tasks:
+    - import_role:
+        name: ../../ansible-irods-cfg
+        tasks_from: irods_environment.yml
+
+    - name: check irods_environment.json deposition
+      stat:
+        path: /home/irods/.irods/irods_environment.json
+      register: response
+      failed_when: >
+        not response.stat.exists
+        or response.stat.pw_name != 'irods'
+        or response.stat.gr_name != 'irods'
+
+- name: test that client configuration file is placed in custom location
+  hosts: localhost
+  become: true
+  vars:
+    irods_cfg_chown: false
+    irods_cfg_environment_file: tmp/ie.json
+  tasks:
+    - import_role:
+        name: ../../ansible-irods-cfg
+        tasks_from: irods_environment.yml
+
+    - name: check ie.json deposition
+      stat:
+        path: /tmp/ie.json
+      register: response
+      failed_when: not response.stat.exists
+        or response.stat.pw_name == 'irods'
+        or response.stat.gr_name == 'irods'
