@@ -1,5 +1,5 @@
 irods-cfg
-================
+=========
 [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg)
 [![Ansible Galaxy](https://img.shields.io/badge/role-cyverse--ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/cyverse-ansible/irods-cfg/)
 
@@ -16,15 +16,38 @@ configuration files.
 * var/lib/irods/.odbc.ini
 * var/lib/irods/.pgpass
 
-This role contains one task file, `init_zone_user.yml`, that is not part of the
-main tasks. It can be used through `include_role` or `import_role` to initialize
-the iRODS zone user.
-
 
 Requirements
 ------------
 
 iRODS 4.1.10 is installed.
+
+
+Tasks Files
+-----------
+
+The __main.yml__ tasks file that is called by default performs the same tasks
+as server.yml, i.e., it deploys the set of files required by an iRODS server.
+
+There are two tier-specific tasks files. The __client.yml__ file deploys the
+configuration files required by a client, e.g., the iCommands. Currently, it
+deploys the `irods_environment.json` file. The __server.yml__ file deploys the
+configuration files required by an iRODS server.
+
+For each iRODS configuration file there is a corresponding tasks file that
+deploys only that configuration file. The __irods_environment.yml__ file deploys
+the clerver or client configuration file, `irods_environment.json` by default.
+In the `etc/irods/` directory, __database_config.yml__ deploys
+`database_config.json`, __host_access_control_config.yml__ deploys
+`host_access_control_config.json`, __hosts_config.yml__ deploys
+`hosts_config.json`, __server_config.yml__ deploys `server_config.json`, and
+`service_account.yml` deploys `service_account.config`. In the `var/lib/irods`
+directory, __odbc.yml__ deploys `.odbc.ini`, and __pgpass.yml__ deploys
+`pgpass.yml`.
+
+The __init_zone_user.yml__ tasks file is not part of main.yml or either of the
+tier-specific tasks files. It initializes the iRODS zone user on the inventory
+host.
 
 
 Role Variables
@@ -165,6 +188,25 @@ Dependencies
 
 Example Playbooks
 -----------------
+
+    # Client
+    - hosts: webdav
+      vars:
+        irods_cfg_environment_file: etc/httpd/irods/irods_environment.json
+        irods_cfg_authentication_file: /etc/httpd/irods/.irodsA
+        irods_cfg_chown: false
+        irods_cfg_host: ares.iplantcollaborative.org
+        irods_cfg_zone_name: iplant
+        irods_cfg_zone_user: davrods_svc
+        irods_cfg_home: /iplant
+      tasks:
+        - include_role:
+            name: cyverse-ansible.irods-cfg
+            tasks_from: "{{ item }}"
+          with_items:
+            - client.yml
+            - init_zone_user.yml
+
     # IES
     - hosts: ies
       roles:
