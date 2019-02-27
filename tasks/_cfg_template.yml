@@ -1,9 +1,9 @@
 ---
 # Variables:
-#   _cfg_template_dest_file  The path of the generated config file relative to 
-#                            then root directory
-#   _cfg_template_name       (OPTIONAL) The name of the source template. The
-#                            default is {{ _cfg_template_dest_name }}.j2
+#  _cfg_template_dest_file  The path of the generated config file relative to
+#                           then root directory.
+#  _cfg_template_name       (OPTIONAL) The name of the source template. The
+#                           default is {{ _cfg_template_dest_name }}.j2.
 
 - name: ensure parent directory exists exists
   file:
