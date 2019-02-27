@@ -109,7 +109,7 @@ _irods_cfg_default_temporary_password_lifetime: "{{
 _irods_cfg_environment_file: "{{
   irods_cfg_environment_file if irods_cfg_environment_file else
   _irods_cfg_environment_file_default
-    | default('home/' ~ _irods_cfg_service_account_name ~ '/.irods/irods_environment.json') }}"
+    | default('home/' ~ _irods_cfg_system_account_name ~ '/.irods/irods_environment.json') }}"
 
 _irods_cfg_environment_variables: "{{
   irods_cfg_environment_variables if irods_cfg_environment_variables else {} }}"
@@ -220,12 +220,12 @@ _irods_cfg_server_port_range_end: "{{
 _irods_cfg_server_port_range_start: "{{
   irods_cfg_server_port_range_start if irods_cfg_server_port_range_start else 20000 }}"
 
-_irods_cfg_service_account_name: "{{
-  irods_cfg_service_account_name if irods_cfg_service_account_name else 'irods' }}"
+_irods_cfg_system_account_name: "{{
+  irods_cfg_system_account_name if irods_cfg_system_account_name else 'irods' }}"
 
-_irods_cfg_service_group_name: "{{
-  irods_cfg_service_group_name if irods_cfg_service_group_name else
-  _irods_cfg_service_account_name }}"
+_irods_cfg_system_group_name: "{{
+  irods_cfg_system_group_name if irods_cfg_system_group_name else
+  _irods_cfg_system_account_name }}"
 
 _irods_cfg_ssl_ca_certificate_file: "{{
   irods_cfg_ssl_ca_certificate_file if irods_cfg_ssl_ca_certificate_file else none }}"
