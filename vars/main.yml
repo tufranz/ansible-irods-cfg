@@ -242,19 +242,6 @@ _irods_cfg_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }
 _irods_cfg_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"
 
 
-_irods_cfg_odbc_properties:
-  mysql:
-    Options: 2
-
-  oracle: {}
-
-  postgres:
-    CommLog: 0
-    Debug: 0
-    Ksqo: 0
-    ReadOnly: 'no'
-
-
 # This is the value of _irods_cfg_icat if the server being configured is an IES
 __icat_guess:
   catalog_database_type: "{{ irods_cfg_icat.catalog_database_type | default('postgres') }}"

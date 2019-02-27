@@ -1,0 +1,6 @@
+---
+_dbms_specific_odbc_properties:
+  CommLog: 0
+  Debug: 0
+  Ksqo: 0
+  ReadOnly: 'no'
