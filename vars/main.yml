@@ -39,44 +39,44 @@ _irods_cfg_authentication_file: "{{
 
 _irods_cfg_client_default_hash_scheme: "{{
   irods_cfg_client_default_hash_scheme if irods_cfg_client_default_hash_scheme else
-  _irods_cfg_client_default_hash_scheme_default | default(none) }}"
+  _client_default_hash_scheme_default | default(none) }}"
 
 _irods_cfg_client_default_resource: "{{
   irods_cfg_client_default_resource if irods_cfg_client_default_resource else
-  _irods_cfg_client_default_resource_default | default(none) }}"
+  _client_default_resource_default | default(none) }}"
 
 _irods_cfg_client_encryption_algorithm: "{{
   irods_cfg_client_encryption_algorithm if irods_cfg_client_encryption_algorithm else
-  _irods_cfg_client_encryption_algorithm_default | default(none) }}"
+  _client_encryption_algorithm_default | default(none) }}"
 
 _irods_cfg_client_encryption_key_size: "{{
   irods_cfg_client_encryption_key_size
     if irods_cfg_client_encryption_key_size or irods_cfg_client_encryption_key_size == 0 else
-  _irods_cfg_client_encryption_key_size_default | default(none) }}"
+  _client_encryption_key_size_default | default(none) }}"
 
 _irods_cfg_client_encryption_num_hash_rounds: "{{
   irods_cfg_client_encryption_num_hash_rounds
     if irods_cfg_client_encryption_num_hash_rounds
        or irods_cfg_client_encryption_num_hash_rounds == 0 else
-  _irods_cfg_client_encryption_num_hash_rounds_default | default(none) }}"
+  _client_encryption_num_hash_rounds_default | default(none) }}"
 
 _irods_cfg_client_encryption_salt_size: "{{
   irods_cfg_client_encryption_salt_size
     if irods_cfg_client_encryption_salt_size or irods_cfg_client_encryption_salt_size == 0 else
-  _irods_cfg_client_encryption_salt_size_default | default(none) }}"
+  _client_encryption_salt_size_default | default(none) }}"
 
 _irods_cfg_client_server_negotiation: "{{
   irods_cfg_client_server_negotiation if irods_cfg_client_server_negotiation else
   'off' if irods_cfg_client_server_negotiation == false else
-  _irods_cfg_client_server_negotiation_default | default(none) }}"
+  _client_server_negotiation_default | default(none) }}"
 
 _irods_cfg_client_server_policy: "{{
   irods_cfg_client_server_policy if irods_cfg_client_server_policy else
-  _irods_cfg_client_server_policy_default | default(none) }}"
+  _client_server_policy_default | default(none) }}"
 
 _irods_cfg_chown: "{{ irods_cfg_chown if irods_cfg_chown or irods_cfg_chown == false else true }}"
 
-_irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _irods_cfg_cwd_default | default(none) }}"
+_irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _cwd_default | default(none) }}"
 
 _irods_cfg_debug: "{{ irods_cfg_debug if irods_cfg_debug else none }}"
 
@@ -108,7 +108,7 @@ _irods_cfg_default_temporary_password_lifetime: "{{
 
 _irods_cfg_environment_file: "{{
   irods_cfg_environment_file if irods_cfg_environment_file else
-  _irods_cfg_environment_file_default
+  _environment_file_default
     | default('home/' ~ _irods_cfg_system_account_name ~ '/.irods/irods_environment.json') }}"
 
 _irods_cfg_environment_variables: "{{
@@ -120,8 +120,7 @@ _irods_cfg_for_server: "{{ irods_cfg_for_server if irods_cfg_for_server else fal
 
 _irods_cfg_gsi_server_dn: "{{ irods_cfg_gsi_server_dn if irods_cfg_gsi_server_dn else none }}"
 
-_irods_cfg_home: "{{
-  irods_cfg_home if irods_cfg_home else _irods_cfg_home_default | default(none) }}"
+_irods_cfg_home: "{{ irods_cfg_home if irods_cfg_home else _home_default | default(none) }}"
 
 _irods_cfg_host: "{{ irods_cfg_host if irods_cfg_host else inventory_hostname }}"
 
@@ -137,7 +136,7 @@ _irods_cfg_log_level: "{{ irods_cfg_log_level if irods_cfg_log_level else none }
 
 _irods_cfg_match_hash_policy: "{{
   irods_cfg_match_hash_policy if irods_cfg_match_hash_policy else
-  _irods_cfg_match_hash_policy_default | default(none) }}"
+  _match_hash_policy_default | default(none) }}"
 
 _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes: "{{
   irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes
@@ -205,11 +204,11 @@ _irods_cfg_server_control_plane_encryption_num_hash_rounds: "{{
 
 _irods_cfg_server_control_plane_key: "{{
   irods_cfg_server_control_plane_key if irods_cfg_server_control_plane_key else
-  _irods_cfg_server_control_plane_key_default | default(none) }}"
+  _server_control_plane_key_default | default(none) }}"
 
 _irods_cfg_server_control_plane_port: "{{
   irods_cfg_server_control_plane_port if irods_cfg_server_control_plane_port else
-  _irods_cfg_server_control_plane_port_default | default(none) }}"
+  _server_control_plane_port_default | default(none) }}"
 
 _irods_cfg_server_control_plane_timeout: "{{
   irods_cfg_server_control_plane_timeout if irods_cfg_server_control_plane_timeout else 10000 }}"
@@ -263,7 +262,7 @@ _irods_cfg_xmsg_port: "{{ irods_cfg_xmsg_port if irods_cfg_xmsg_port else none }
 
 _irods_cfg_zone_auth_scheme: "{{
   irods_cfg_zone_auth_scheme if irods_cfg_zone_auth_scheme else
-  _irods_cfg_zone_auth_scheme_default | default(none) }}"
+  _zone_auth_scheme_default | default(none) }}"
 
 _irods_cfg_zone_key: "{{ irods_cfg_zone_key if irods_cfg_zone_key else 'TEMPORARY_zone_key' }}"
 

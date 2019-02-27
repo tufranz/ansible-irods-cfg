@@ -2,29 +2,28 @@
 # These are the config file specific defaults for the server side
 # irods_environment.json
 
-_irods_cfg_client_default_hash_scheme_default: "{{ _irods_cfg_default_hash_scheme }}"
+_client_default_hash_scheme_default: "{{ _irods_cfg_default_hash_scheme }}"
 
-_irods_cfg_client_default_resource_default: "{{
+_client_default_resource_default: "{{
   _irods_cfg_default_resource_name if _irods_cfg_default_resource_name else 'demoResc' }}"
 
-_irods_cfg_client_encryption_algorithm_default: "{{
-  _irods_cfg_server_control_plane_encryption_algorithm }}"
+_client_encryption_algorithm_default: "{{ _irods_cfg_server_control_plane_encryption_algorithm }}"
 
-_irods_cfg_client_encryption_key_size_default: 32
+_client_encryption_key_size_default: 32
 
-_irods_cfg_client_encryption_num_hash_rounds_default: "{{
+_client_encryption_num_hash_rounds_default: "{{
   _irods_cfg_server_control_plane_encryption_num_hash_rounds }}"
 
-_irods_cfg_client_encryption_salt_size_default: 8
+_client_encryption_salt_size_default: 8
 
-_irods_cfg_client_server_negotiation_default: request_server_negotiation
+_client_server_negotiation_default: request_server_negotiation
 
-_irods_cfg_client_server_policy_default: CS_NEG_DONT_CARE
+_client_server_policy_default: CS_NEG_DONT_CARE
 
-_irods_cfg_cwd_default: "{{ _irods_cfg_home }}"
+_cwd_default: "{{ _irods_cfg_home }}"
 
-_irods_cfg_environment_file_default: var/lib/irods/.irods/irods_environment.json
+_environment_file_default: var/lib/irods/.irods/irods_environment.json
 
-_irods_cfg_home_default: "{{ '/' ~ _irods_cfg_zone_name ~ '/home/' ~ _irods_cfg_zone_user }}"
+_home_default: "{{ '/' ~ _irods_cfg_zone_name ~ '/home/' ~ _irods_cfg_zone_user }}"
 
-_irods_cfg_match_hash_policy_default: compatible
+_match_hash_policy_default: compatible
