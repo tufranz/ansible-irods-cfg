@@ -1,6 +1,6 @@
 ---
 - import_playbook: test_templates.yml
-- import_playbook: test_service_own.yml
+- import_playbook: test_system_account_own.yml
 - import_playbook: test_cfg_template.yml
 - import_playbook: test_change_notify.yml
 - import_playbook: test_client_deposition.yml

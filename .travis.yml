@@ -40,7 +40,7 @@ script:
   - ansible-playbook --inventory-file=tests/inventory tests/test_templates.yml
 
   # Test service ownership flag
-  - ansible-playbook --inventory-file=tests/inventory tests/test_service_own.yml
+  - ansible-playbook --inventory-file=tests/inventory tests/test_system_account_own.yml
 
   # Remove test artifacts
   - sudo rm --force /etc/irods/*

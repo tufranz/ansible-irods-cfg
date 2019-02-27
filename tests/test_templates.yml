@@ -375,12 +375,12 @@
           - server_config.xmsg_port == 3
 
 
-- name: test custom service account name
+- name: test custom system account name
   hosts: localhost
   gather_facts: false
   vars_files:
     - ../defaults/main.yml
-    - vars/service_account_name.yml
+    - vars/system_account_name.yml
     - ../vars/main.yml
   vars:
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
@@ -392,12 +392,12 @@
           - service_account is search('IRODS_SERVICE_GROUP_NAME=custom')
 
 
-- name: test custom service group name
+- name: test custom system group name
   hosts: localhost
   gather_facts: false
   vars_files:
     - ../defaults/main.yml
-    - vars/service_group_name.yml
+    - vars/system_group_name.yml
     - ../vars/main.yml
   vars:
     service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"

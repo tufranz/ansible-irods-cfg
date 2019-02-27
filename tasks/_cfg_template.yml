@@ -10,9 +10,10 @@
     dest: "{{ (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
     state: directory
 
-- include_tasks: _service_own.yml
+- include_tasks: _system_account_own.yml
   vars:
-    _service_own_path: "{{ (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
+    _system_account_own_path: "{{
+      (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
 
 - name: generate {{ _cfg_template_dest_name }}
   template:
@@ -21,6 +22,6 @@
   notify:
     - changed config
 
-- include_tasks: _service_own.yml
+- include_tasks: _system_account_own.yml
   vars:
-    _service_own_path: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_file }}"
+    _system_account_own_path: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_file }}"

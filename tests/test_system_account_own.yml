@@ -10,10 +10,10 @@
 
     - include_role:
         name: ../../ansible-irods-cfg
-        tasks_from: _service_own.yml
+        tasks_from: _system_account_own.yml
       vars:
         irods_cfg_chown: false
-        _service_own_path: /etc/irods/not_owner_test
+        _system_account_own_path: /etc/irods/not_owner_test
 
     - name: verify file not owned
       stat:
@@ -28,10 +28,10 @@
 
     - include_role:
         name: ../../ansible-irods-cfg
-        tasks_from: _service_own.yml
+        tasks_from: _system_account_own.yml
       vars:
         irods_cfg_chown: true
-        _service_own_path: /etc/irods/owner_test
+        _system_account_own_path: /etc/irods/owner_test
 
     - name: verify file is owned
       stat:
