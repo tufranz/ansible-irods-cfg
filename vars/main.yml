@@ -1,37 +1,4 @@
 ---
-# This is the value of _irods_cfg_icat if the server being configured is an IES
-__irods_cfg_icat_guess:
-  catalog_database_type: "{{
-    irods_cfg_icat.catalog_database_type
-      if irods_cfg_icat.catalog_database_type is defined
-         and irods_cfg_icat.catalog_database_type else
-    'postgres' }}"
-  db_host: "{{
-    irods_cfg_icat.db_host if irods_cfg_icat.db_host is defined and irods_cfg_icat.db_host else
-    'localhost' }}"
-  db_name: "{{
-    irods_cfg_icat.db_name if irods_cfg_icat.db_name is defined and irods_cfg_icat.db_name else
-    'ICAT' }}"
-  db_odbc_type: "{{
-    irods_cfg_icat.db_odbc_type
-      if irods_cfg_icat.db_odbc_type is defined and irods_cfg_icat.db_odbc_type else
-    'unix' }}"
-  db_password: "{{
-    irods_cfg_icat.db_password
-      if irods_cfg_icat.db_password is defined and irods_cfg_icat.db_password else
-    'testpassword' }}"
-  db_port: "{{
-    irods_cfg_icat.db_port if irods_cfg_icat.db_port is defined and irods_cfg_icat.db_port else
-    5432 }}"
-  db_username: "{{
-    irods_cfg_icat.db_username
-      if irods_cfg_icat.db_username is defined and irods_cfg_icat.db_username else
-    'irods' }}"
-  odbc_driver: "{{
-    irods_cfg_icat.odbc_driver
-      if irods_cfg_icat.odbc_driver is defined and irods_cfg_icat.odbc_driver else
-    none }}"
-
 _irods_cfg_access_entries: "{{ irods_cfg_access_entries if irods_cfg_access_entries else [] }}"
 
 _irods_cfg_authentication_file: "{{
@@ -126,7 +93,7 @@ _irods_cfg_host: "{{ irods_cfg_host if irods_cfg_host else inventory_hostname }}
 
 _irods_cfg_host_entries: "{{ irods_cfg_host_entries if irods_cfg_host_entries else [] }}"
 
-_irods_cfg_icat: "{{ __irods_cfg_icat_guess if irods_cfg_icat is mapping else none }}"
+_irods_cfg_icat: "{{ __icat_guess if irods_cfg_icat is mapping else none }}"
 
 _irods_cfg_icat_host: "{{ irods_cfg_icat_host if irods_cfg_icat_host else _irods_cfg_host }}"
 
@@ -274,6 +241,7 @@ _irods_cfg_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }
 
 _irods_cfg_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"
 
+
 _irods_cfg_odbc_properties:
   base:
     Database: "{{ _irods_cfg_icat.db_name }}"
@@ -290,3 +258,15 @@ _irods_cfg_odbc_properties:
     Debug: 0
     Ksqo: 0
     ReadOnly: 'no'
+
+
+# This is the value of _irods_cfg_icat if the server being configured is an IES
+__icat_guess:
+  catalog_database_type: "{{ irods_cfg_icat.catalog_database_type | default('postgres') }}"
+  db_host: "{{ irods_cfg_icat.db_host | default('localhost') }}"
+  db_name: "{{ irods_cfg_icat.db_name | default('ICAT') }}"
+  db_odbc_type: "{{ irods_cfg_icat.db_odbc_type | default('unix') }}"
+  db_password: "{{ irods_cfg_icat.db_password | default('testpassword') }}"
+  db_port: "{{ irods_cfg_icat.db_port | default(5432) }}"
+  db_username: "{{ irods_cfg_icat.db_username | default('irods') }}"
+  odbc_driver: "{{ irods_cfg_icat.odbc_driver | default(none) }}"
