@@ -1,5 +1,5 @@
 ---
-- name: initialize clerver connection
+- name: initialize connection to server
   shell: |
     bak='{{ irods_cfg_authentication_file }}.bak'
     trap "rm --force '$bak'" EXIT
