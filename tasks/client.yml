@@ -1,0 +1,4 @@
+---
+- include_tasks: irods_environment.yml
+  vars:
+    _irods_cfg_for_server: false

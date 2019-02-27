@@ -5,7 +5,7 @@
   tasks:
     - import_role:
         name: ../../ansible-irods-cfg
-        tasks_from: irods_environment.yml
+        tasks_from: client.yml
 
     - name: check irods_environment.json deposition
       stat:
@@ -25,7 +25,7 @@
   tasks:
     - import_role:
         name: ../../ansible-irods-cfg
-        tasks_from: irods_environment.yml
+        tasks_from: client.yml
 
     - name: check ie.json deposition
       stat:
