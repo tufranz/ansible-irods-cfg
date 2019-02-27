@@ -52,12 +52,8 @@
         esac
 
         printf '%s' "$odbc" | head --lines 1
-      register: result
+      register: __result
       changed_when: false
-
-    - set_fact:
-        driver: "{{ _irods_cfg_icat.odbc_driver if _irods_cfg_icat.odbc_driver else
-                    result.stdout }}"
 
     - include_role:
         name: cyverse.unixodbc-cfg
@@ -68,7 +64,8 @@
         unixodbc_cfg_group: "{{ _irods_cfg_system_group_name if _irods_cfg_chown else None }}"
         unixodbc_cfg_sources:
           - source_name: "{{ _irods_cfg_icat.catalog_database_type }}"
-            driver_file: "{{ driver }}"
+            driver_file: "{{
+              _irods_cfg_icat.odbc_driver if _irods_cfg_icat.odbc_driver else __result.stdout }}"
             driver_properties: "{{
               _irods_cfg_odbc_properties.base
               | combine(_irods_cfg_odbc_properties[_irods_cfg_icat.catalog_database_type]) }}"
