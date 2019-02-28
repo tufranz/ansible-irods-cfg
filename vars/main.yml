@@ -182,12 +182,6 @@ _server_port_range_end: "{{
 _server_port_range_start: "{{
   irods_cfg_server_port_range_start if irods_cfg_server_port_range_start else 20000 }}"
 
-_system_account_name: "{{
-  irods_cfg_system_account_name if irods_cfg_system_account_name else 'irods' }}"
-
-_system_group_name: "{{
-  irods_cfg_system_group_name if irods_cfg_system_group_name else _system_account_name }}"
-
 _ssl_ca_certificate_file: "{{
   irods_cfg_ssl_ca_certificate_file if irods_cfg_ssl_ca_certificate_file else none }}"
 
@@ -203,6 +197,12 @@ _ssl_certificate_key_file: "{{
 _ssl_dh_params_file: "{{ irods_cfg_ssl_dh_params_file if irods_cfg_ssl_dh_params_file else none }}"
 
 _ssl_verify_server: "{{ irods_cfg_ssl_verify_server if irods_cfg_ssl_verify_server else none }}"
+
+_system_account_name: "{{
+  irods_cfg_system_account_name if irods_cfg_system_account_name else 'irods' }}"
+
+_system_group_name: "{{
+  irods_cfg_system_group_name if irods_cfg_system_group_name else _system_account_name }}"
 
 _transfer_buffer_size_for_parallel_transfer: "{{
   irods_cfg_transfer_buffer_size_for_parallel_transfer
