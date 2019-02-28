@@ -3,8 +3,8 @@
 #  _system_account_own_path  the path to give the system account ownership to.
 
 - name: ensure service account owns {{ _system_account_own_path }}
-  when: _irods_cfg_chown
+  when: _chown
   file:
     dest: "{{ _system_account_own_path }}"
-    owner: "{{ _irods_cfg_system_account_name }}"
-    group: "{{ _irods_cfg_system_group_name }}"
+    owner: "{{ _system_account_name }}"
+    group: "{{ _system_group_name }}"

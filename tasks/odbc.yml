@@ -1,21 +1,21 @@
 ---
-- when: _irods_cfg_icat is mapping
+- when: _icat is mapping
   block:
-    - include_vars: "{{ _irods_cfg_icat.catalog_database_type }}.yml"
+    - include_vars: "{{ _icat.catalog_database_type }}.yml"
 
     - name: locate ODBC driver file
-      when: not _irods_cfg_icat.odbc_driver
+      when: not _icat.odbc_driver
       shell: |
-        case '{{ _irods_cfg_icat.catalog_database_type }}' in
+        case '{{ _icat.catalog_database_type }}' in
           mysql)
             if [ '{{ ansible_distribution }}' = CentOS \
                  -a "{{ ansible_distribution_version is version_compare('7', '<') }}" = True ]
             then
-              odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name libmyodbc5.so | grep 64)
+              odbc=$(find '{{ _root_dir }}'/usr -name libmyodbc5.so | grep 64)
 
               if [ -z "$odbc" ]
               then
-                odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name 'libmyodbc*.so')
+                odbc=$(find '{{ _root_dir }}'/usr -name 'libmyodbc*.so')
               fi
             fi
             ;;
@@ -23,7 +23,7 @@
           oracle)
             if [ -z "$ORACLE_HOME" ]
             then
-              ORACLE_HOME='{{ _irods_cfg_root_dir }}'/usr/lib/oracle/11.2/client64
+              ORACLE_HOME='{{ _root_dir }}'/usr/lib/oracle/11.2/client64
             fi
 
             odbc="$ORACLE_HOME"/lib/libsqora.so.11.1
@@ -33,20 +33,19 @@
             if [ '{{ ansible_distribution }}' = CentOS \
                  -a "{{ ansible_distribution_version is version_compare('6.2', '<') }}" = True ]
             then
-              odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name libodbcpsql.so | grep 64)
+              odbc=$(find '{{ _root_dir }}'/usr -name libodbcpsql.so | grep 64)
 
               if [ -z "$odbc" ]
               then
-                odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name libodbcpsql.so)
+                odbc=$(find '{{ _root_dir }}'/usr -name libodbcpsql.so)
               fi
 
               if [ -z "$odbc" ]
               then
-                odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name 'psqlodbc*.so')
+                odbc=$(find '{{ _root_dir }}'/usr -name 'psqlodbc*.so')
               fi
             else
-              odbc=$(find '{{ _irods_cfg_root_dir }}'/usr -name 'psqlodbc*.so' \
-                       | grep --invert-match 'w\.so')
+              odbc=$(find '{{ _root_dir }}'/usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
             fi
             ;;
           *)
@@ -62,15 +61,14 @@
         tasks_from: odbc.yml
       vars:
         __base_driver_properties:
-          Database: "{{ _irods_cfg_icat.db_name }}"
-          Port: "{{ _irods_cfg_icat.db_port }}"
-          Servername: "{{ _irods_cfg_icat.db_host }}"
-        unixodbc_cfg_odbcini_path: "{{ _irods_cfg_root_dir }}/var/lib/irods"
-        unixodbc_cfg_user: "{{ _irods_cfg_system_account_name if _irods_cfg_chown else None }}"
-        unixodbc_cfg_group: "{{ _irods_cfg_system_group_name if _irods_cfg_chown else None }}"
+          Database: "{{ _icat.db_name }}"
+          Port: "{{ _icat.db_port }}"
+          Servername: "{{ _icat.db_host }}"
+        unixodbc_cfg_odbcini_path: "{{ _root_dir }}/var/lib/irods"
+        unixodbc_cfg_user: "{{ _system_account_name if _chown else None }}"
+        unixodbc_cfg_group: "{{ _system_group_name if _chown else None }}"
         unixodbc_cfg_sources:
-          - source_name: "{{ _irods_cfg_icat.catalog_database_type }}"
-            driver_file: "{{
-              _irods_cfg_icat.odbc_driver if _irods_cfg_icat.odbc_driver else __result.stdout }}"
+          - source_name: "{{ _icat.catalog_database_type }}"
+            driver_file: "{{ _icat.odbc_driver if _icat.odbc_driver else __result.stdout }}"
             driver_properties: "{{
               __base_driver_properties | combine(_dbms_specific_odbc_properties) }}"

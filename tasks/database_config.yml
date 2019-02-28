@@ -1,12 +1,12 @@
 ---
-- when: _irods_cfg_icat is mapping
+- when: _icat is mapping
   block:
     - name: validate database config params
-      when: _irods_cfg_validate
+      when: _validate
       assert:
         that:
-          - _irods_cfg_icat.catalog_database_type in ('mysql', 'oracle', 'postgres')
-          - _irods_cfg_icat.db_port | int >= 1 and _irods_cfg_icat.db_port | int <= 65535
+          - _icat.catalog_database_type in ('mysql', 'oracle', 'postgres')
+          - _icat.db_port | int >= 1 and _icat.db_port | int <= 65535
 
     - include_tasks: _cfg_template.yml
       vars:

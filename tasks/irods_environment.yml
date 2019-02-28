@@ -1,50 +1,44 @@
 ---
 - include_vars: irods_environment_server.yml
-  when: _irods_cfg_for_server
+  when: _for_server
 
-- when: _irods_cfg_validate
+- when: _validate
   ignore_errors: true
   block:
     - name: validate core variables for irods_environment
       assert:
         that:
-          - _irods_cfg_zone_port | int >= 1 and _irods_cfg_zone_port <= 65535
+          - _zone_port | int >= 1 and _zone_port <= 65535
 
     - name: validate variables for irods_environment
-      when: _irods_cfg_for_server
+      when: _for_server
       assert:
         that:
-          - _irods_cfg_client_server_negotiation in ['off', 'request_server_negotiation']
-          - "_irods_cfg_client_server_policy
-             in ['CS_NEG_DONT_CARE', 'CS_NEG_REFUSE', 'CS_NEG_REQUIRE']"
-          - _irods_cfg_client_default_hash_scheme in ['MD5', 'SHA256']
-          - _irods_cfg_client_encryption_key_size | int >= 0
-          - _irods_cfg_client_encryption_num_hash_rounds | int >= 0
-          - _irods_cfg_client_encryption_salt_size | int >= 0
-          - _irods_cfg_cwd is match('^/..*')
-          - _irods_cfg_home is match('/..*')
-          - "not _irods_cfg_log_level
-             or (_irods_cfg_log_level | int >= 1 and _irods_cfg_log_level | int <= 10)"
-          - _irods_cfg_match_hash_policy in ['compatible', 'strict']
-          - 'not _irods_cfg_server_control_plane_key
-             or _irods_cfg_server_control_plane_key | length == 32'
-          - 'not _irods_cfg_server_control_plane_port
-             or (_irods_cfg_server_control_plane_port | int >= 1
-                 and _irods_cfg_server_control_plane_port | int <= 65535
-                 and _irods_cfg_server_control_plane_port | int != _irods_cfg_zone_port | int)'
-          - "not _irods_cfg_ssl_verify_server
-             or _irods_cfg_ssl_verify_server in ['cert', 'hostname', 'none']"
-          - 'not _irods_cfg_xmsg_port
-             or (_irods_cfg_xmsg_port | int >= 1
-                 and _irods_cfg_xmsg_port | int <= 65535
-                 and _irods_cfg_xmsg_port | int != _irods_cfg_zone_port | int
-                 and _irods_cfg_xmsg_port | int != _irods_cfg_server_control_plane_port | int)'
-          - "not _irods_cfg_zone_auth_scheme
-             or _irods_cfg_zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']"
+          - _client_server_negotiation in ['off', 'request_server_negotiation']
+          - _client_server_policy in ['CS_NEG_DONT_CARE', 'CS_NEG_REFUSE', 'CS_NEG_REQUIRE']
+          - _client_default_hash_scheme in ['MD5', 'SHA256']
+          - _client_encryption_key_size | int >= 0
+          - _client_encryption_num_hash_rounds | int >= 0
+          - _client_encryption_salt_size | int >= 0
+          - _cwd is match('^/..*')
+          - _home is match('/..*')
+          - not _log_level or (_log_level | int >= 1 and _log_level | int <= 10)
+          - _match_hash_policy in ['compatible', 'strict']
+          - not _server_control_plane_key or _server_control_plane_key | length == 32
+          - 'not _server_control_plane_port
+             or (_server_control_plane_port | int >= 1
+                 and _server_control_plane_port | int <= 65535
+                 and _server_control_plane_port | int != _zone_port | int)'
+          - not _ssl_verify_server or _ssl_verify_server in ['cert', 'hostname', 'none']
+          - 'not _xmsg_port
+             or (_xmsg_port | int >= 1 and _xmsg_port | int <= 65535
+                 and _xmsg_port | int != _zone_port | int
+                 and _xmsg_port | int != _server_control_plane_port | int)'
+          - not _zone_auth_scheme or _zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
 
 - include_tasks: _cfg_template.yml
   vars:
-    _cfg_template_dest_file: "{{ _irods_cfg_environment_file }}"
+    _cfg_template_dest_file: "{{ _environment_file }}"
     _cfg_template_name: irods_environment.json.j2
 
 - meta: flush_handlers

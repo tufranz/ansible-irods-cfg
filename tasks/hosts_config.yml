@@ -1,7 +1,7 @@
 ---
 - name: validate address type for hosts_config
-  when: _irods_cfg_validate
-  with_items: "{{ _irods_cfg_host_entries }}"
+  when: _validate
+  with_items: "{{ _host_entries }}"
   assert:
     that:
       - item.address_type == 'local' or item.address_type == 'remote'

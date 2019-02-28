@@ -1,6 +1,6 @@
 {
   "access_entries": [
-{% for entry in _irods_cfg_access_entries %}
+{% for entry in _access_entries %}
     {
       "address": "{{ entry.address }}",
       "group": "{{ entry.group }}",
@@ -8,5 +8,6 @@
       "user": "{{ entry.user }}"
     }{% if not loop.last %},{% endif %}
 {% endfor %}
+
   ]
 }

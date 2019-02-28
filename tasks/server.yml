@@ -11,7 +11,7 @@
 
 - include_tasks: irods_environment.yml
   vars:
-    _irods_cfg_for_server: true
+    _for_server: true
 
 - import_tasks: server_config.yml
 

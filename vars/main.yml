@@ -1,248 +1,241 @@
 ---
-_irods_cfg_access_entries: "{{ irods_cfg_access_entries if irods_cfg_access_entries else [] }}"
+_access_entries: "{{ irods_cfg_access_entries if irods_cfg_access_entries else [] }}"
 
-_irods_cfg_authentication_file: "{{
+_authentication_file: "{{
   irods_cfg_authentication_file if irods_cfg_authentication_file else none }}"
 
-_irods_cfg_client_default_hash_scheme: "{{
+_client_default_hash_scheme: "{{
   irods_cfg_client_default_hash_scheme if irods_cfg_client_default_hash_scheme else
   _client_default_hash_scheme_default | default(none) }}"
 
-_irods_cfg_client_default_resource: "{{
+_client_default_resource: "{{
   irods_cfg_client_default_resource if irods_cfg_client_default_resource else
   _client_default_resource_default | default(none) }}"
 
-_irods_cfg_client_encryption_algorithm: "{{
+_client_encryption_algorithm: "{{
   irods_cfg_client_encryption_algorithm if irods_cfg_client_encryption_algorithm else
   _client_encryption_algorithm_default | default(none) }}"
 
-_irods_cfg_client_encryption_key_size: "{{
+_client_encryption_key_size: "{{
   irods_cfg_client_encryption_key_size
     if irods_cfg_client_encryption_key_size or irods_cfg_client_encryption_key_size == 0 else
   _client_encryption_key_size_default | default(none) }}"
 
-_irods_cfg_client_encryption_num_hash_rounds: "{{
+_client_encryption_num_hash_rounds: "{{
   irods_cfg_client_encryption_num_hash_rounds
     if irods_cfg_client_encryption_num_hash_rounds
        or irods_cfg_client_encryption_num_hash_rounds == 0 else
   _client_encryption_num_hash_rounds_default | default(none) }}"
 
-_irods_cfg_client_encryption_salt_size: "{{
+_client_encryption_salt_size: "{{
   irods_cfg_client_encryption_salt_size
     if irods_cfg_client_encryption_salt_size or irods_cfg_client_encryption_salt_size == 0 else
   _client_encryption_salt_size_default | default(none) }}"
 
-_irods_cfg_client_server_negotiation: "{{
+_client_server_negotiation: "{{
   irods_cfg_client_server_negotiation if irods_cfg_client_server_negotiation else
   'off' if irods_cfg_client_server_negotiation == false else
   _client_server_negotiation_default | default(none) }}"
 
-_irods_cfg_client_server_policy: "{{
+_client_server_policy: "{{
   irods_cfg_client_server_policy if irods_cfg_client_server_policy else
   _client_server_policy_default | default(none) }}"
 
-_irods_cfg_chown: "{{ irods_cfg_chown if irods_cfg_chown or irods_cfg_chown == false else true }}"
+_chown: "{{ irods_cfg_chown if irods_cfg_chown or irods_cfg_chown == false else true }}"
 
-_irods_cfg_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _cwd_default | default(none) }}"
+_cwd: "{{ irods_cfg_cwd if irods_cfg_cwd else _cwd_default | default(none) }}"
 
-_irods_cfg_debug: "{{ irods_cfg_debug if irods_cfg_debug else none }}"
+_debug: "{{ irods_cfg_debug if irods_cfg_debug else none }}"
 
-_irods_cfg_default_dir_mode: "{{
-  irods_cfg_default_dir_mode if irods_cfg_default_dir_mode else '0750' }}"
+_default_dir_mode: "{{ irods_cfg_default_dir_mode if irods_cfg_default_dir_mode else '0750' }}"
 
-_irods_cfg_default_file_mode: "{{
-  irods_cfg_default_file_mode if irods_cfg_default_file_mode else '0600' }}"
+_default_file_mode: "{{ irods_cfg_default_file_mode if irods_cfg_default_file_mode else '0600' }}"
 
-_irods_cfg_default_hash_scheme: "{{
+_default_hash_scheme: "{{
   irods_cfg_default_hash_scheme if irods_cfg_default_hash_scheme else 'SHA256' }}"
 
-_irods_cfg_default_number_of_transfer_threads: "{{
+_default_number_of_transfer_threads: "{{
   irods_cfg_default_number_of_transfer_threads
     if irods_cfg_default_number_of_transfer_threads
        or irods_cfg_default_number_of_transfer_threads == 0 else
   none }}"
 
-_irods_cfg_default_resource_directory: "{{
+_default_resource_directory: "{{
   irods_cfg_default_resource_directory if irods_cfg_default_resource_directory else none }}"
 
-_irods_cfg_default_resource_name: "{{
+_default_resource_name: "{{
   irods_cfg_default_resource_name if irods_cfg_default_resource_name else none }}"
 
-_irods_cfg_default_temporary_password_lifetime: "{{
+_default_temporary_password_lifetime: "{{
   irods_cfg_default_temporary_password_lifetime
     if irods_cfg_default_temporary_password_lifetime else
   none }}"
 
-_irods_cfg_environment_file: "{{
+_environment_file: "{{
   irods_cfg_environment_file if irods_cfg_environment_file else
   _environment_file_default
-    | default('home/' ~ _irods_cfg_system_account_name ~ '/.irods/irods_environment.json') }}"
+    | default('home/' ~ _system_account_name ~ '/.irods/irods_environment.json') }}"
 
-_irods_cfg_environment_variables: "{{
+_environment_variables: "{{
   irods_cfg_environment_variables if irods_cfg_environment_variables else {} }}"
 
-_irods_cfg_federation: "{{ irods_cfg_federation if irods_cfg_federation else [] }}"
+_federation: "{{ irods_cfg_federation if irods_cfg_federation else [] }}"
 
-_irods_cfg_for_server: "{{ irods_cfg_for_server if irods_cfg_for_server else false }}"
+_for_server: "{{ irods_cfg_for_server if irods_cfg_for_server else false }}"
 
-_irods_cfg_gsi_server_dn: "{{ irods_cfg_gsi_server_dn if irods_cfg_gsi_server_dn else none }}"
+_gsi_server_dn: "{{ irods_cfg_gsi_server_dn if irods_cfg_gsi_server_dn else none }}"
 
-_irods_cfg_home: "{{ irods_cfg_home if irods_cfg_home else _home_default | default(none) }}"
+_home: "{{ irods_cfg_home if irods_cfg_home else _home_default | default(none) }}"
 
-_irods_cfg_host: "{{ irods_cfg_host if irods_cfg_host else inventory_hostname }}"
+_host: "{{ irods_cfg_host if irods_cfg_host else inventory_hostname }}"
 
-_irods_cfg_host_entries: "{{ irods_cfg_host_entries if irods_cfg_host_entries else [] }}"
+_host_entries: "{{ irods_cfg_host_entries if irods_cfg_host_entries else [] }}"
 
-_irods_cfg_icat: "{{ __icat_guess if irods_cfg_icat is mapping else none }}"
+_icat: "{{ __icat_guess if irods_cfg_icat is mapping else none }}"
 
-_irods_cfg_icat_host: "{{ irods_cfg_icat_host if irods_cfg_icat_host else _irods_cfg_host }}"
+_icat_host: "{{ irods_cfg_icat_host if irods_cfg_icat_host else _host }}"
 
-_irods_cfg_kerberos_name: "{{ irods_cfg_kerberos_name if irods_cfg_kerberos_name else none }}"
+_kerberos_name: "{{ irods_cfg_kerberos_name if irods_cfg_kerberos_name else none }}"
 
-_irods_cfg_log_level: "{{ irods_cfg_log_level if irods_cfg_log_level else none }}"
+_log_level: "{{ irods_cfg_log_level if irods_cfg_log_level else none }}"
 
-_irods_cfg_match_hash_policy: "{{
+_match_hash_policy: "{{
   irods_cfg_match_hash_policy if irods_cfg_match_hash_policy else
   _match_hash_policy_default | default(none) }}"
 
-_irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes: "{{
+_maximum_number_of_concurrent_rule_engine_server_processes: "{{
   irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes
     if irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes else
   none }}"
 
-_irods_cfg_maximum_size_for_single_buffer: "{{
+_maximum_size_for_single_buffer: "{{
   irods_cfg_maximum_size_for_single_buffer
     if irods_cfg_maximum_size_for_single_buffer
        or irods_cfg_maximum_size_for_single_buffer == 0 else
   none }}"
 
-_irods_cfg_maximum_temporary_password_lifetime: "{{
+_maximum_temporary_password_lifetime: "{{
   irods_cfg_maximum_temporary_password_lifetime
     if irods_cfg_maximum_temporary_password_lifetime else
   1000 }}"
 
-_irods_cfg_negotiation_key: "{{
+_negotiation_key: "{{
   irods_cfg_negotiation_key if irods_cfg_negotiation_key else 'TEMPORARY_32byte_negotiation_key' }}"
 
-_irods_cfg_pam_no_extend: "{{ irods_cfg_pam_no_extend if irods_cfg_pam_no_extend else none }}"
+_pam_no_extend: "{{ irods_cfg_pam_no_extend if irods_cfg_pam_no_extend else none }}"
 
-_irods_cfg_pam_password_length: "{{
+_pam_password_length: "{{
   irods_cfg_pam_password_length
     if irods_cfg_pam_password_length or irods_cfg_pam_password_length == 0 else
   none }}"
 
-_irods_cfg_pam_password_max_time: "{{
-  irods_cfg_pam_password_max_time if irods_cfg_pam_password_max_time else
-  none }}"
+_pam_password_max_time: "{{
+  irods_cfg_pam_password_max_time if irods_cfg_pam_password_max_time else none }}"
 
-_irods_cfg_pam_password_min_time: "{{
+_pam_password_min_time: "{{
   irods_cfg_pam_password_min_time if irods_cfg_pam_password_min_time else none }}"
 
-_irods_cfg_re_additional_data_variable_mappings: "{{
+_re_additional_data_variable_mappings: "{{
   irods_cfg_re_additional_data_variable_mappings
     if irods_cfg_re_additional_data_variable_mappings else
   [] }}"
 
-_irods_cfg_re_additional_function_name_mappings: "{{
+_re_additional_function_name_mappings: "{{
   irods_cfg_re_additional_function_name_mappings
     if irods_cfg_re_additional_function_name_mappings else
   [] }}"
 
-_irods_cfg_re_additional_rulebases: "{{
+_re_additional_rulebases: "{{
   irods_cfg_re_additional_rulebases if irods_cfg_re_additional_rulebases else [] }}"
 
-_irods_cfg_root_dir: "{{
-  (irods_cfg_root_dir | regex_replace('\\/$', '')) if irods_cfg_root_dir else '' }}"
+_root_dir: "{{ (irods_cfg_root_dir | regex_replace('\\/$', '')) if irods_cfg_root_dir else '' }}"
 
-_irods_cfg_schema_validation_base_uri: "{{
+_schema_validation_base_uri: "{{
   irods_cfg_schema_validation_base_uri if irods_cfg_schema_validation_base_uri else
   'https://schemas.irods.org/configuration' }}"
 
-_irods_cfg_server_control_plane_encryption_algorithm: "{{
+_server_control_plane_encryption_algorithm: "{{
   irods_cfg_server_control_plane_encryption_algorithm
     if irods_cfg_server_control_plane_encryption_algorithm else
   'AES-256-CBC' }}"
 
-_irods_cfg_server_control_plane_encryption_num_hash_rounds: "{{
+_server_control_plane_encryption_num_hash_rounds: "{{
   irods_cfg_server_control_plane_encryption_num_hash_rounds
     if irods_cfg_server_control_plane_encryption_num_hash_rounds
        or irods_cfg_server_control_plane_encryption_num_hash_rounds == 0 else
   16 }}"
 
-_irods_cfg_server_control_plane_key: "{{
+_server_control_plane_key: "{{
   irods_cfg_server_control_plane_key if irods_cfg_server_control_plane_key else
   _server_control_plane_key_default | default(none) }}"
 
-_irods_cfg_server_control_plane_port: "{{
+_server_control_plane_port: "{{
   irods_cfg_server_control_plane_port if irods_cfg_server_control_plane_port else
   _server_control_plane_port_default | default(none) }}"
 
-_irods_cfg_server_control_plane_timeout: "{{
+_server_control_plane_timeout: "{{
   irods_cfg_server_control_plane_timeout if irods_cfg_server_control_plane_timeout else 10000 }}"
 
-_irods_cfg_server_port_range_end: "{{
+_server_port_range_end: "{{
   irods_cfg_server_port_range_end if irods_cfg_server_port_range_end else 20199 }}"
 
-_irods_cfg_server_port_range_start: "{{
+_server_port_range_start: "{{
   irods_cfg_server_port_range_start if irods_cfg_server_port_range_start else 20000 }}"
 
-_irods_cfg_system_account_name: "{{
+_system_account_name: "{{
   irods_cfg_system_account_name if irods_cfg_system_account_name else 'irods' }}"
 
-_irods_cfg_system_group_name: "{{
-  irods_cfg_system_group_name if irods_cfg_system_group_name else
-  _irods_cfg_system_account_name }}"
+_system_group_name: "{{
+  irods_cfg_system_group_name if irods_cfg_system_group_name else _system_account_name }}"
 
-_irods_cfg_ssl_ca_certificate_file: "{{
+_ssl_ca_certificate_file: "{{
   irods_cfg_ssl_ca_certificate_file if irods_cfg_ssl_ca_certificate_file else none }}"
 
-_irods_cfg_ssl_ca_certificate_path: "{{
+_ssl_ca_certificate_path: "{{
   irods_cfg_ssl_ca_certificate_path if irods_cfg_ssl_ca_certificate_path else none }}"
 
-_irods_cfg_ssl_certificate_chain_file: "{{
+_ssl_certificate_chain_file: "{{
   irods_cfg_ssl_certificate_chain_file if irods_cfg_ssl_certificate_chain_file else none }}"
 
-_irods_cfg_ssl_certificate_key_file: "{{
+_ssl_certificate_key_file: "{{
   irods_cfg_ssl_certificate_key_file if irods_cfg_ssl_certificate_key_file else none }}"
 
-_irods_cfg_ssl_dh_params_file: "{{
-  irods_cfg_ssl_dh_params_file if irods_cfg_ssl_dh_params_file else none }}"
+_ssl_dh_params_file: "{{ irods_cfg_ssl_dh_params_file if irods_cfg_ssl_dh_params_file else none }}"
 
-_irods_cfg_ssl_verify_server: "{{
-  irods_cfg_ssl_verify_server if irods_cfg_ssl_verify_server else none }}"
+_ssl_verify_server: "{{ irods_cfg_ssl_verify_server if irods_cfg_ssl_verify_server else none }}"
 
-_irods_cfg_transfer_buffer_size_for_parallel_transfer: "{{
+_transfer_buffer_size_for_parallel_transfer: "{{
   irods_cfg_transfer_buffer_size_for_parallel_transfer
     if irods_cfg_transfer_buffer_size_for_parallel_transfer else
   none }}"
 
-_irods_cfg_transfer_chunk_size_for_parallel_transfer: "{{
+_transfer_chunk_size_for_parallel_transfer: "{{
   irods_cfg_transfer_chunk_size_for_parallel_transfer
     if irods_cfg_transfer_chunk_size_for_parallel_transfer else
   none }}"
 
-_irods_cfg_validate: "{{ irods_cfg_validate if irods_cfg_validate else false }}"
+_validate: "{{ irods_cfg_validate if irods_cfg_validate else false }}"
 
-_irods_cfg_xmsg_host: "{{ irods_cfg_xmsg_host if irods_cfg_xmsg_host else none }}"
+_xmsg_host: "{{ irods_cfg_xmsg_host if irods_cfg_xmsg_host else none }}"
 
-_irods_cfg_xmsg_port: "{{ irods_cfg_xmsg_port if irods_cfg_xmsg_port else none }}"
+_xmsg_port: "{{ irods_cfg_xmsg_port if irods_cfg_xmsg_port else none }}"
 
-_irods_cfg_zone_auth_scheme: "{{
+_zone_auth_scheme: "{{
   irods_cfg_zone_auth_scheme if irods_cfg_zone_auth_scheme else
   _zone_auth_scheme_default | default(none) }}"
 
-_irods_cfg_zone_key: "{{ irods_cfg_zone_key if irods_cfg_zone_key else 'TEMPORARY_zone_key' }}"
+_zone_key: "{{ irods_cfg_zone_key if irods_cfg_zone_key else 'TEMPORARY_zone_key' }}"
 
-_irods_cfg_zone_name: "{{ irods_cfg_zone_name if irods_cfg_zone_name else 'tempZone' }}"
+_zone_name: "{{ irods_cfg_zone_name if irods_cfg_zone_name else 'tempZone' }}"
 
-_irods_cfg_zone_password: "{{ irods_cfg_zone_password if irods_cfg_zone_password else 'rods' }}"
+_zone_password: "{{ irods_cfg_zone_password if irods_cfg_zone_password else 'rods' }}"
 
-_irods_cfg_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }}"
+_zone_port: "{{ irods_cfg_zone_port if irods_cfg_zone_port else 1247 }}"
 
-_irods_cfg_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"
+_zone_user: "{{ irods_cfg_zone_user if irods_cfg_zone_user else 'rods' }}"
 
 
-# This is the value of _irods_cfg_icat if the server being configured is an IES
+# This is the value of _icat if the server being configured is an IES
 __icat_guess:
   catalog_database_type: "{{ irods_cfg_icat.catalog_database_type | default('postgres') }}"
   db_host: "{{ irods_cfg_icat.db_host | default('localhost') }}"

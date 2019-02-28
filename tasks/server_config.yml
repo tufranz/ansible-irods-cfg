@@ -1,76 +1,69 @@
 ---
 - include_vars: server_config.yml
 
-- when: _irods_cfg_validate
+- when: _validate
   ignore_errors: true
   block:
     - name: validate federation in server configuration
-      with_items: "{{ _irods_cfg_federation }}"
+      with_items: "{{ _federation }}"
       assert:
         that:
-          - item.icat_host != _irods_cfg_icat_host
-          - item.zone_name != _irods_cfg_zone_name
+          - item.icat_host != _icat_host
+          - item.zone_name != _zone_name
           - item.negotiation_key | length == 32
 
     - name: validate other server configuration parameters
       assert:
         that:
-          - 'not _irods_cfg_default_number_of_transfer_threads
-             or _irods_cfg_default_number_of_transfer_threads | int >= 0'
-          - 'not _irods_cfg_default_temporary_password_lifetime
-             or (_irods_cfg_default_temporary_password_lifetime | int > 0
-                 and _irods_cfg_default_temporary_password_lifetime | int
-                       <= _irods_cfg_maximum_temporary_password_lifetime | int)'
-          - 'not _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes
-             or _irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes | int >= 1'
-          - 'not _irods_cfg_maximum_size_for_single_buffer
-             or _irods_cfg_maximum_size_for_single_buffer | int >= 0'
-          - _irods_cfg_maximum_temporary_password_lifetime | int > 0
-          - 'not _irods_cfg_transfer_buffer_size_for_parallel_transfer
-             or _irods_cfg_transfer_buffer_size_for_parallel_transfer | int > 0'
-          - 'not _irods_cfg_transfer_chunk_size_for_parallel_transfer
-             or _irods_cfg_transfer_chunk_size_for_parallel_transfer | int > 0'
-          - _irods_cfg_default_hash_scheme in ['MD5', 'SHA256']
-          - "not _irods_cfg_default_resource_directory
-             or _irods_cfg_default_resource_directory is match('/.*')"
-          - _irods_cfg_match_hash_policy in ['compatible', 'strict']
-          - _irods_cfg_negotiation_key | length == 32
-          - not _irods_cfg_pam_no_extend or _irods_cfg_pam_no_extend in [true, false]
-          - not _irods_cfg_pam_password_length or _irods_cfg_pam_password_length | int >= 0
-          - not _irods_cfg_pam_password_max_time or _irods_cfg_pam_password_max_time | int > 0
-          - 'not _irods_cfg_pam_password_min_time
-             or ((_irods_cfg_pam_password_min_time | int > 0
-                  and _irods_cfg_pam_password_min_time | int
-                    <= _irods_cfg_pam_password_max_time | int)
-                   if _irods_cfg_pam_password_max_time else
-                 (_irods_cfg_pam_password_min_time | int > 0))'
-          - _irods_cfg_server_control_plane_encryption_num_hash_rounds | int >= 0
-          - 'not _irods_cfg_server_control_plane_key
-             or _irods_cfg_server_control_plane_key | length == 32'
-          - 'not _irods_cfg_server_control_plane_port
-             or (_irods_cfg_server_control_plane_port | int >= 1
-                 and _irods_cfg_server_control_plane_port | int <= 65535)'
-          - _irods_cfg_server_control_plane_timeout | int > 0
-          - '_irods_cfg_server_port_range_end | int >= 1
-             and _irods_cfg_server_port_range_end | int <= 65535'
-          - '_irods_cfg_server_port_range_start | int >= 1
-             and _irods_cfg_server_port_range_start | int <= _irods_cfg_server_port_range_end | int'
-          - '_irods_cfg_server_control_plane_port | int < _irods_cfg_server_port_range_start | int
-             or _irods_cfg_server_control_plane_port | int > _irods_cfg_server_port_range_end | int'
-          - 'not _irods_cfg_xmsg_port
-             or (_irods_cfg_xmsg_port | int >= 1
-                 and _irods_cfg_xmsg_port | int <= 65535
-                 and _irods_cfg_xmsg_port != _irods_cfg_server_control_plane_port
-                 and (_irods_cfg_xmsg_port | int < _irods_cfg_server_port_range_start | int
-                      or _irods_cfg_xmsg_port | int > _irods_cfg_server_port_range_end | int))'
-          - _irods_cfg_zone_auth_scheme in ['', 'gsi', 'krb', 'native', 'pam']
-          - not _irods_cfg_zone_key is match('.*-.*')
-          - '_irods_cfg_zone_port | int >= 1
-            and _irods_cfg_zone_port | int <= 65535
-            and _irods_cfg_zone_port != _irods_cfg_server_control_plane_port
-            and (_irods_cfg_zone_port | int < _irods_cfg_server_port_range_start | int
-                 or _irods_cfg_zone_port | int > _irods_cfg_server_port_range_end | int)
-            and _irods_cfg_zone_port != _irods_cfg_xmsg_port'
+          - 'not _default_number_of_transfer_threads
+             or _default_number_of_transfer_threads | int >= 0'
+          - 'not _default_temporary_password_lifetime
+             or (_default_temporary_password_lifetime | int > 0
+                 and _default_temporary_password_lifetime | int
+                   <= _maximum_temporary_password_lifetime | int)'
+          - 'not _maximum_number_of_concurrent_rule_engine_server_processes
+             or _maximum_number_of_concurrent_rule_engine_server_processes | int >= 1'
+          - not _maximum_size_for_single_buffer or _maximum_size_for_single_buffer | int >= 0
+          - _maximum_temporary_password_lifetime | int > 0
+          - 'not _transfer_buffer_size_for_parallel_transfer
+             or _transfer_buffer_size_for_parallel_transfer | int > 0'
+          - 'not _transfer_chunk_size_for_parallel_transfer
+             or _transfer_chunk_size_for_parallel_transfer | int > 0'
+          - _default_hash_scheme in ['MD5', 'SHA256']
+          - not _default_resource_directory or _default_resource_directory is match('/.*')
+          - _match_hash_policy in ['compatible', 'strict']
+          - _negotiation_key | length == 32
+          - not _pam_no_extend or _pam_no_extend in [true, false]
+          - not _pam_password_length or _pam_password_length | int >= 0
+          - not _pam_password_max_time or _pam_password_max_time | int > 0
+          - 'not _pam_password_min_time
+             or ((_pam_password_min_time | int > 0
+                  and _pam_password_min_time | int <= _pam_password_max_time | int)
+                   if _pam_password_max_time else
+                 (_pam_password_min_time | int > 0))'
+          - _server_control_plane_encryption_num_hash_rounds | int >= 0
+          - not _server_control_plane_key or _server_control_plane_key | length == 32
+          - 'not _server_control_plane_port
+             or (_server_control_plane_port | int >= 1
+                 and _server_control_plane_port | int <= 65535)'
+          - _server_control_plane_timeout | int > 0
+          - _server_port_range_end | int >= 1 and _server_port_range_end | int <= 65535
+          - '_server_port_range_start | int >= 1
+             and _server_port_range_start | int <= _server_port_range_end | int'
+          - '_server_control_plane_port | int < _server_port_range_start | int
+             or _server_control_plane_port | int > _server_port_range_end | int'
+          - 'not _xmsg_port
+             or (_xmsg_port | int >= 1 and _xmsg_port | int <= 65535
+                 and _xmsg_port != _server_control_plane_port
+                 and (_xmsg_port | int < _server_port_range_start | int
+                      or _xmsg_port | int > _server_port_range_end | int))'
+          - _zone_auth_scheme in ['', 'gsi', 'krb', 'native', 'pam']
+          - not _zone_key is match('.*-.*')
+          - '_zone_port | int >= 1 and _zone_port | int <= 65535
+            and _zone_port != _server_control_plane_port
+            and (_zone_port | int < _server_port_range_start | int
+                 or _zone_port | int > _server_port_range_end | int)
+            and _zone_port != _xmsg_port'
 
 - include_tasks: _cfg_template.yml
   vars:

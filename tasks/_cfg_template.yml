@@ -7,21 +7,20 @@
 
 - name: ensure parent directory exists exists
   file:
-    dest: "{{ (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
+    dest: "{{ (_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
     state: directory
 
 - include_tasks: _system_account_own.yml
   vars:
-    _system_account_own_path: "{{
-      (_irods_cfg_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
+    _system_account_own_path: "{{ (_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
 
 - name: generate {{ _cfg_template_dest_name }}
   template:
     src: "{{ _cfg_template_name | default((_cfg_template_dest_file | basename) ~ '.j2') }}"
-    dest: "{{ _irods_cfg_root_dir }}/{{ _cfg_template_dest_file }}"
+    dest: "{{ _root_dir }}/{{ _cfg_template_dest_file }}"
   notify:
     - changed config
 
 - include_tasks: _system_account_own.yml
   vars:
-    _system_account_own_path: "{{ _irods_cfg_root_dir }}/{{  _cfg_template_dest_file }}"
+    _system_account_own_path: "{{ _root_dir }}/{{  _cfg_template_dest_file }}"

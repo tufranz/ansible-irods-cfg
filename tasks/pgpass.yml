@@ -1,11 +1,11 @@
 ---
-- when: _irods_cfg_icat is mapping and  _irods_cfg_icat.catalog_database_type == 'postgres'
+- when: _icat is mapping and  _icat.catalog_database_type == 'postgres'
   block:
     - name: validate pgpass config params
-      when: _irods_cfg_validate
+      when: _validate
       assert:
         that:
-          - _irods_cfg_icat.db_port | int >= 1 and _irods_cfg_icat.db_port | int <= 65535
+          - _icat.db_port | int >= 1 and _icat.db_port | int <= 65535
 
     - include_tasks: _cfg_template.yml
       vars:
@@ -14,5 +14,5 @@
 
     - name: assign correct permissions to .pgpass
       file:
-        dest: "{{ _irods_cfg_root_dir }}/var/lib/irods/.pgpass"
+        dest: "{{ _root_dir }}/var/lib/irods/.pgpass"
         mode: 'u+r,go='
