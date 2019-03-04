@@ -23,12 +23,11 @@
                    <= _maximum_temporary_password_lifetime | int)'
           - 'not _maximum_number_of_concurrent_rule_engine_server_processes
              or _maximum_number_of_concurrent_rule_engine_server_processes | int >= 1'
-          - not _maximum_size_for_single_buffer or _maximum_size_for_single_buffer | int >= 0
+          - _maximum_size_for_single_buffer | int >= 0
           - _maximum_temporary_password_lifetime | int > 0
           - 'not _transfer_buffer_size_for_parallel_transfer
              or _transfer_buffer_size_for_parallel_transfer | int > 0'
-          - 'not _transfer_chunk_size_for_parallel_transfer
-             or _transfer_chunk_size_for_parallel_transfer | int > 0'
+          - _transfer_chunk_size_for_parallel_transfer | int > 0
           - _default_hash_scheme in ['MD5', 'SHA256']
           - not _default_resource_directory or _default_resource_directory is match('/.*')
           - _match_hash_policy in ['compatible', 'strict']

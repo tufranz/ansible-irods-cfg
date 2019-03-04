@@ -1,15 +1,8 @@
 {
   "advanced_settings": {
-{% if _maximum_size_for_single_buffer %}
-    "maximum_size_for_single_buffer_in_megabytes": {{ _maximum_size_for_single_buffer }},
-{% endif %}
 {% if _transfer_buffer_size_for_parallel_transfer %}
     "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
       _transfer_buffer_size_for_parallel_transfer }},
-{% endif %}
-{% if _transfer_chunk_size_for_parallel_transfer %}
-    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{
-      _transfer_chunk_size_for_parallel_transfer }},
 {% endif %}
 {% if _default_number_of_transfer_threads %}
     "default_number_of_transfer_threads": {{ _default_number_of_transfer_threads }},
@@ -21,8 +14,11 @@
 {% if _default_temporary_password_lifetime %}
     "default_temporary_password_lifetime_in_seconds": {{ _default_temporary_password_lifetime }},
 {% endif %}
-{# This is required even though the schema doesn't mention it. #}
-    "maximum_temporary_password_lifetime_in_seconds": {{ _maximum_temporary_password_lifetime }}
+{# These are required even though the schema doesn't mention it. #}
+    "maximum_size_for_single_buffer_in_megabytes": {{ _maximum_size_for_single_buffer }},
+    "maximum_temporary_password_lifetime_in_seconds": {{ _maximum_temporary_password_lifetime }},
+    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{
+      _transfer_chunk_size_for_parallel_transfer }}
   },
   "default_dir_mode": "{{ _default_dir_mode }}",
   "default_file_mode": "{{ _default_file_mode }}",

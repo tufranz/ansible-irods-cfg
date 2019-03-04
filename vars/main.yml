@@ -112,7 +112,7 @@ _maximum_size_for_single_buffer: "{{
   irods_cfg_maximum_size_for_single_buffer
     if irods_cfg_maximum_size_for_single_buffer
        or irods_cfg_maximum_size_for_single_buffer == 0 else
-  none }}"
+  32 }}"
 
 _maximum_temporary_password_lifetime: "{{
   irods_cfg_maximum_temporary_password_lifetime
@@ -212,7 +212,7 @@ _transfer_buffer_size_for_parallel_transfer: "{{
 _transfer_chunk_size_for_parallel_transfer: "{{
   irods_cfg_transfer_chunk_size_for_parallel_transfer
     if irods_cfg_transfer_chunk_size_for_parallel_transfer else
-  none }}"
+  40 }}"
 
 _validate: "{{ irods_cfg_validate if irods_cfg_validate else false }}"
 
