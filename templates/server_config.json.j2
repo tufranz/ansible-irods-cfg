@@ -33,9 +33,10 @@
 {% for key, value in _environment_variables.iteritems() %}
     "{{ key }}": "{{ value }}"
 {%-  if not loop.last %},
+{%   else %}
+
 {%   endif %}
 {% endfor %}
-
   },
   "federation": [
 {% for federate in _federation %}
@@ -44,9 +45,12 @@
       "zone_name": "{{ federate.zone_name }}",
       "zone_key": "{{ federate.zone_key }}",
       "negotiation_key": "{{ federate.negotiation_key }}"
-    }{% if not loop.last %},{% endif %}
-{% endfor %}
+    }
+{%-  if not loop.last %},
+{%   else %}
 
+{%   endif %}
+{% endfor %}
   ],
   "icat_host": "{{ _icat_host }}",
 {% if _kerberos_name %}

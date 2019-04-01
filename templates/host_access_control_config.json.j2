@@ -6,8 +6,11 @@
       "group": "{{ entry.group }}",
       "mask": "{{ entry.mask }}",
       "user": "{{ entry.user }}"
-    }{% if not loop.last %},{% endif %}
-{% endfor %}
+    }
+{%-  if not loop.last %},
+{%   else %}
 
+{%   endif %}
+{% endfor %}
   ]
 }
