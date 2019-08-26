@@ -30,7 +30,7 @@
   "default_resource_name": "{{ _default_resource_name }}",
 {% endif %}
   "environment_variables": {
-{% for key, value in _environment_variables.iteritems() %}
+{% for key, value in _environment_variables.items() %}
     "{{ key }}": "{{ value }}"
 {%-  if not loop.last %},
 {%   else %}
