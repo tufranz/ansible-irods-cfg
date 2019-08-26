@@ -1,7 +1,7 @@
 ---
 - include_vars: server_config.yml
 
-- when: _validate
+- when: _validate | bool
   ignore_errors: true
   block:
     - name: validate federation in server configuration

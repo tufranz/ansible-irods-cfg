@@ -1,8 +1,8 @@
 ---
-- when: _icat is mapping and  _icat.catalog_database_type == 'postgres'
+- when: _icat is mapping and _icat.catalog_database_type == 'postgres'
   block:
     - name: validate pgpass config params
-      when: _validate
+      when: _validate | bool
       assert:
         that:
           - _icat.db_port | int >= 1 and _icat.db_port | int <= 65535

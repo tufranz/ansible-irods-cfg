@@ -1,8 +1,8 @@
 ---
 - include_vars: irods_environment_server.yml
-  when: _for_server
+  when: _for_server | bool
 
-- when: _validate
+- when: _validate | bool
   ignore_errors: true
   block:
     - name: validate core variables for irods_environment
@@ -11,7 +11,7 @@
           - _zone_port | int >= 1 and _zone_port <= 65535
 
     - name: validate variables for irods_environment
-      when: _for_server
+      when: _for_server | bool
       assert:
         that:
           - _client_server_negotiation in ['off', 'request_server_negotiation']

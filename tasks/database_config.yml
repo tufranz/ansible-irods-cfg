@@ -2,7 +2,7 @@
 - when: _icat is mapping
   block:
     - name: validate database config params
-      when: _validate
+      when: _validate | bool
       assert:
         that:
           - _icat.catalog_database_type in ('mysql', 'oracle', 'postgres')

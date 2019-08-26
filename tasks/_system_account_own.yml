@@ -3,7 +3,7 @@
 #  _system_account_own_path  the path to give the system account ownership to.
 
 - name: ensure service account owns {{ _system_account_own_path }}
-  when: _chown
+  when: _chown | bool
   file:
     dest: "{{ _system_account_own_path }}"
     owner: "{{ _system_account_name }}"

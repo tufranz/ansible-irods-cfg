@@ -1,6 +1,6 @@
 ---
 - name: validate address type for hosts_config
-  when: _validate
+  when: _validate | bool
   with_items: "{{ _host_entries }}"
   assert:
     that:
