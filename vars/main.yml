@@ -57,8 +57,8 @@ _default_hash_scheme: "{{
 _default_number_of_transfer_threads: "{{
   irods_cfg_default_number_of_transfer_threads
     if irods_cfg_default_number_of_transfer_threads
-       or irods_cfg_default_number_of_transfer_threads == 0 else
-  none }}"
+    or irods_cfg_default_number_of_transfer_threads == 0 else
+  4 }}"
 
 _default_resource_directory: "{{
   irods_cfg_default_resource_directory if irods_cfg_default_resource_directory else none }}"
@@ -206,8 +206,9 @@ _system_group_name: "{{
 
 _transfer_buffer_size_for_parallel_transfer: "{{
   irods_cfg_transfer_buffer_size_for_parallel_transfer
-    if irods_cfg_transfer_buffer_size_for_parallel_transfer else
-  none }}"
+    if irods_cfg_transfer_buffer_size_for_parallel_transfer
+    or irods_cfg_transfer_buffer_size_for_parallel_transfer == 0 else
+  4 }}"
 
 _transfer_chunk_size_for_parallel_transfer: "{{
   irods_cfg_transfer_chunk_size_for_parallel_transfer
