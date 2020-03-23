@@ -11,6 +11,12 @@
 {% if _client_server_policy %}
   "irods_client_server_policy": "{{ _client_server_policy }}",
 {% endif %}
+{% if _server_control_plane_key %}
+  "irods_control_plane_key": "{{ _server_control_plane_key }}",
+{% endif %}
+{% if _server_control_plane_port %}
+  "irods_control_plane_port": {{ _server_control_plane_port }},
+{% endif %}
 {% if _cwd %}
   "irods_cwd": "{{ _cwd }}",
 {% endif %}
