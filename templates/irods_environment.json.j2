@@ -83,8 +83,6 @@
   "irods_xmsg_port": {{ _xmsg_port }},
 {% endif %}
   "irods_zone_name": "{{ _zone_name }}",
-  "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
-    _transfer_buffer_size_for_parallel_transfer }}
 {% if _for_server %}
   {% if _server_control_plane_key %}
   "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
@@ -96,7 +94,9 @@
   "irods_server_control_plane_encryption_algorithm": "{{ _client_encryption_algorithm }}",
   {% endif %}
   {% if _client_encryption_num_hash_rounds %}
-  "irods_server_control_plane_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }}
+  "irods_server_control_plane_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
   {% endif %}
 {% endif %}
+  "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
+    _transfer_buffer_size_for_parallel_transfer }}
 }
