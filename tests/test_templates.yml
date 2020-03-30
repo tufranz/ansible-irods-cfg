@@ -37,6 +37,7 @@
           - irods_environment.irods_ssl_certificate_key_file is not defined
           - irods_environment.irods_ssl_dh_params_file is not defined
           - irods_environment.irods_ssl_verify_server is not defined
+          - irods_environment.irods_transfer_buffer_size_for_parallel_transfer_in_megabytes == 4
           - irods_environment.irods_user_name == 'rods'
           - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port is not defined
@@ -81,6 +82,7 @@
           - irods_environment.irods_ssl_certificate_key_file is not defined
           - irods_environment.irods_ssl_dh_params_file is not defined
           - irods_environment.irods_ssl_verify_server is not defined
+          - irods_environment.irods_transfer_buffer_size_for_parallel_transfer_in_megabytes == 4
           - irods_environment.irods_user_name == 'rods'
           - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port is not defined
@@ -318,6 +320,7 @@
           - irods_environment.irods_ssl_certificate_key_file == 'key_file'
           - irods_environment.irods_ssl_dh_params_file == 'params_file'
           - irods_environment.irods_ssl_verify_server == 'cert'
+          - irods_environment.irods_transfer_buffer_size_for_parallel_transfer_in_megabytes == 32
           - irods_environment.irods_user_name == 'user'
           - irods_environment.irods_xmsg_host == 'xmsg_host'
           - irods_environment.irods_xmsg_port == 6
@@ -427,7 +430,7 @@
           - irods_environment.irods_encryption_key_size == 0
           - irods_environment.irods_encryption_num_hash_rounds == 0
           - irods_environment.irods_encryption_salt_size == 0
-        
+
     - name: verify server_config.json is correct
       assert:
         that:

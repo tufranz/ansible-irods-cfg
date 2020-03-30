@@ -80,5 +80,7 @@
 {% if _xmsg_port %}
   "irods_xmsg_port": {{ _xmsg_port }},
 {% endif %}
-  "irods_zone_name": "{{ _zone_name }}"
+  "irods_zone_name": "{{ _zone_name }}",
+  "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
+    _transfer_buffer_size_for_parallel_transfer }}
 }
