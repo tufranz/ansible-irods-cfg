@@ -11,11 +11,13 @@
 {% if _client_server_policy %}
   "irods_client_server_policy": "{{ _client_server_policy }}",
 {% endif %}
-{% if _server_control_plane_key %}
+{% if not _for_server %}
+  {% if _server_control_plane_key %}
   "irods_control_plane_key": "{{ _server_control_plane_key }}",
-{% endif %}
-{% if _server_control_plane_port %}
+  {% endif %}
+  {% if _server_control_plane_port %}
   "irods_control_plane_port": {{ _server_control_plane_port }},
+  {% endif %}
 {% endif %}
 {% if _cwd %}
   "irods_cwd": "{{ _cwd }}",
@@ -30,13 +32,13 @@
   "irods_default_resource": "{{ _client_default_resource }}",
 {% endif %}
 {% if _client_encryption_algorithm %}
-  "irods_encryption_algorithm": "{{ _client_encryption_algorithm }}",
+"irods_encryption_algorithm": "{{ _client_encryption_algorithm }}",
+{% endif %}
+{% if _client_encryption_num_hash_rounds %}
+"irods_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
 {% endif %}
 {% if _client_encryption_key_size %}
   "irods_encryption_key_size": {{ _client_encryption_key_size }},
-{% endif %}
-{% if _client_encryption_num_hash_rounds %}
-  "irods_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
 {% endif %}
 {% if _client_encryption_salt_size %}
   "irods_encryption_salt_size": {{ _client_encryption_salt_size }},
@@ -83,4 +85,18 @@
   "irods_zone_name": "{{ _zone_name }}",
   "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
     _transfer_buffer_size_for_parallel_transfer }}
+{% if _for_server %}
+  {% if _server_control_plane_key %}
+  "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
+  {% endif %}
+  {% if _server_control_plane_port %}
+  "irods_server_control_plane_port": {{ _server_control_plane_port }},
+  {% endif %}
+  {% if _client_encryption_algorithm %}
+  "irods_server_control_plane_encryption_algorithm": "{{ _client_encryption_algorithm }}",
+  {% endif %}
+  {% if _client_encryption_num_hash_rounds %}
+  "irods_server_control_plane_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }}
+  {% endif %}
+{% endif %}
 }
