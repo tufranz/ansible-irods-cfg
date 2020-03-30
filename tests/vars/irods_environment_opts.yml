@@ -25,6 +25,7 @@ irods_cfg_ssl_certificate_chain_file: chain
 irods_cfg_ssl_certificate_key_file: key_file
 irods_cfg_ssl_dh_params_file: params_file
 irods_cfg_ssl_verify_server: cert
+irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
 irods_cfg_xmsg_host: xmsg_host
 irods_cfg_xmsg_port: 6
 irods_cfg_zone_auth_scheme: gsi
