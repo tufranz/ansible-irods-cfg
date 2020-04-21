@@ -32,10 +32,10 @@
   "irods_default_resource": "{{ _client_default_resource }}",
 {% endif %}
 {% if _client_encryption_algorithm %}
-"irods_encryption_algorithm": "{{ _client_encryption_algorithm }}",
+  "irods_encryption_algorithm": "{{ _client_encryption_algorithm }}",
 {% endif %}
 {% if _client_encryption_num_hash_rounds %}
-"irods_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
+  "irods_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
 {% endif %}
 {% if _client_encryption_key_size %}
   "irods_encryption_key_size": {{ _client_encryption_key_size }},
