@@ -8,14 +8,15 @@
         tasks_from: odbc.yml
       vars:
         __base_driver_properties:
-          Database: "{{ _icat.db_name }}"
-          Port: "{{ _icat.db_port }}"
+          Description: iRODS Catalog
           Servername: "{{ _icat.db_host }}"
+          Port: "{{ _icat.db_port }}"
+          Database: "{{ _icat.db_name }}"
         unixodbc_cfg_odbcini_path: "{{ _root_dir }}/var/lib/irods"
         unixodbc_cfg_user: "{{ _system_account_name if _chown else None }}"
         unixodbc_cfg_group: "{{ _system_group_name if _chown else None }}"
         unixodbc_cfg_sources:
-          - source_name: "{{ _icat.catalog_database_type }}"
+          - source_name: iRODS Catalog
             driver_file: "{{
               _icat.odbc_driver if _icat.odbc_driver else _dbms_default_odbc_driver }}"
             driver_properties: "{{
