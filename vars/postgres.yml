@@ -1,4 +1,6 @@
 ---
+_dbms_default_odbc_driver: PostgreSQL
+
 _dbms_specific_odbc_properties:
   CommLog: 0
   Debug: 0

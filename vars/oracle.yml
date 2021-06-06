@@ -1,2 +1,4 @@
 ---
+_dbms_default_odbc_driver: Oracle
+
 _dbms_specific_odbc_properties: {}

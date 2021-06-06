@@ -168,7 +168,7 @@ Field                   | Default      | Choices                 | Comments
 `db_password`           | testpassword |                         | the password used by `db_username` to connect to `db_name`
 `db_port`               | 5432         |                         | the port on which the database server is listening
 `db_username`           | irods        |                         | the database user name
-`odbc_driver`           | null         |                         | The absolute path to the ODBC driver file. If `null` the driver will be automatically determined
+`odbc_driver`           | null         |                         | The ODBC driver to user, if `null` the driver will be automatically determined
 
 For `catalog_database_type`, only `postgres` has been fully tested.
 

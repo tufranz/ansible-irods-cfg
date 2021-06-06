@@ -3,59 +3,6 @@
   block:
     - include_vars: "{{ _icat.catalog_database_type }}.yml"
 
-    - name: locate ODBC driver file
-      when: not _icat.odbc_driver
-      shell: |
-        case '{{ _icat.catalog_database_type }}' in
-          mysql)
-            if [ '{{ ansible_distribution }}' = CentOS \
-                 -a "{{ ansible_distribution_version is version_compare('7', '<') }}" = True ]
-            then
-              odbc=$(find '{{ _root_dir }}'/usr -name libmyodbc5.so | grep 64)
-
-              if [ -z "$odbc" ]
-              then
-                odbc=$(find '{{ _root_dir }}'/usr -name 'libmyodbc*.so')
-              fi
-            fi
-            ;;
-
-          oracle)
-            if [ -z "$ORACLE_HOME" ]
-            then
-              ORACLE_HOME='{{ _root_dir }}'/usr/lib/oracle/11.2/client64
-            fi
-
-            odbc="$ORACLE_HOME"/lib/libsqora.so.11.1
-            ;;
-
-          postgres)
-            if [ '{{ ansible_distribution }}' = CentOS \
-                 -a "{{ ansible_distribution_version is version_compare('6.2', '<') }}" = True ]
-            then
-              odbc=$(find '{{ _root_dir }}'/usr -name libodbcpsql.so | grep 64)
-
-              if [ -z "$odbc" ]
-              then
-                odbc=$(find '{{ _root_dir }}'/usr -name libodbcpsql.so)
-              fi
-
-              if [ -z "$odbc" ]
-              then
-                odbc=$(find '{{ _root_dir }}'/usr -name 'psqlodbc*.so')
-              fi
-            else
-              odbc=$(find '{{ _root_dir }}'/usr -name 'psqlodbc*.so' | grep --invert-match 'w\.so')
-            fi
-            ;;
-          *)
-            ;;
-        esac
-
-        printf '%s' "$odbc" | head --lines 1
-      register: __result
-      changed_when: false
-
     - include_role:
         name: cyverse.unixodbc-cfg
         tasks_from: odbc.yml
@@ -69,6 +16,7 @@
         unixodbc_cfg_group: "{{ _system_group_name if _chown else None }}"
         unixodbc_cfg_sources:
           - source_name: "{{ _icat.catalog_database_type }}"
-            driver_file: "{{ _icat.odbc_driver if _icat.odbc_driver else __result.stdout }}"
+            driver_file: "{{
+              _icat.odbc_driver if _icat.odbc_driver else _dbms_default_odbc_driver }}"
             driver_properties: "{{
               __base_driver_properties | combine(_dbms_specific_odbc_properties) }}"
