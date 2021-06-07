@@ -1,9 +1,11 @@
 ---
 - when: _icat is mapping
   block:
-    - include_vars: "{{ _icat.catalog_database_type }}.yml"
+    - name: load vars for chosen database type
+      include_vars: "{{ _icat.catalog_database_type }}.yml"
 
-    - include_role:
+    - name: create .odbc.ini
+      include_role:
         name: cyverse.unixodbc-cfg
         tasks_from: odbc.yml
       vars:

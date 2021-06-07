@@ -9,6 +9,7 @@
   file:
     dest: "{{ (_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
     state: directory
+    mode: u+rx
 
 - include_tasks: _system_account_own.yml
   vars:
@@ -18,6 +19,7 @@
   template:
     src: "{{ _cfg_template_name | default((_cfg_template_dest_file | basename) ~ '.j2') }}"
     dest: "{{ _root_dir }}/{{ _cfg_template_dest_file }}"
+    mode: u+r
   notify:
     - changed config
 

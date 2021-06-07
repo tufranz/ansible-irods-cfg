@@ -6,7 +6,7 @@ irods_cfg_client_encryption_algorithm: algorithm
 irods_cfg_client_encryption_key_size: 1
 irods_cfg_client_encryption_num_hash_rounds: 2
 irods_cfg_client_encryption_salt_size: 3
-irods_cfg_client_server_negotiation: off
+irods_cfg_client_server_negotiation: 'off'
 irods_cfg_client_server_policy: CS_NEG_REFUSE
 irods_cfg_cwd: /zone
 irods_cfg_debug: CAT

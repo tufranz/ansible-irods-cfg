@@ -1,6 +1,7 @@
 ---
-- include_vars: irods_environment_server.yml
+- name: load irods_environment values for server
   when: _for_server | bool
+  include_vars: irods_environment_server.yml
 
 - when: _validate | bool
   ignore_errors: true
@@ -41,4 +42,5 @@
     _cfg_template_dest_file: "{{ _environment_file }}"
     _cfg_template_name: irods_environment.json.j2
 
-- meta: flush_handlers
+- name: ensure known that changes were made
+  meta: flush_handlers
