@@ -14,5 +14,5 @@
     dest: "{{ ansible_env.HOME }}"
 
 - name: validate {{ cfg_path }} with schema
-  shell: jsonschema --instance {{ cfg_path }} {{ ansible_env.HOME }}/{{ schema }}
+  shell: jsonschema --instance '{{ cfg_path }}' '{{ ansible_env.HOME }}/{{ schema }}'
   changed_when: false
