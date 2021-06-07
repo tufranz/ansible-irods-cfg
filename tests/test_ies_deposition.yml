@@ -39,29 +39,25 @@
     - name: verify .odbc.ini contents
       assert:
         that:
-          - "lookup('ini', 'driver section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini')
+          - "lookup('ini', 'driver section=iRODS Catalog file=/var/lib/irods/.odbc.ini')
               == 'PostgreSQL12'"
-          - "lookup('ini', 'Description section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini')
+          - "lookup('ini', 'Description section=iRODS Catalog file=/var/lib/irods/.odbc.ini')
               == 'iRODS Catalog'"
-          - "lookup('ini', 'Servername section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini') \
+          - "lookup('ini', 'Servername section=iRODS Catalog file=/var/lib/irods/.odbc.ini') \
               == 'icat.domain'"
-          - lookup('ini', 'Port section="iRODS Catalog" file=/var/lib/irods/.odbc.ini') == '1'
-          - "lookup('ini', 'Database section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini')
-              == 'db'"
-          - lookup('ini', 'CommLog section="iRODS Catalog" file=/var/lib/irods/.odbc.ini') == '0'
-          - lookup('ini', 'Debug section="iRODS Catalog" file=/var/lib/irods/.odbc.ini') == '0'
-          - "lookup('ini', 'FakeOidIndex section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini') \
+          - lookup('ini', 'Port section=iRODS Catalog file=/var/lib/irods/.odbc.ini') == '1'
+          - lookup('ini', 'Database section=iRODS Catalog file=/var/lib/irods/.odbc.ini') == 'db'
+          - lookup('ini', 'CommLog section=iRODS Catalog file=/var/lib/irods/.odbc.ini') == '0'
+          - lookup('ini', 'Debug section=iRODS Catalog file=/var/lib/irods/.odbc.ini') == '0'
+          - "lookup('ini', 'FakeOidIndex section=iRODS Catalog file=/var/lib/irods/.odbc.ini') \
               == 'No'"
-          - lookup('ini', 'Ksqo section="iRODS Catalog" file=/var/lib/irods/.odbc.ini') == '0'
-          - lookup('ini', 'ReadOnly section="iRODS Catalog" file=/var/lib/irods/.odbc.ini') == 'No'
-          - "lookup( \
-                'ini', 'RowVersioning section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini') \
+          - lookup('ini', 'Ksqo section=iRODS Catalog file=/var/lib/irods/.odbc.ini') == '0'
+          - lookup('ini', 'ReadOnly section=iRODS Catalog file=/var/lib/irods/.odbc.ini') == 'No'
+          - "lookup('ini', 'RowVersioning section=iRODS Catalog file=/var/lib/irods/.odbc.ini') \
               == 'No'"
-          - "lookup( \
-                'ini', 'ShowOidColumn section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini') \
+          - "lookup('ini', 'ShowOidColumn section=iRODS Catalog file=/var/lib/irods/.odbc.ini') \
               == 'No'"
-          - "lookup(\
-                'ini', 'ShowSystemTables section=\"iRODS Catalog\" file=/var/lib/irods/.odbc.ini') \
+          - "lookup('ini', 'ShowSystemTables section=iRODS Catalog file=/var/lib/irods/.odbc.ini') \
               == 'No'"
 
     - include_tasks: tasks/verify_change_notified.yml
