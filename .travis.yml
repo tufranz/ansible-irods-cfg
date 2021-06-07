@@ -11,13 +11,13 @@ addons:
 
 install:
   # Install ansible
-  - pip install ansible==2.8 jsonschema
-
-  # Check ansible version
-  - ansible --version
+  - pip install ansible==2.8 jsonschema==2
 
   # Create ansible.cfg with correct roles_path
   - printf '[defaults]\nroles_path=../' > ansible.cfg
+
+  # Install dependent roles
+  - ansible-galaxy install --role-file=tests/requirements.yml
 
 before_script:
   # Create irods user
@@ -28,9 +28,6 @@ before_script:
 
   # Give irods ownership of its directories
   - sudo chown irods:irods /etc/irods /var/lib/irods
-
-  # Install dependent roles
-  - ansible-galaxy install --role-file=tests/requirements.yml
 
 script:
   # Basic role syntax check
@@ -56,10 +53,9 @@ script:
 
   - >
     ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
-                     tests/test_client_deposition.yml \
+        tests/test_client_deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
-        && (echo 'Idempotence test: pass' && exit 0) \
-        || (echo 'Idempotence test: fail' && exit 1)
+        && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
 
   # Remove test artifacts
   - sudo rm --force --recursive /home/irods/.irods /tmp/ie.json
@@ -69,10 +65,9 @@ script:
 
   - >
     ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
-                     tests/test_core_server_deposition.yml \
+        tests/test_core_server_deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
-        && (echo 'Idempotence test: pass' && exit 0) \
-        || (echo 'Idempotence test: fail' && exit 1)
+        && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
 
   # Remove test artifacts
   - sudo rm --force /etc/irods/* /var/lib/irods/.irods/* /var/lib/irods/.odbc.ini
@@ -82,17 +77,15 @@ script:
 
   - >
     ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory \
-                     tests/test_ies_deposition.yml \
+        tests/test_ies_deposition.yml \
       | grep --quiet 'changed=0.*failed=0' \
-        && (echo 'Idempotence test: pass' && exit 0) \
-        || (echo 'Idempotence test: fail' && exit 1)
+        && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
 
   # Remove test artifacts
   - sudo rm --force /etc/irods/* /var/lib/irods/.irods/* /var/lib/irods/.odbc.ini
 
   # Test change notification
   - ansible-playbook --inventory-file=tests/inventory tests/test_change_notify.yml
-
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
