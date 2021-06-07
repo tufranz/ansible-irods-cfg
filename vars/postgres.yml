@@ -8,5 +8,5 @@ _dbms_specific_odbc_properties:
   Ksqo: 0
   ReadOnly: 'No'
   RowVersioning: 'No'
-  ShowOldColumn: 'No'
+  ShowOidColumn: 'No'
   ShowSystemTables: 'No'
