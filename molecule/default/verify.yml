@@ -1,12 +1,14 @@
 ---
-- name: test default variables generate correct client side irods_environment
+- name: verify | default variables generate correct client side irods_environment
   hosts: localhost
-  gather_facts: false
+  connection: local
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
-    - ../vars/main.yml
+    - ../../defaults/main.yml
+    - ../../vars/main.yml
   vars:
-    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
     - name: verify irods_environment.json expands correctly
       assert:
@@ -47,15 +49,18 @@
           - irods_environment.irods_server_control_plane_encryption_algorithm is not defined
           - irods_environment.irods_server_control_plane_encryption_num_hash_rounds is not defined
 
-- name: test default variables generate correct server side irods_environment
+
+- name: verify | default variables generate correct server side irods_environment
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
-    - ../vars/main.yml
-    - ../vars/irods_environment_server.yml
+    - ../../defaults/main.yml
+    - ../../vars/main.yml
+    - ../../vars/irods_environment_server.yml
   vars:
-    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
     - name: verify irods_environment.json expands correctly
       assert:
@@ -97,15 +102,17 @@
           - irods_environment.irods_server_control_plane_encryption_num_hash_rounds is not defined
 
 
-- name: test default variables generate correct server_config
+- name: verify | default variables generate correct server_config
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
-    - ../vars/main.yml
-    - ../vars/server_config.yml
+    - ../../defaults/main.yml
+    - ../../vars/main.yml
+    - ../../vars/server_config.yml
   vars:
-    server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
+    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
   tasks:
     - name: verify server_config.json is correct
       assert:
@@ -158,16 +165,18 @@
           - server_config.zone_user == 'rods'
 
 
-- name: test default variables generate correct remaining configuration files
+- name: verify | default variables generate correct remaining configuration files
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
-    - ../vars/main.yml
+    - ../../defaults/main.yml
+    - ../../vars/main.yml
   vars:
-    hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
-    hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
-    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+    hacc: "{{ lookup('template', '../../templates/host_access_control_config.json.j2') }}"
+    hosts_config: "{{ lookup('template', '../../templates/hosts_config.json.j2') }}"
+    service_account: "{{ lookup('template', '../../templates/service_account.config.j2') }}"
   tasks:
     - name: verify that derived irods_cfg_icat is null
       assert:
@@ -191,16 +200,18 @@
           - service_account is search('IRODS_SERVICE_GROUP_NAME=irods')
 
 
-- name: test default database_config and pgpass
+- name: verify | default database_config and pgpass
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/database_config_defaults.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    database_config: "{{ lookup('template', '../templates/database_config.json.j2') }}"
-    pgpass: "{{ lookup('template', '../templates/pgpass.j2') }}"
+    database_config: "{{ lookup('template', '../../templates/database_config.json.j2') }}"
+    pgpass: "{{ lookup('template', '../../templates/pgpass.j2') }}"
   tasks:
     - name: verify database_config is correct
       assert:
@@ -219,16 +230,18 @@
           - pgpass is search('localhost:5432:ICAT:irods:testpassword')
 
 
-- name: test database_config and pgpass options
+- name: verify | database_config and pgpass options
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/database_config_opts.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    database_config: "{{ lookup('template', '../templates/database_config.json.j2') }}"
-    pgpass: "{{ lookup('template', '../templates/pgpass.j2') }}"
+    database_config: "{{ lookup('template', '../../templates/database_config.json.j2') }}"
+    pgpass: "{{ lookup('template', '../../templates/pgpass.j2') }}"
   tasks:
     - name: verify database_config is correct
       assert:
@@ -247,15 +260,17 @@
           - pgpass is search('icat.domain:1:db:irodsuser:secret')
 
 
-- name: test host_access_control_config options
+- name: verify | host_access_control_config options
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/host_access_control_config_opts.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    hacc: "{{ lookup('template', '../templates/host_access_control_config.json.j2') }}"
+    hacc: "{{ lookup('template', '../../templates/host_access_control_config.json.j2') }}"
   tasks:
     - name: verify entries
       assert:
@@ -267,15 +282,17 @@
           - hacc.access_entries[1].user == 'user2'
 
 
-- name: test hosts_config options
+- name: verify | hosts_config options
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/hosts_config_opts.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    hosts_config: "{{ lookup('template', '../templates/hosts_config.json.j2') }}"
+    hosts_config: "{{ lookup('template', '../../templates/hosts_config.json.j2') }}"
   tasks:
     - name: verify entries
       assert:
@@ -289,15 +306,17 @@
           - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'
 
 
-- name: test irods_environment options on client side
+- name: verify | irods_environment options on client side
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/irods_environment_opts.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
     - name: verify irods_environment
       assert:
@@ -338,16 +357,19 @@
           - irods_environment.irods_server_control_plane_encryption_algorithm is not defined
           - irods_environment.irods_server_control_plane_encryption_num_hash_rounds is not defined
 
-- name: test irods_environment options on server side
+
+- name: verify | irods_environment options on server side
   hosts: localhost
   gather_facts: false
+  collections:
+    - ansible.builtin
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/irods_environment_server.yml
     - vars/irods_environment_opts.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
     - name: verify irods_environment
       assert:
@@ -388,16 +410,16 @@
           - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 2
 
 
-- name: test server_config options
+- name: verify | server_config options
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/server_config_opts.yml
-    - ../vars/main.yml
-    - ../vars/server_config.yml
+    - ../../vars/main.yml
+    - ../../vars/server_config.yml
   vars:
-    server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
+    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
   tasks:
     - name: verify optional fields
       assert:
@@ -438,15 +460,15 @@
           - server_config.xmsg_port == 3
 
 
-- name: test custom system account name
+- name: verify | custom system account name
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/system_account_name.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+    service_account: "{{ lookup('template', '../../templates/service_account.config.j2') }}"
   tasks:
     - name: verify service_account.config is correct
       assert:
@@ -455,15 +477,15 @@
           - service_account is search('IRODS_SERVICE_GROUP_NAME=custom')
 
 
-- name: test custom system group name
+- name: verify | custom system group name
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/system_group_name.yml
-    - ../vars/main.yml
+    - ../../vars/main.yml
   vars:
-    service_account: "{{ lookup('template', '../templates/service_account.config.j2') }}"
+    service_account: "{{ lookup('template', '../../templates/service_account.config.j2') }}"
   tasks:
     - name: verify service_account.config is correct
       assert:
@@ -472,17 +494,17 @@
           - service_account is search('IRODS_SERVICE_GROUP_NAME=custom')
 
 
-- name: test jinja2 falsey quirks
+- name: verify | jinja2 falsy quirks
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../defaults/main.yml
+    - ../../defaults/main.yml
     - vars/jinja2_quirks.yml
-    - ../vars/main.yml
-    - ../vars/server_config.yml
+    - ../../vars/main.yml
+    - ../../vars/server_config.yml
   vars:
-    irods_environment: "{{ lookup('template', '../templates/irods_environment.json.j2') }}"
-    server_config: "{{ lookup('template', '../templates/server_config.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
+    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
   tasks:
     - name: verify irods_environment.json is correct
       assert:
@@ -499,3 +521,19 @@
           - server_config.advanced_settings.maximum_size_for_single_buffer_in_megabytes == 0
           - server_config.pam_password_length == 0
           - server_config.server_control_plane_encryption_num_hash_rounds == 0
+
+
+- name: verify | service ownership assignment
+  hosts: all
+  tasks:
+    - name: verify file not owned
+      stat:
+        path: /etc/irods/not_owner_test
+      register: response
+      failed_when: response.stat.pw_name == 'irods' or response.stat.gr_name == 'irods'
+
+    - name: verify file is owned
+      stat:
+        path: /etc/irods/owner_test
+      register: response
+      failed_when: response.stat.pw_name != 'irods' or response.stat.gr_name != 'irods'

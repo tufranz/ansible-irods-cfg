@@ -1,91 +1,11 @@
 ---
-language: python
-python: "2.7.13"
-
 sudo: required
-
-addons:
-  apt:
-    packages:
-      - odbc-postgresql
-
+language: python
+services:
+  docker
 install:
-  # Install ansible
-  - sudo pip install ansible==2.8 'jsonschema<3'
-
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' > ansible.cfg
-
-  # Install dependent roles
-  - ansible-galaxy install --role-file=tests/requirements.yml
-
-before_script:
-  # Create irods user
-  - sudo useradd --create-home irods
-
-  # Create directories for irods user
-  - sudo mkdir --parents /etc/irods /var/lib/irods
-
-  # Give irods ownership of its directories
-  - sudo chown irods:irods /etc/irods /var/lib/irods
-
+  - python3 -m pip install molecule[ansible-base,docker,lint]
 script:
-  # Basic role syntax check
-  - ansible-playbook --syntax-check --inventory-file=tests/inventory tests/all_tests.yml
-
-  # Test template expansion
-  - ansible-playbook --inventory-file=tests/inventory tests/test_templates.yml
-
-  # Test service ownership flag
-  - ansible-playbook --inventory-file=tests/inventory tests/test_system_account_own.yml
-
-  # Remove test artifacts
-  - sudo rm --force /etc/irods/*
-
-  # Test config placement
-  - ansible-playbook --inventory-file=tests/inventory tests/test_cfg_template.yml
-
-  # Remove test artifacts
-  - sudo rm --force --recursive /var/lib/irods/deposit
-
-  # Test client deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test_client_deposition.yml
-
-  - >
-    ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
-        tests/test_client_deposition.yml \
-      | grep --quiet 'changed=0.*failed=0' \
-        && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
-
-  # Remove test artifacts
-  - sudo rm --force --recursive /home/irods/.irods /tmp/ie.json
-
-  # Test core deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test_core_server_deposition.yml
-
-  - >
-    ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory  \
-        tests/test_core_server_deposition.yml \
-      | grep --quiet 'changed=0.*failed=0' \
-        && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
-
-  # Remove test artifacts
-  - sudo rm --force /etc/irods/* /var/lib/irods/.irods/* /var/lib/irods/.odbc.ini
-
-  # Test IES specific deposition
-  - ansible-playbook --inventory-file=tests/inventory tests/test_ies_deposition.yml
-
-  - >
-    ansible-playbook --extra-vars 'test_idempotent=true' --inventory-file=tests/inventory \
-        tests/test_ies_deposition.yml \
-      | grep --quiet 'changed=0.*failed=0' \
-        && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
-
-  # Remove test artifacts
-  - sudo rm --force /etc/irods/* /var/lib/irods/.irods/* /var/lib/irods/.odbc.ini
-
-  # Test change notification
-  - ansible-playbook --inventory-file=tests/inventory tests/test_change_notify.yml
-
+  - molecule test --all
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

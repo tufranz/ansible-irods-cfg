@@ -1,0 +1,99 @@
+---
+- name: verify
+  hosts: all
+  become: true
+  become_user: irods
+  collections:
+    - ansible.builtin
+  tasks:
+    - include_tasks: tasks/validate_deposition.yml
+      vars:
+        cfg_path: /etc/irods/{{ item }}
+        schema: "{{ item }}"
+      with_items:
+        - host_access_control_config.json
+        - hosts_config.json
+        - server_config.json
+        - database_config.json
+
+    - include_tasks: tasks/validate_deposition.yml
+      vars:
+        cfg_path: /var/lib/irods/.irods/irods_environment.json
+        schema: service_account_environment.json
+
+    - name: check service_account.config deposition
+      stat:
+        path: /etc/irods/service_account.config
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'irods' or
+        response.stat.gr_name != 'irods'
+
+    - name: check .pgpass deposition
+      stat:
+        path: /var/lib/irods/.pgpass
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'irods' or
+        response.stat.gr_name != 'irods' or
+        not response.stat.rusr or
+        response.stat.rgrp or response.stat.wgrp or response.stat.xgrp or
+        response.stat.roth or response.stat.woth or response.stat.xoth
+
+    - name: check .odbc.ini deposition
+      stat:
+        path: /var/lib/irods/.odbc.ini
+      register: response
+      failed_when: >
+        not response.stat.exists or
+        response.stat.pw_name != 'irods' or
+        response.stat.gr_name != 'irods'
+
+    - name: grab .odbc.ini content
+      slurp:
+        src: /var/lib/irods/.odbc.ini
+      register: odbcBase64
+
+    - name: decode .odbc.ini content
+      set_fact:
+        odbc: "{{ odbcBase64.content | b64decode }}"
+
+    - name: verify .odbc.ini content
+      assert:
+        that: >
+          odbc is 
+          search(
+            "^(.*\n)?\[iRODS Catalog\]\n([^\[]*\n)?{{ item.key|regex_escape }} = {{ 
+              item.value|regex_escape }}(\n.*|$)" )
+        quiet: true
+      with_items:
+        - key: driver
+          value: PostgreSQL12
+        - key: Description
+          value: iRODS Catalog
+        - key: Servername
+          value: 'icat.domain'
+        - key: Port
+          value: '1'
+        - key: Database
+          value: db
+        - key: CommLog
+          value: '0'
+        - key: Debug
+          value: '0'
+        - key: FakeOidIndex
+          value: 'No'
+        - key: Ksqo
+          value: '0'
+        - key: ReadOnly
+          value: 'No'
+        - key: RowVersioning
+          value: 'No'
+        - key: ShowOidColumn
+          value: 'No'
+        - key: ShowSystemTables
+          value: 'No' 
+      loop_control:
+        label: "{{ item.key }}"

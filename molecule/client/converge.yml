@@ -1,0 +1,29 @@
+---
+- name: converge | custom configuration location
+  hosts: all
+  tasks:
+    - name: generate irods_environment.json
+      include_role:
+        name: ansible-irods-cfg
+        tasks_from: _cfg_template.yml
+      vars:
+        irods_cfg_root_dir: /var/lib/irods
+        _cfg_template_dest_file: deposit/irods_environment.json
+
+
+- name: converge | client deposition
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: place default client env file
+      import_role:
+        name: ansible-irods-cfg
+        tasks_from: client.yml
+
+    - name: place custom client env file
+      include_role:
+        name: ansible-irods-cfg
+        tasks_from: client.yml
+      vars:
+        irods_cfg_chown: false
+        irods_cfg_environment_file: tmp/ie.json

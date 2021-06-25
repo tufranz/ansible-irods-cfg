@@ -1,0 +1,14 @@
+---
+dependency:
+  name: galaxy
+  enabled: false
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: centos:7
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+lint: bash -c 'yamllint . && ansible-lint .'

@@ -1,13 +1,9 @@
 ---
-- name: test that the defaults are correctly placed
-  hosts: localhost
-  become: true
-  vars:
-    irods_cfg_made_changes: false
-  roles:
-    - role: ../../ansible-irods-cfg
-
-  post_tasks:
+- name: verify
+  hosts: all
+  collections:
+    - ansible.builtin
+  tasks:
     - include_tasks: tasks/validate_deposition.yml
       vars:
         cfg_path: /etc/irods/{{ item }}
@@ -48,5 +44,3 @@
         not response.stat.exists or
         response.stat.pw_name != 'irods' or
         response.stat.gr_name != 'irods'
-
-    - include_tasks: tasks/verify_change_notified.yml

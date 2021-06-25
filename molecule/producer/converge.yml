@@ -1,0 +1,15 @@
+---
+- name: converge
+  hosts: all
+  roles:
+    - role: ansible-irods-cfg
+      vars:
+        irods_cfg_icat:
+          catalog_database_type: postgres
+          db_host: icat.domain
+          db_name: db
+          db_odbc_type: postgres
+          db_password: secret
+          db_port: 1
+          db_username: irodsuser
+          odbc_driver: PostgreSQL12
