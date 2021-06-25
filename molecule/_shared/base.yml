@@ -1,0 +1,15 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/_shared/requirements.yml
+    requirements-file: molecule/_shared/requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: centos:7
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

@@ -6,7 +6,7 @@
   collections:
     - ansible.builtin
   tasks:
-    - include_tasks: tasks/validate_deposition.yml
+    - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /etc/irods/{{ item }}
         schema: "{{ item }}"
@@ -16,7 +16,7 @@
         - server_config.json
         - database_config.json
 
-    - include_tasks: tasks/validate_deposition.yml
+    - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /var/lib/irods/.irods/irods_environment.json
         schema: service_account_environment.json

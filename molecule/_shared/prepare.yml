@@ -1,0 +1,10 @@
+---
+- name: base | prepare
+  hosts: all
+  collections:
+    - ansible.builtin
+  tasks:
+    - name: create irods user
+      user:
+        name: irods
+        home: /var/lib/irods
