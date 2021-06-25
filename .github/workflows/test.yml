@@ -4,21 +4,17 @@ on: [ push, pull_request, workflow_dispatch ]
 jobs:
   build:
     runs-on: ubuntu-18.04
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [ 3.6 ]
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python 
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.6
 
       - name: Install molecule
-        run: python3 -m pip install molecule[ansible-base,docker,lint]
+        run: python3 -m pip install molecule[ansible,docker,lint]
         
       - name: Test with molecule
         run: molecule test
