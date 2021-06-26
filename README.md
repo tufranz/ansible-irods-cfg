@@ -1,6 +1,7 @@
-# cyverse.irods_cfg
-<!-- [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg) -->
+# cyverse.
+
 [![Ansible Galaxy](https://img.shields.io/badge/role-cyverse--ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/cyverse-ansible/irods-cfg/)
+[![Test Status](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml/badge.svg)](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml)
 
 This role will eventually be able to be used to completely configure an iRODS server once iRODS is 
 installed. At the moment, it can maintain the following configuration files.
