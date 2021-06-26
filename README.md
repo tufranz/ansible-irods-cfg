@@ -1,11 +1,9 @@
-irods-cfg
-=========
+# cyverse.irods_cfg
 [![Build Status](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg.svg?branch=master)](https://travis-ci.org/CyVerse-Ansible/ansible-irods-cfg)
 [![Ansible Galaxy](https://img.shields.io/badge/role-cyverse--ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/cyverse-ansible/irods-cfg/)
 
-This role will eventually be able to be used to completely configure an iRODS
-server once iRODS is installed. At the moment, it can maintain the following
-configuration files.
+This role will eventually be able to be used to completely configure an iRODS server once iRODS is 
+installed. At the moment, it can maintain the following configuration files.
 
 * irods_environment.json
 * etc/irods/database_config.json
@@ -16,42 +14,31 @@ configuration files.
 * var/lib/irods/.odbc.ini
 * var/lib/irods/.pgpass
 
-
-Requirements
-------------
+## Requirements
 
 iRODS 4.1.10 is installed.
 
+## Tasks Files
 
-Tasks Files
------------
+The `main.yml` tasks file that is called by default performs the same tasks as `server.yml`, i.e., 
+it deploys the set of files required by an iRODS server.
 
-The __main.yml__ tasks file that is called by default performs the same tasks
-as server.yml, i.e., it deploys the set of files required by an iRODS server.
+There are two tier-specific tasks files. `client.yml` deploys the configuration files required by a 
+client, e.g., the iCommands. Currently, it deploys the irods_environment.json file. `server.yml` 
+deploys the configuration files required by an iRODS server.
 
-There are two tier-specific tasks files. The __client.yml__ file deploys the
-configuration files required by a client, e.g., the iCommands. Currently, it
-deploys the `irods_environment.json` file. The __server.yml__ file deploys the
-configuration files required by an iRODS server.
+For each iRODS configuration file there is a corresponding tasks file that deploys only that 
+configuration file. `irods_environment.yml` deploys the client or clerver configuration file, 
+_irods_environment.json_ by default. In the `etc/irods/` directory, `database_config.yml` deploys 
+database_config.json, `host_access_control_config.yml` deploys host_access_control_config.json, 
+`hosts_config.yml` deploys hosts_config.json, `server_config.yml` deploys server_config.json, and 
+`service_account.yml` deploys service_account.config. In the `var/lib/irods` directory, `odbc.yml` 
+deploys .odbc.ini, and `pgpass.yml` deploys .pgpass.
 
-For each iRODS configuration file there is a corresponding tasks file that
-deploys only that configuration file. The __irods_environment.yml__ file deploys
-the client or clerver or configuration file, `irods_environment.json` by default.
-In the `etc/irods/` directory, __database_config.yml__ deploys
-`database_config.json`, __host_access_control_config.yml__ deploys
-`host_access_control_config.json`, __hosts_config.yml__ deploys
-`hosts_config.json`, __server_config.yml__ deploys `server_config.json`, and
-`service_account.yml` deploys `service_account.config`. In the `var/lib/irods`
-directory, __odbc.yml__ deploys `.odbc.ini`, and __pgpass.yml__ deploys
-`pgpass.yml`.
+The `init_zone_user.yml` tasks file is not part of `main.yml` or either of the tier-specific tasks 
+files. It initializes the iRODS zone user on the inventory host.
 
-The __init_zone_user.yml__ tasks file is not part of main.yml or either of the
-tier-specific tasks files. It initializes the iRODS zone user on the inventory
-host.
-
-
-Role Variables
---------------
+## Role Variables
 
 Here are the role variables. None of them are required.
 
@@ -130,7 +117,8 @@ Variable                                                              | Default 
 `irods_cfg_zone_port`                                                 | 1247                                                                                 |                                                  | the main port used by the zone for communication
 `irods_cfg_zone_user`                                                 | rods                                                                                 |                                                  | the name of the rodsadmin user running this iRODS instance
 
-The `irods_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry` object has the following fields, all of them required.
+The `irods_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry` 
+object has the following fields, all of them required.
 
 Field     | Choices | Comments
 --------- | ------- | --------
@@ -139,9 +127,11 @@ Field     | Choices | Comments
 `mask`    |         | the network mask when `address` is a network address
 `user`    |         | the iRODS user able to access
 
-The `irods_cfg_environment_variables` variable is a dictionary where the key is the name of a server process environment variable, and the value is the value of the environment variable.
+The `irods_cfg_environment_variables` variable is a dictionary where the key is the name of a server 
+process environment variable, and the value is the value of the environment variable.
 
-The `irods_cfg_federation` variable is an array of `federation` objects. A `federation` object has the following fields, all of them required.
+The `irods_cfg_federation` variable is an array of `federation` objects. A `federation` object has 
+the following fields, all of them required.
 
 Field             | Choices | Comments
 ----------------- | --------| --------
@@ -150,14 +140,16 @@ Field             | Choices | Comments
 `zone_key `       |         | the shared authentication secret with the federated zone
 `zone_name`       |         | the name of the federated zone
 
-The `irods_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry` object has the following fields, all of them required.
+The `irods_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry` object has 
+the following fields, all of them required.
 
 Field          | Choices       | Comments
 -------------- | ------------- | --------
 `address_type` | local, remote | indicates if this host is localhost.
 `addresses`    |               | an array of names and addresses referring to this host
 
-The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none of them are required.
+The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none 
+of them are required.
 
 Field                   | Default      | Choices                 | Comments
 ----------------------- | ------------ | ----------------------- | --------
@@ -172,104 +164,97 @@ Field                   | Default      | Choices                 | Comments
 
 For `catalog_database_type`, only `postgres` has been fully tested.
 
+## Facts Set
 
-Facts Set
----------
+If any of the iRODS configuration files are changed, the fact `irods_cfg_made_changes` will be set 
+to `true`.
 
-If any of the iRODS configuration files are changed, the fact
-`irods_cfg_made_changes` will be set to `true`.
+## Dependencies
 
+[cyverse-ansible.unixodbc-cfg](https://galaxy.ansible.com/cyverse-ansible/unixodbc-cfg/)
 
-Dependencies
-------------
+## Example Playbooks
 
-[cyverse-ansible.odbcini-cfg](https://galaxy.ansible.com/cyverse-ansible/unixodbc-cfg/)
+````yaml
+# Client
+- hosts: webdav
+  vars:
+    irods_cfg_environment_file: etc/httpd/irods/irods_environment.json
+    irods_cfg_authentication_file: /etc/httpd/irods/.irodsA
+    irods_cfg_chown: false
+    irods_cfg_host: ares.iplantcollaborative.org
+    irods_cfg_zone_name: iplant
+    irods_cfg_zone_user: davrods_svc
+    irods_cfg_home: /iplant
+  tasks:
+    - include_role:
+        name: cyverse-ansible.irods-cfg
+        tasks_from: "{{ item }}"
+      with_items:
+        - client.yml
+        - init_zone_user.yml
 
-
-Example Playbooks
------------------
-
-    # Client
-    - hosts: webdav
+# IES
+- hosts: ies
+  roles:
+    - role: cyverse-ansible.irods-cfg
       vars:
-        irods_cfg_environment_file: etc/httpd/irods/irods_environment.json
-        irods_cfg_authentication_file: /etc/httpd/irods/.irodsA
-        irods_cfg_chown: false
-        irods_cfg_host: ares.iplantcollaborative.org
+        irods_cfg_default_hash_scheme: MD5
+        irods_cfg_default_number_of_transfer_threads: 16
+        irods_cfg_default_resource_name: CyVerseRes
+        irods_cfg_environment_variables:
+          amqp_host: amqp.cyverse.org
+        irods_cfg_federation:
+          - icat_host: irods.tacc.utexas.edu
+            negotiation_key: "Don't you wish!                !"
+            zone_key: crack me
+            zone_name: tacc
+        irods_cfg_host_entries:
+          - address_type: local
+            addresses:
+              - ares.iplantcollaborative.org
+              - data.cyverse.org
+              - data.iplantcollaborative.org
+        irods_cfg_icat:
+          db_host: irods-db.cyverse.org
+          db_password: secret
+          db_username: icatuser
+        irods_cfg_negotiation_key: Just guess it                  .
+        irods_cfg_re_additional_rulebases:
+          - ipc_custom
+        irods_cfg_server_control_plane_key: "I'm not telling                ."
+        irods_cfg_server_port_range_end: 20399
+        irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
+        irods_cfg_zone_key: secret
         irods_cfg_zone_name: iplant
-        irods_cfg_zone_user: davrods_svc
-        irods_cfg_home: /iplant
-      tasks:
-        - include_role:
-            name: cyverse-ansible.irods-cfg
-            tasks_from: "{{ item }}"
-          with_items:
-            - client.yml
-            - init_zone_user.yml
+        irods_cfg_zone_user: cyverse_admin
 
-    # IES
-    - hosts: ies
-      roles:
-        - role: cyverse-ansible.irods-cfg
-          vars:
-            irods_cfg_default_hash_scheme: MD5
-            irods_cfg_default_number_of_transfer_threads: 16
-            irods_cfg_default_resource_name: CyVerseRes
-            irods_cfg_environment_variables:
-              amqp_host: amqp.cyverse.org
-            irods_cfg_federation:
-              - icat_host: irods.tacc.utexas.edu
-                negotiation_key: "Don't you wish!                !"
-                zone_key: crack me
-                zone_name: tacc
-            irods_cfg_host_entries:
-              - address_type: local
-                addresses:
-                  - ares.iplantcollaborative.org
-                  - data.cyverse.org
-                  - data.iplantcollaborative.org
-            irods_cfg_icat:
-              db_host: irods-db.cyverse.org
-              db_password: secret
-              db_username: icatuser
-            irods_cfg_negotiation_key: Just guess it                  .
-            irods_cfg_re_additional_rulebases:
-              - ipc_custom
-            irods_cfg_server_control_plane_key: "I'm not telling                ."
-            irods_cfg_server_port_range_end: 20399
-            irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
-            irods_cfg_zone_key: secret
-            irods_cfg_zone_name: iplant
-            irods_cfg_zone_user: cyverse_admin
+# Resource Server
+- hosts: rs
+  roles:
+    - role: cyverse-ansible.irods-cfg
+      vars:
+        irods_cfg_default_hash_scheme: MD5
+        irods_cfg_default_number_of_transfer_threads: 16
+        irods_cfg_default_resource_directory: /f2/haboob
+        irods_cfg_default_resource_name: haboobRes
+        irods_cfg_negotiation_key: Just guess it                  .
+        irods_cfg_re_additional_rulebases:
+          - ipc_custom
+        irods_cfg_server_control_plane_key: "I'm not telling                ."
+        irods_cfg_server_port_range_end: 20399
+        irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
+        irods_cfg_zone_key: secret
+        irods_cfg_zone_name: iplant
+        irods_cfg_zone_user: has_admin
+````
 
-    # Resource Server
-    - hosts: rs
-      roles:
-        - role: cyverse-ansible.irods-cfg
-          vars:
-            irods_cfg_default_hash_scheme: MD5
-            irods_cfg_default_number_of_transfer_threads: 16
-            irods_cfg_default_resource_directory: /f2/haboob
-            irods_cfg_default_resource_name: haboobRes
-            irods_cfg_negotiation_key: Just guess it                  .
-            irods_cfg_re_additional_rulebases:
-              - ipc_custom
-            irods_cfg_server_control_plane_key: "I'm not telling                ."
-            irods_cfg_server_port_range_end: 20399
-            irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
-            irods_cfg_zone_key: secret
-            irods_cfg_zone_name: iplant
-            irods_cfg_zone_user: has_admin
-
-
-License
--------
+## License
 
 See [license](/LICENSE.txt).
 
 
-Author Information
-------------------
+## Author Information
 
 Tony Edgin  
 <tedgin@cyverse.org>  
