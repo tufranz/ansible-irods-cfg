@@ -11,7 +11,7 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - xenial
+        - bionic
     - name: EL
       versions:
         - 7
@@ -22,7 +22,7 @@ galaxy_info:
     - configuration
 
 dependencies:
-  - name: cyverse.unixodbc-cfg
+  - name: cyverse.unixodbc_cfg
     src: cyverse-ansible.unixodbc-cfg
     version: master
     vars:
