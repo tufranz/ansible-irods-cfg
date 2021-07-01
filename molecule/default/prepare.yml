@@ -4,6 +4,7 @@
 
 - name: prepare
   hosts: all
+  gather_facts: false
   collections:
     - ansible.builtin
   tasks:

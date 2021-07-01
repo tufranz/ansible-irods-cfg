@@ -2,8 +2,8 @@
 - import_playbook: ../_shared/prepare.yml
 
 
-- name: prepare
-  hosts: all
+- name: prepare | centos
+  hosts: centos
   collections:
     - ansible.builtin
   tasks:
@@ -12,11 +12,28 @@
         name: epel-release
         state: present
 
+
+- name: prepare | ubuntu
+  hosts: ubuntu
+  collections:
+    - ansible.builtin
+  tasks:
+    - name: initialize apt cache
+      apt:
+        update_cache: true
+
+
+- name: prepare | finish
+  hosts: all
+  gather_facts: false
+  collections:
+    - ansible.builtin
+  tasks:
     - name: install required packages
       package:
         name: 
           - python-setuptools
-          - python2-jsonschema
+          - python-jsonschema
         state: present
 
     - name: download configuration schemas

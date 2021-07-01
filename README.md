@@ -17,7 +17,7 @@ installed. At the moment, it can maintain the following configuration files.
 
 ## Requirements
 
-iRODS 4.1.10 is installed.
+iRODS 4.2.8 is installed.
 
 ## Tasks Files
 

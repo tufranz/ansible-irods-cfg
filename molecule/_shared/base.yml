@@ -7,8 +7,10 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: centos
     image: centos:7
+  - name: ubuntu
+    image: ubuntu:bionic
 provisioner:
   name: ansible
 verifier:

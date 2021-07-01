@@ -1,6 +1,7 @@
 ---
-- name: base | prepare
+- name: prepare | base
   hosts: all
+  gather_facts: false
   collections:
     - ansible.builtin
   tasks:
