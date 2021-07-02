@@ -200,7 +200,7 @@
           - service_account is search('IRODS_SERVICE_GROUP_NAME=irods')
 
 
-- name: verify | default database_config and pgpass
+- name: verify | default database_config
   hosts: localhost
   gather_facts: false
   collections:
@@ -211,7 +211,6 @@
     - ../../vars/main.yml
   vars:
     database_config: "{{ lookup('template', '../../templates/database_config.json.j2') }}"
-    pgpass: "{{ lookup('template', '../../templates/pgpass.j2') }}"
   tasks:
     - name: verify database_config is correct
       assert:
@@ -224,13 +223,8 @@
           - database_config.db_port == 5432
           - database_config.db_username == 'irods'
 
-    - name: verify pgpass is correct
-      assert:
-        that:
-          - pgpass is search('localhost:5432:ICAT:irods:testpassword')
 
-
-- name: verify | database_config and pgpass options
+- name: verify | database_config
   hosts: localhost
   gather_facts: false
   collections:
@@ -241,7 +235,6 @@
     - ../../vars/main.yml
   vars:
     database_config: "{{ lookup('template', '../../templates/database_config.json.j2') }}"
-    pgpass: "{{ lookup('template', '../../templates/pgpass.j2') }}"
   tasks:
     - name: verify database_config is correct
       assert:
@@ -253,11 +246,6 @@
           - database_config.db_password == 'secret'
           - database_config.db_port == 1
           - database_config.db_username == 'irodsuser'
-
-    - name: verify pgpass is correct
-      assert:
-        that:
-          - pgpass is search('icat.domain:1:db:irodsuser:secret')
 
 
 - name: verify | host_access_control_config options
