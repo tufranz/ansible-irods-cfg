@@ -1,17 +1,17 @@
 ---
-- name: load irods_environment values for server
+- name: irods_environment | load values for server
   when: _for_server | bool
   include_vars: irods_environment_server.yml
 
 - when: _validate | bool
   ignore_errors: true
   block:
-    - name: validate core variables for irods_environment
+    - name: irods_environment | validate core variables
       assert:
         that:
           - _zone_port | int >= 1 and _zone_port <= 65535
 
-    - name: validate variables for irods_environment
+    - name: irods_environment | validate variables
       when: _for_server | bool
       assert:
         that:
@@ -42,5 +42,5 @@
     _cfg_template_dest_file: "{{ _environment_file }}"
     _cfg_template_name: irods_environment.json.j2
 
-- name: ensure known that changes were made
+- name: irods_environment | ensure known that changes were made
   meta: flush_handlers

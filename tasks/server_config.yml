@@ -1,11 +1,11 @@
 ---
-- name: include variables for server config
+- name: server_config | include variables
   include_vars: server_config.yml
 
 - when: _validate | bool
   ignore_errors: true
   block:
-    - name: validate federation in server configuration
+    - name: server_config | validate federation
       with_items: "{{ _federation }}"
       assert:
         that:
@@ -13,7 +13,7 @@
           - item.zone_name != _zone_name
           - item.negotiation_key | length == 32
 
-    - name: validate other server configuration parameters
+    - name: server_config | validate parameters
       assert:
         that:
           - 'not _default_number_of_transfer_threads
@@ -69,5 +69,5 @@
   vars:
     _cfg_template_dest_file: etc/irods/server_config.json
 
-- name: ensure known that changes were made
+- name: server_config | ensure known that changes were made
   meta: flush_handlers

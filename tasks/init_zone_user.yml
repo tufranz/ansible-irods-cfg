@@ -1,5 +1,5 @@
 ---
-- name: initialize connection to server
+- name: init_zone_user | initialize connection to server
   shell: |
     bak='{{ _authentication_file }}.bak'
     trap "rm --force '$bak'" EXIT

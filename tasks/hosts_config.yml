@@ -1,5 +1,5 @@
 ---
-- name: validate address type for hosts_config
+- name: hosts_config | validate address type
   when: _validate | bool
   with_items: "{{ _host_entries }}"
   assert:
@@ -11,5 +11,5 @@
   vars:
     _cfg_template_dest_file: etc/irods/hosts_config.json
 
-- name: ensure known that changes were made
+- name: hosts_config | ensure known that changes were made
   meta: flush_handlers
