@@ -5,11 +5,13 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - ../../vars/main.yml
   vars:
     irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
+    - debug:
+        var: irods_environment
+
     - name: verify irods_environment.json expands correctly
       assert:
         that:
@@ -56,7 +58,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - ../../vars/main.yml
     - ../../vars/irods_environment_server.yml
   vars:
@@ -108,7 +109,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
   vars:
@@ -171,7 +171,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - ../../vars/main.yml
   vars:
     hacc: "{{ lookup('template', '../../templates/host_access_control_config.json.j2') }}"
@@ -206,7 +205,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - vars/database_config_defaults.yml
     - ../../vars/main.yml
   vars:
@@ -230,7 +228,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - vars/database_config_opts.yml
     - ../../vars/main.yml
   vars:
@@ -254,7 +251,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - vars/host_access_control_config_opts.yml
     - ../../vars/main.yml
   vars:
@@ -276,7 +272,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - vars/hosts_config_opts.yml
     - ../../vars/main.yml
   vars:
@@ -300,7 +295,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - vars/irods_environment_opts.yml
     - ../../vars/main.yml
   vars:
@@ -352,7 +346,6 @@
   collections:
     - ansible.builtin
   vars_files:
-    - ../../defaults/main.yml
     - vars/irods_environment_server.yml
     - vars/irods_environment_opts.yml
     - ../../vars/main.yml
@@ -402,7 +395,6 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../../defaults/main.yml
     - vars/server_config_opts.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
@@ -452,7 +444,6 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../../defaults/main.yml
     - vars/system_account_name.yml
     - ../../vars/main.yml
   vars:
@@ -469,7 +460,6 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../../defaults/main.yml
     - vars/system_group_name.yml
     - ../../vars/main.yml
   vars:
@@ -486,7 +476,6 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../../defaults/main.yml
     - vars/jinja2_quirks.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
