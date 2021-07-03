@@ -1,104 +1,52 @@
+{% import 'server_config_macros.j2' as sc with context %}
 {
-  "advanced_settings": {
-{% if _default_temporary_password_lifetime %}
-    "default_temporary_password_lifetime_in_seconds": {{ _default_temporary_password_lifetime }},
-{% endif %}
-{% if _maximum_number_of_concurrent_rule_engine_server_processes %}
-    "maximum_number_of_concurrent_rule_engine_server_processes": {{
-      _maximum_number_of_concurrent_rule_engine_server_processes }},
-{% endif %}
-{# These are required even though the schema doesn't mention it. #}
-    "default_number_of_transfer_threads": {{ _default_number_of_transfer_threads }},
-    "maximum_size_for_single_buffer_in_megabytes": {{ _maximum_size_for_single_buffer }},
-    "maximum_temporary_password_lifetime_in_seconds": {{ _maximum_temporary_password_lifetime }},
-    "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
-      _transfer_buffer_size_for_parallel_transfer }},
-    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{
-      _transfer_chunk_size_for_parallel_transfer }}
-  },
-  "default_dir_mode": "{{ _default_dir_mode }}",
-  "default_file_mode": "{{ _default_file_mode }}",
-  "default_hash_scheme": "{{ _default_hash_scheme }}",
+    "advanced_settings": {{ sc.advanced_settings() | indent(4) }},
+    "default_dir_mode": "{{ _default_dir_mode }}",
+    "default_file_mode": "{{ _default_file_mode }}",
+    "default_hash_scheme": "{{ _default_hash_scheme }}",
 {% if _default_resource_directory %}
-  "default_resource_directory": "{{ _default_resource_directory }}",
+    "default_resource_directory": "{{ _default_resource_directory }}",
 {% endif %}
 {% if _default_resource_name %}
-  "default_resource_name": "{{ _default_resource_name }}",
+    "default_resource_name": "{{ _default_resource_name }}",
 {% endif %}
-  "environment_variables": {
-{% for key, value in _environment_variables.items() %}
-    "{{ key }}": "{{ value }}"
-{%-  if not loop.last %},
-{%   else %}
-
-{%   endif %}
-{% endfor %}
-  },
-  "federation": [
-{% for federate in _federation %}
-    {
-      "icat_host": "{{ federate.icat_host }}",
-      "zone_name": "{{ federate.zone_name }}",
-      "zone_key": "{{ federate.zone_key }}",
-      "negotiation_key": "{{ federate.negotiation_key }}"
-    }
-{%-  if not loop.last %},
-{%   else %}
-
-{%   endif %}
-{% endfor %}
-  ],
-  "icat_host": "{{ _icat_host }}",
+    "environment_variables": {{ sc.environment_variables() | indent(4) }},
+    "federation": {{ sc.federation() | indent(4) }},
+    "icat_host": "{{ _icat_host }}",
 {% if _kerberos_name %}
-  "kerberos_name": "{{ _kerberos_name }}",
+    "kerberos_name": "{{ _kerberos_name }}",
 {% endif %}
-  "match_hash_policy": "{{ _match_hash_policy }}",
-  "negotiation_key": "{{ _negotiation_key }}",
+    "match_hash_policy": "{{ _match_hash_policy }}",
+    "negotiation_key": "{{ _negotiation_key }}",
 {% if _pam_no_extend %}
-  "pam_no_extend": {{ _pam_no_extend }},
+    "pam_no_extend": {{ _pam_no_extend }},
 {% endif %}
 {% if _pam_password_length %}
-  "pam_password_length": {{ _pam_password_length }},
+    "pam_password_length": {{ _pam_password_length }},
 {% endif %}
 {% if _pam_password_max_time %}
-  "pam_password_max_time": {{ _pam_password_max_time }},
+    "pam_password_max_time": {{ _pam_password_max_time }},
 {% endif %}
 {% if _pam_password_min_time %}
-  "pam_password_min_time": {{ _pam_password_min_time }},
+    "pam_password_min_time": {{ _pam_password_min_time }},
 {% endif %}
-  "re_data_variable_mapping_set": [
-{% for mapping in _re_additional_data_variable_mappings %}
-    { "filename": "{{ mapping }}" },
-{% endfor %}
-    { "filename": "core" }
-  ],
-  "re_function_name_mapping_set": [
-{% for mapping in _re_additional_function_name_mappings %}
-    { "filename": "{{ mapping }}" },
-{% endfor %}
-    { "filename": "core" }
-  ],
-  "re_rulebase_set": [
-{% for rulebase in _re_additional_rulebases %}
-    { "filename": "{{ rulebase }}" },
-{% endfor %}
-    { "filename": "core" }
-  ],
-  "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",
-  "server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
-  "server_control_plane_encryption_num_hash_rounds": {{
-    _server_control_plane_encryption_num_hash_rounds }},
-  "server_control_plane_key": "{{ _server_control_plane_key }}",
-  "server_control_plane_port": {{ _server_control_plane_port }},
-  "server_control_plane_timeout_milliseconds": {{ _server_control_plane_timeout }},
-  "server_port_range_end": {{ _server_port_range_end }},
-  "server_port_range_start": {{ _server_port_range_start }},
+    "re_data_variable_mapping_set": {{ sc.re_data_variable_mapping_set() | indent(4) }},
+    "re_function_name_mapping_set": {{ sc.re_function_name_mapping_set() | indent(4) }},
+    "re_rulebase_set": {{ sc.re_rulebase_set() | indent(4) }},
+    "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",
+    "server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
+    "server_control_plane_encryption_num_hash_rounds": {{ _server_control_plane_encryption_num_hash_rounds }},
+    "server_control_plane_key": "{{ _server_control_plane_key }}",
+    "server_control_plane_port": {{ _server_control_plane_port }},
+    "server_control_plane_timeout_milliseconds": {{ _server_control_plane_timeout }},
+    "server_port_range_end": {{ _server_port_range_end }},
+    "server_port_range_start": {{ _server_port_range_start }},
 {% if _xmsg_port %}
-  "xmsg_port": {{ _xmsg_port }},
+    "xmsg_port": {{ _xmsg_port }},
 {% endif %}
-  "zone_auth_scheme": "{{ _zone_auth_scheme }}",
-  "zone_key": "{{ _zone_key }}",
-  "zone_name": "{{ _zone_name }}",
-  "zone_port": {{ _zone_port }},
-  "zone_user": "{{ _zone_user }}"
+    "zone_auth_scheme": "{{ _zone_auth_scheme }}",
+    "zone_key": "{{ _zone_key }}",
+    "zone_name": "{{ _zone_name }}",
+    "zone_port": {{ _zone_port }},
+    "zone_user": "{{ _zone_user }}"
 }

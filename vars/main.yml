@@ -53,6 +53,8 @@ _default_file_mode: >-
   {{ irods_cfg_default_file_mode if irods_cfg_default_file_mode|default(none) else '0600' }}
 _default_hash_scheme: >-
   {{ irods_cfg_default_hash_scheme if irods_cfg_default_hash_scheme|default(none) else 'SHA256' }}
+_default_log_rotation: >-
+  {{ irods_cfg_default_log_rotation if irods_cfg_default_log_rotation|default(none) else 5 }}
 _default_number_of_transfer_threads: >-
   {{ irods_cfg_default_number_of_transfer_threads
     if irods_cfg_default_number_of_transfer_threads|default(none)

@@ -1,0 +1,149 @@
+{% macro mk_access_entry(entry) -%}
+{
+    "address": "{{ entry.address }}",
+    "group": "{{ entry.group }}",
+    "mask": "{{ entry.mask }}",
+    "user": "{{ entry.user }}"
+}
+{%- endmacro %}
+
+
+{% macro access_entries() -%}
+{% if _access_entries %}
+[
+{%   for e in _access_entries %}
+    {{ mk_access_entry(e) | indent(4) }}{% if not loop.last %},{% endif +%}
+{%   endfor %}
+]
+{%- else %}
+[]
+{%- endif %}
+{%- endmacro %}
+
+
+{% macro advanced_settings() -%}
+{
+    "default_number_of_transfer_threads": {{ _default_number_of_transfer_threads }},
+{%   if _default_temporary_password_lifetime %}
+    "default_temporary_password_lifetime_in_seconds": {{ _default_temporary_password_lifetime }},
+{%   endif %}
+{%   if _maximum_number_of_concurrent_rule_engine_server_processes %}
+    "maximum_number_of_concurrent_rule_engine_server_processes": {{ _maximum_number_of_concurrent_rule_engine_server_processes }},
+{%   endif %}
+    "maximum_size_for_single_buffer_in_megabytes": {{ _maximum_size_for_single_buffer }},
+    "maximum_temporary_password_lifetime_in_seconds": {{ _maximum_temporary_password_lifetime }},
+    "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{ _transfer_buffer_size_for_parallel_transfer }},
+    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{ _transfer_chunk_size_for_parallel_transfer }}
+}
+{%- endmacro %}
+
+
+{% macro environment_variables() -%}
+{%   if _environment_variables|length == 0 %}
+{}
+{%-  elif _environment_variables|length == 1 %}
+{%     set key, value = _environment_variables.items()|first %}
+{ "{{ key }}": "{{ value }}" }
+{%-  else %}
+{ 
+{%     for key, value in _environment_variables.items() %}
+    "{{ key }}": "{{ value }}"{% if not loop.last %},{% endif +%}
+{%     endfor %}
+}
+{%-  endif %}
+{%- endmacro %}
+
+
+{% macro mk_federate(def) -%}
+{
+    "icat_host": "{{ def.icat_host }}",
+    "zone_name": "{{ def.zone_name }}",
+    "zone_key": "{{ def.zone_key }}",
+    "negotiation_key": "{{ def.negotiation_key }}"
+}
+{%- endmacro %}
+
+
+{% macro federation() -%}
+{%   if _federation %}
+[
+{%     for f in _federation %}
+    {{ mk_federate(f) | indent(4) }}{% if not loop.last %},{% endif +%}
+{%     endfor %}
+]
+{%-  else %}
+[]
+{%-  endif %}
+{%- endmacro %}
+
+
+{% macro mk_address(address) -%}
+{ "address": "{{ address }}" }
+{%- endmacro %}
+
+
+{% macro mk_address_list(addresses) -%}
+{%   if addresses %}
+[
+{%     for a in addresses %}
+    {{ mk_address(a) }}{% if not loop.last %},{% endif +%}
+{%     endfor %}
+]
+{%-  else %}
+[]
+{%-  endif %}
+{%- endmacro %}
+
+
+{% macro mk_host_entry(entry) -%}
+{
+    "address_type": "{{ entry.address_type }}",
+    "addresses": {{ mk_address_list(entry.addresses) | indent(4) }} 
+}
+{%- endmacro %}
+
+
+{% macro host_entries() -%}
+{%   if _host_entries %}
+[
+{%     for e in _host_entries %}
+    {{ mk_host_entry(e) | indent(4) }}{% if not loop.last %},{% endif +%}
+{%     endfor %}
+]
+{%-  else %}
+[]
+{%-  endif %}
+{% endmacro %}
+
+
+{% macro mk_re_file(file) -%}
+{ "filename": "{{ file }}" }
+{%- endmacro %}
+
+
+{% macro mk_re_file_set(files) -%}
+{%   if files %}
+[
+{%     for f in files %}
+    {{ mk_re_file(f) }}{% if not loop.last %},{% endif +%}
+{%     endfor %}
+]
+{%-  else %}
+[]
+{%-  endif %}
+{%- endmacro %}
+
+
+{% macro re_data_variable_mapping_set() -%}
+{{ mk_re_file_set(_re_additional_data_variable_mappings + [ 'core' ]) }}
+{%- endmacro %}
+
+
+{% macro re_function_name_mapping_set() -%}
+{{ mk_re_file_set(_re_additional_function_name_mappings + [ 'core' ]) }}
+{%- endmacro %}
+
+
+{% macro re_rulebase_set() -%}
+{{ mk_re_file_set(_re_additional_rulebases + [ 'core' ]) }}
+{%- endmacro %}

@@ -1,18 +1,4 @@
+{% import 'server_config_macros.j2' as sc with context %}
 {
-  "host_entries": [
-{%- for entry in _host_entries %}
-
-    {
-      "address_type": "{{ entry.address_type }}",
-      "addresses": [
-{% for address in entry.addresses %}
-        { "address": "{{ address }}" }{% if not loop.last %},
-{% endif %}
-{% endfor %}
-
-      ]
-    }{% if not loop.last %},{% else %}
-
-  {% endif %}
-{% endfor %}]
+    "host_entries": {{ sc.host_entries() | indent(4) }}
 }

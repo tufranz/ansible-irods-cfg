@@ -1,102 +1,101 @@
 {
 {% if _authentication_file %}
-  "irods_authentication_file": "{{ _authentication_file }}",
+    "irods_authentication_file": "{{ _authentication_file }}",
 {% endif %}
 {% if _zone_auth_scheme %}
-  "irods_authentication_scheme": "{{ _zone_auth_scheme }}",
+    "irods_authentication_scheme": "{{ _zone_auth_scheme }}",
 {% endif %}
 {% if _client_server_negotiation %}
-  "irods_client_server_negotiation": "{{ _client_server_negotiation }}",
+    "irods_client_server_negotiation": "{{ _client_server_negotiation }}",
 {% endif %}
 {% if _client_server_policy %}
-  "irods_client_server_policy": "{{ _client_server_policy }}",
+    "irods_client_server_policy": "{{ _client_server_policy }}",
 {% endif %}
 {% if not _for_server %}
 {%   if _server_control_plane_key %}
-  "irods_control_plane_key": "{{ _server_control_plane_key }}",
+    "irods_control_plane_key": "{{ _server_control_plane_key }}",
 {%   endif %}
 {%   if _server_control_plane_port %}
-  "irods_control_plane_port": {{ _server_control_plane_port }},
+    "irods_control_plane_port": {{ _server_control_plane_port }},
 {%   endif %}
 {% endif %}
 {% if _cwd %}
-  "irods_cwd": "{{ _cwd }}",
+    "irods_cwd": "{{ _cwd }}",
 {% endif %}
 {% if _debug %}
-  "irods_debug": "{{ _debug }}",
+    "irods_debug": "{{ _debug }}",
 {% endif %}
 {% if _client_default_hash_scheme %}
-  "irods_default_hash_scheme": "{{ _client_default_hash_scheme }}",
+    "irods_default_hash_scheme": "{{ _client_default_hash_scheme }}",
 {% endif %}
 {% if _client_default_resource %}
-  "irods_default_resource": "{{ _client_default_resource }}",
+    "irods_default_resource": "{{ _client_default_resource }}",
 {% endif %}
 {% if _client_encryption_algorithm %}
-  "irods_encryption_algorithm": "{{ _client_encryption_algorithm }}",
+    "irods_encryption_algorithm": "{{ _client_encryption_algorithm }}",
 {% endif %}
 {% if _client_encryption_num_hash_rounds %}
-  "irods_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
+    "irods_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
 {% endif %}
 {% if _client_encryption_key_size %}
-  "irods_encryption_key_size": {{ _client_encryption_key_size }},
+    "irods_encryption_key_size": {{ _client_encryption_key_size }},
 {% endif %}
 {% if _client_encryption_salt_size %}
-  "irods_encryption_salt_size": {{ _client_encryption_salt_size }},
+    "irods_encryption_salt_size": {{ _client_encryption_salt_size }},
 {% endif %}
 {% if _gsi_server_dn %}
-  "irods_gsi_server_dn": "{{ _gsi_server_dn }}",
+    "irods_gsi_server_dn": "{{ _gsi_server_dn }}",
 {% endif %}
 {% if _home %}
-  "irods_home": "{{ _home }}",
+    "irods_home": "{{ _home }}",
 {% endif %}
-  "irods_host": "{{ _host }}",
+    "irods_host": "{{ _host }}",
 {% if _log_level %}
-  "irods_log_level": {{ _log_level }},
+    "irods_log_level": {{ _log_level }},
 {% endif %}
 {% if _match_hash_policy %}
-  "irods_match_hash_policy": "{{ _match_hash_policy }}",
+    "irods_match_hash_policy": "{{ _match_hash_policy }}",
 {% endif %}
-  "irods_port": {{ _zone_port }},
-{% if _ssl_ca_certificate_file %}
-  "irods_ssl_ca_certificate_file": "{{ _ssl_ca_certificate_file }}",
-{% endif %}
-{% if _ssl_ca_certificate_path %}
-  "irods_ssl_ca_certificate_path": "{{ _ssl_ca_certificate_path }}",
-{% endif %}
-{% if _ssl_certificate_chain_file %}
-  "irods_ssl_certificate_chain_file": "{{ _ssl_certificate_chain_file }}",
-{% endif %}
-{% if _ssl_certificate_key_file %}
-  "irods_ssl_certificate_key_file": "{{ _ssl_certificate_key_file }}",
-{% endif %}
-{% if _ssl_dh_params_file %}
-  "irods_ssl_dh_params_file": "{{ _ssl_dh_params_file }}",
-{% endif %}
-{% if _ssl_verify_server %}
-  "irods_ssl_verify_server": "{{ _ssl_verify_server }}",
-{% endif %}
-  "irods_user_name": "{{ _zone_user }}",
-{% if _xmsg_host %}
-  "irods_xmsg_host": "{{ _xmsg_host }}",
-{% endif %}
-{% if _xmsg_port %}
-  "irods_xmsg_port": {{ _xmsg_port }},
-{% endif %}
-  "irods_zone_name": "{{ _zone_name }}",
+    "irods_port": {{ _zone_port }},
 {% if _for_server %}
 {%   if _server_control_plane_key %}
-  "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
+    "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
 {%   endif %}
 {%   if _server_control_plane_port %}
-  "irods_server_control_plane_port": {{ _server_control_plane_port }},
+    "irods_server_control_plane_port": {{ _server_control_plane_port }},
 {%   endif %}
 {%   if _client_encryption_algorithm %}
-  "irods_server_control_plane_encryption_algorithm": "{{ _client_encryption_algorithm }}",
+    "irods_server_control_plane_encryption_algorithm": "{{ _client_encryption_algorithm }}",
 {%   endif %}
 {%   if _client_encryption_num_hash_rounds %}
-  "irods_server_control_plane_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
+    "irods_server_control_plane_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
 {%   endif %}
 {% endif %}
-  "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
-    _transfer_buffer_size_for_parallel_transfer }}
+{% if _ssl_ca_certificate_file %}
+    "irods_ssl_ca_certificate_file": "{{ _ssl_ca_certificate_file }}",
+{% endif %}
+{% if _ssl_ca_certificate_path %}
+    "irods_ssl_ca_certificate_path": "{{ _ssl_ca_certificate_path }}",
+{% endif %}
+{% if _ssl_certificate_chain_file %}
+    "irods_ssl_certificate_chain_file": "{{ _ssl_certificate_chain_file }}",
+{% endif %}
+{% if _ssl_certificate_key_file %}
+    "irods_ssl_certificate_key_file": "{{ _ssl_certificate_key_file }}",
+{% endif %}
+{% if _ssl_dh_params_file %}
+    "irods_ssl_dh_params_file": "{{ _ssl_dh_params_file }}",
+{% endif %}
+{% if _ssl_verify_server %}
+    "irods_ssl_verify_server": "{{ _ssl_verify_server }}",
+{% endif %}
+    "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{ _transfer_buffer_size_for_parallel_transfer }},
+    "irods_user_name": "{{ _zone_user }}",
+{% if _xmsg_host %}
+    "irods_xmsg_host": "{{ _xmsg_host }}",
+{% endif %}
+{% if _xmsg_port %}
+    "irods_xmsg_port": {{ _xmsg_port }},
+{% endif %}
+    "irods_zone_name": "{{ _zone_name }}"
 }
