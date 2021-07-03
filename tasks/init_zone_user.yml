@@ -3,22 +3,16 @@
   shell: |
     bak='{{ _authentication_file }}.bak'
     trap "rm --force '$bak'" EXIT
-
-    if [[ -f '{{ _authentication_file }}' ]]
-    then
+    if [[ -f '{{ _authentication_file }}' ]]; then
       cp '{{ _authentication_file }}' "$bak"
     else
       touch "$bak"
     fi
-
-    if ! iinit '{{ _zone_password }}'
-    then
+    if ! iinit '{{ _zone_password }}'; then
       exit 1
     fi
-
-    if ! diff --brief "$bak" '{{ _authentication_file }}' 2> /dev/null
-    then
+    if ! diff --brief "$bak" '{{ _authentication_file }}' 2> /dev/null; then
       printf 'changed'
     fi
-  register: __result
-  changed_when: __result.stdout == 'changed'
+  register: result
+  changed_when: result.stdout == 'changed'
