@@ -8,6 +8,8 @@ irods_cfg_client_encryption_num_hash_rounds: 2
 irods_cfg_client_encryption_salt_size: 3
 irods_cfg_client_server_negotiation: 'off'
 irods_cfg_client_server_policy: CS_NEG_REFUSE
+irods_cfg_client_xmsg_port: 6
+irods_cfg_connection_pool_refresh_time: 100
 irods_cfg_cwd: /zone
 irods_cfg_debug: CAT
 irods_cfg_gsi_server_dn: dn
@@ -15,6 +17,7 @@ irods_cfg_home: /zone/home
 irods_cfg_host: host
 irods_cfg_log_level: 4
 irods_cfg_match_hash_policy: strict
+irods_cfg_plugins_home: /plugins
 irods_cfg_server_control_plane_key: TEMPORARY__32byte_ctrl_plane_ke1
 irods_cfg_server_control_plane_port: 5
 irods_cfg_system_account_name: root
@@ -25,9 +28,11 @@ irods_cfg_ssl_certificate_chain_file: chain
 irods_cfg_ssl_certificate_key_file: key_file
 irods_cfg_ssl_dh_params_file: params_file
 irods_cfg_ssl_verify_server: cert
-irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
+
+# TODO remove, this is no longer supported
+irods_cfg_transfer_buffer_size_for_parallel_transfer: 32  
+
 irods_cfg_xmsg_host: xmsg_host
-irods_cfg_xmsg_port: 6
 irods_cfg_zone_auth_scheme: gsi
 irods_cfg_zone_name: zone
 irods_cfg_zone_port: 7

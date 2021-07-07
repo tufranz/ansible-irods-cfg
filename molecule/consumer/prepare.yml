@@ -2,43 +2,14 @@
 - import_playbook: ../_shared/prepare.yml
 
 
-- name: prepare | centos
-  hosts: centos
-  collections:
-    - ansible.builtin
-  tasks:
-    - name: install epel repo
-      package:
-        name: epel-release
-        state: present
-
-
-- name: prepare | ubuntu
-  hosts: ubuntu
-  collections:
-    - ansible.builtin
-  tasks:
-    - name: initialize apt cache
-      apt:
-        update_cache: true
-
-
-- name: prepare | finish
+- name: prepare
   hosts: all
-  gather_facts: false
   collections:
     - ansible.builtin
   tasks:
-    - name: install required packages
-      package:
-        name: 
-          - python-setuptools
-          - python-jsonschema
-        state: present
-
     - name: download configuration schemas
       get_url:
-        url: https://schemas.irods.org/configuration/v2/{{ item }}
+        url: https://schemas.irods.org/configuration/v3/{{ item }}
         dest: /var/lib/irods/
         timeout: 120
       with_items:

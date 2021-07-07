@@ -1,10 +1,41 @@
 ---
+- name: prepare | centos
+  hosts: centos
+  collections:
+    - ansible.builtin
+  tasks:
+    - name: install epel repo
+      package:
+        name: epel-release
+        state: present
+
+
+- name: prepare | ubuntu
+  hosts: ubuntu
+  collections:
+    - ansible.builtin
+  tasks:
+    - name: initialize apt cache
+      apt:
+        update_cache: true
+
+
 - name: prepare | base
   hosts: all
   gather_facts: false
   collections:
     - ansible.builtin
   tasks:
+    - name: install setuptools
+      package:
+        name: python-setuptools
+        state: present
+
+    - name: install jsonschema
+      package:
+        name: python-jsonschema
+        state: present
+        
     - name: create irods user
       user:
         name: irods

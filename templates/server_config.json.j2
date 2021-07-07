@@ -1,6 +1,8 @@
 {% import 'server_config_macros.j2' as sc with context %}
 {
     "advanced_settings": {{ sc.advanced_settings() | indent(4) }},
+    "catalog_provider_hosts": {{ sc.mk_catalog_provider_hosts(_catalog_provider_hosts) | indent(4) }},
+    "catalog_service_role": "{{ _catalog_service_role }}",
     "default_dir_mode": "{{ _default_dir_mode }}",
     "default_file_mode": "{{ _default_file_mode }}",
     "default_hash_scheme": "{{ _default_hash_scheme }}",
@@ -12,7 +14,6 @@
 {% endif %}
     "environment_variables": {{ sc.environment_variables() | indent(4) }},
     "federation": {{ sc.federation() | indent(4) }},
-    "icat_host": "{{ _icat_host }}",
 {% if _kerberos_name %}
     "kerberos_name": "{{ _kerberos_name }}",
 {% endif %}
@@ -30,9 +31,7 @@
 {% if _pam_password_min_time %}
     "pam_password_min_time": {{ _pam_password_min_time }},
 {% endif %}
-    "re_data_variable_mapping_set": {{ sc.re_data_variable_mapping_set() | indent(4) }},
-    "re_function_name_mapping_set": {{ sc.re_function_name_mapping_set() | indent(4) }},
-    "re_rulebase_set": {{ sc.re_rulebase_set() | indent(4) }},
+    "plugin_configuration": {{ sc.plugin_configuration() | indent(4) }},
     "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",
     "server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
     "server_control_plane_encryption_num_hash_rounds": {{ _server_control_plane_encryption_num_hash_rounds }},
@@ -41,9 +40,7 @@
     "server_control_plane_timeout_milliseconds": {{ _server_control_plane_timeout }},
     "server_port_range_end": {{ _server_port_range_end }},
     "server_port_range_start": {{ _server_port_range_start }},
-{% if _xmsg_port %}
     "xmsg_port": {{ _xmsg_port }},
-{% endif %}
     "zone_auth_scheme": "{{ _zone_auth_scheme }}",
     "zone_key": "{{ _zone_key }}",
     "zone_name": "{{ _zone_name }}",

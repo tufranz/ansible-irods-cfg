@@ -11,13 +11,14 @@
 {% if _client_server_policy %}
     "irods_client_server_policy": "{{ _client_server_policy }}",
 {% endif %}
-{% if not _for_server %}
-{%   if _server_control_plane_key %}
+{% if _connection_pool_refresh_time %}
+    "irods_connection_pool_refresh_time_in_seconds": {{ _connection_pool_refresh_time }},
+{% endif %}
+{% if _server_control_plane_key %}
     "irods_control_plane_key": "{{ _server_control_plane_key }}",
-{%   endif %}
-{%   if _server_control_plane_port %}
+{% endif %}
+{% if _server_control_plane_port %}
     "irods_control_plane_port": {{ _server_control_plane_port }},
-{%   endif %}
 {% endif %}
 {% if _cwd %}
     "irods_cwd": "{{ _cwd }}",
@@ -56,21 +57,10 @@
 {% if _match_hash_policy %}
     "irods_match_hash_policy": "{{ _match_hash_policy }}",
 {% endif %}
-    "irods_port": {{ _zone_port }},
-{% if _for_server %}
-{%   if _server_control_plane_key %}
-    "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
-{%   endif %}
-{%   if _server_control_plane_port %}
-    "irods_server_control_plane_port": {{ _server_control_plane_port }},
-{%   endif %}
-{%   if _client_encryption_algorithm %}
-    "irods_server_control_plane_encryption_algorithm": "{{ _client_encryption_algorithm }}",
-{%   endif %}
-{%   if _client_encryption_num_hash_rounds %}
-    "irods_server_control_plane_encryption_num_hash_rounds": {{ _client_encryption_num_hash_rounds }},
-{%   endif %}
+{% if _plugins_home %}
+    "irods_plugins_home": "{{ _plugins_home }}",
 {% endif %}
+    "irods_port": {{ _zone_port }},
 {% if _ssl_ca_certificate_file %}
     "irods_ssl_ca_certificate_file": "{{ _ssl_ca_certificate_file }}",
 {% endif %}
@@ -89,13 +79,12 @@
 {% if _ssl_verify_server %}
     "irods_ssl_verify_server": "{{ _ssl_verify_server }}",
 {% endif %}
-    "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{ _transfer_buffer_size_for_parallel_transfer }},
     "irods_user_name": "{{ _zone_user }}",
 {% if _xmsg_host %}
     "irods_xmsg_host": "{{ _xmsg_host }}",
 {% endif %}
-{% if _xmsg_port %}
-    "irods_xmsg_port": {{ _xmsg_port }},
+{% if _client_xmsg_port %}
+    "irods_xmsg_port": {{ _client_xmsg_port }},
 {% endif %}
     "irods_zone_name": "{{ _zone_name }}"
 }

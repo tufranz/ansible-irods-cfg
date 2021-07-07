@@ -25,12 +25,6 @@
       register: response
       failed_when: response.stat.exists
 
-    - name: verify that .pgpass was not deposited
-      stat:
-        path: /var/lib/irods/.pgpass
-      register: response
-      failed_when: response.stat.exists
-
     - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /var/lib/irods/.irods/irods_environment.json

@@ -2,6 +2,8 @@
 # These are the config file specific defaults for the server side
 # irods_environment.json
 
+_authentication_file_default: "{{ _root_dir }}/var/lib/irods/.irods/.irodsA"
+
 _client_default_hash_scheme_default: "{{ _default_hash_scheme }}"
 
 _client_default_resource_default: "{{
@@ -19,6 +21,8 @@ _client_server_negotiation_default: request_server_negotiation
 
 _client_server_policy_default: CS_NEG_DONT_CARE
 
+_connection_pool_refresh_time_default: 300
+
 _cwd_default: "{{ _home }}"
 
 _environment_file_default: var/lib/irods/.irods/irods_environment.json
@@ -26,3 +30,7 @@ _environment_file_default: var/lib/irods/.irods/irods_environment.json
 _home_default: "{{ '/' ~ _zone_name ~ '/home/' ~ _zone_user }}"
 
 _match_hash_policy_default: compatible
+
+_server_control_plane_key_default: TEMPORARY__32byte_ctrl_plane_key
+
+_server_control_plane_port_default: 1248

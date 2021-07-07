@@ -10,6 +10,7 @@
         tasks_from: _system_account_own.yml
       vars:
         irods_cfg_chown: false
+        irods_cfg_validate: true
         _system_account_own_path: /etc/irods/not_owner_test
 
     - name: give file irods ownershop
@@ -18,4 +19,5 @@
         tasks_from: _system_account_own.yml
       vars:
         irods_cfg_chown: true
+        irods_cfg_validate: true
         _system_account_own_path: /etc/irods/owner_test

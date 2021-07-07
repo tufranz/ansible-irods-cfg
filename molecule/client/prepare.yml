@@ -1,2 +1,14 @@
 ---
 - import_playbook: ../_shared/prepare.yml
+
+
+- name: prepare
+  hosts: all
+  collections:
+    - ansible.builtin
+  tasks:
+    - name: download client env schema
+      get_url:
+        url: https://schemas.irods.org/configuration/v3/client_environment.json
+        dest: /var/lib/irods/
+        timeout: 120

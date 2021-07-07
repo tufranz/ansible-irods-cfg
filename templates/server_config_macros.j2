@@ -24,14 +24,11 @@
 {% macro advanced_settings() -%}
 {
     "default_number_of_transfer_threads": {{ _default_number_of_transfer_threads }},
-{%   if _default_temporary_password_lifetime %}
     "default_temporary_password_lifetime_in_seconds": {{ _default_temporary_password_lifetime }},
-{%   endif %}
-{%   if _maximum_number_of_concurrent_rule_engine_server_processes %}
     "maximum_number_of_concurrent_rule_engine_server_processes": {{ _maximum_number_of_concurrent_rule_engine_server_processes }},
-{%   endif %}
     "maximum_size_for_single_buffer_in_megabytes": {{ _maximum_size_for_single_buffer }},
     "maximum_temporary_password_lifetime_in_seconds": {{ _maximum_temporary_password_lifetime }},
+    "rule_engine_server_sleep_time_in_seconds": {{ _rule_engine_server_sleep_time }},
     "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{ _transfer_buffer_size_for_parallel_transfer }},
     "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{ _transfer_chunk_size_for_parallel_transfer }}
 }
@@ -54,12 +51,27 @@
 {%- endmacro %}
 
 
+{% macro mk_catalog_provider_hosts(hosts) -%}
+{%   if hosts|length == 0 %}
+[]
+{%-  elif hosts|length == 1 %}
+[ "{{ hosts[0] }}" ]
+{%-  else %}
+[
+{%     for h in hosts %}
+    "{{ h }}"{% if not loop.last %},{% endif +%}
+{%     endfor %}
+]
+{%-  endif %}
+{%- endmacro %}
+
+
 {% macro mk_federate(def) -%}
 {
-    "icat_host": "{{ def.icat_host }}",
-    "zone_name": "{{ def.zone_name }}",
+    "catalog_provider_hosts": {{ mk_catalog_provider_hosts(def.catalog_provider_hosts) | indent(4) }},
+    "negotiation_key": "{{ def.negotiation_key }}",
     "zone_key": "{{ def.zone_key }}",
-    "negotiation_key": "{{ def.negotiation_key }}"
+    "zone_name": "{{ def.zone_name }}"
 }
 {%- endmacro %}
 
@@ -116,34 +128,85 @@
 {% endmacro %}
 
 
-{% macro mk_re_file(file) -%}
-{ "filename": "{{ file }}" }
+{% macro mk_database_config(cfg) -%}
+{
+    "db_host": "{{ cfg.db_host }}",
+    "db_name": "{{ cfg.db_name }}",
+    "db_odbc_driver": "{{ cfg.odbc_driver }}",
+    "db_password": "{{ cfg.db_password }}",
+    "db_port": {{ cfg.db_port }},
+    "db_username": "{{ cfg.db_username }}"
+}
+{%- endmacro %}
+
+
+{% macro mk_database(db, default_driver) -%}
+{%   set d = db if db.odbc_driver else db | combine({ 'odbc_driver': default_driver }) %}
+{
+    "{{ db.catalog_database_type }}": {{ mk_database_config(d) | indent(4) }}
+}
 {%- endmacro %}
 
 
 {% macro mk_re_file_set(files) -%}
-{%   if files %}
+{%   if files|length == 0 %}
+[]
+{%-  elif files|length == 1 %}
+[ "{{ files[0] }}" ]
+{%-  else %}
 [
 {%     for f in files %}
-    {{ mk_re_file(f) }}{% if not loop.last %},{% endif +%}
+    "{{ f }}"{% if not loop.last %},{% endif +%}
 {%     endfor %}
 ]
-{%-  else %}
-[]
 {%-  endif %}
 {%- endmacro %}
 
 
-{% macro re_data_variable_mapping_set() -%}
-{{ mk_re_file_set(_re_additional_data_variable_mappings + [ 'core' ]) }}
+{% macro mk_rule_lang_config(extra_dvm, extra_fnm, extra_rulebases) -%}
+{
+    "re_data_variable_mapping_set": {{ mk_re_file_set(extra_dvm + [ 'core' ]) | indent(4) }}, 
+    "re_function_name_mapping_set": {{ mk_re_file_set(extra_fnm + [ 'core' ]) | indent(4) }},
+    "re_rulebase_set": {{ mk_re_file_set(extra_rulebases + [ 'core' ]) | indent(4) }},
+    "regexes_for_supported_peps": [
+        "ac[^ ]*", 
+        "msi[^ ]*", 
+        "[^ ]*pep_[^ ]*_(pre|post|except|finally)"
+    ]
+}
 {%- endmacro %}
 
 
-{% macro re_function_name_mapping_set() -%}
-{{ mk_re_file_set(_re_additional_function_name_mappings + [ 'core' ]) }}
+{% macro mk_rule_engine(instance_name, plugin_name, cfg_json, shm) -%}
+{
+    "instance_name": "{{ instance_name }}",
+    "plugin_name": "{{ plugin_name }}",
+    "plugin_specific_configuration": {{ cfg_json | indent(4) }}{% if shm %},{% endif +%}
+{%   if shm %}
+    "shared_memory_instance": "{{ shm }}"
+{%   endif %}
+} 
 {%- endmacro %}
 
 
-{% macro re_rulebase_set() -%}
-{{ mk_re_file_set(_re_additional_rulebases + [ 'core' ]) }}
+{% macro mk_rule_engine_list(rule_lang_extra_dvm, rule_lang_extra_fnm, rule_lang_extra_rulebases)
+-%}
+{%   set rule_lang_cfg = mk_rule_lang_config(rule_lang_extra_dvm, rule_lang_extra_fnm, rule_lang_extra_rulebases) %}
+[
+    {{ mk_rule_engine('irods_rule_engine_plugin-irods_rule_language-instance', 'irods_rule_engine_plugin-irods_rule_language', rule_lang_cfg, 'irods_rule_language_rule_engine') | indent(4) }},
+    {{ mk_rule_engine('irods_rule_engine_plugin-cpp_default_policy-instance', 'irods_rule_engine_plugin-cpp_default_policy', '{}', none) | indent(4) }}
+]
+{%- endmacro %}
+
+
+{% macro plugin_configuration() -%}
+{
+    "authentication": {},
+{%   if _icat %}
+    "database": {{ mk_database(_icat, _dbms_default_odbc_driver) | indent(4) }},
+{%   endif %}
+    "network": {},
+    "resource": {},
+    "rule_engines": {{ mk_rule_engine_list(_re_additional_data_variable_mappings, _re_additional_function_name_mappings, _re_additional_rulebases) | indent(4) }}
+}
 {%- endmacro %}

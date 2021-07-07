@@ -19,7 +19,8 @@
         unixodbc_cfg_group: "{{ _system_group_name if _chown else None }}"
         unixodbc_cfg_sources:
           - source_name: iRODS Catalog
-            driver_file: >
-              {{ _icat.odbc_driver if _icat.odbc_driver else _dbms_default_odbc_driver }}
-            driver_properties: >
+            driver_file: >-
+              {{ _icat.odbc_driver if _icat.odbc_driver|default(none) else 
+                _dbms_default_odbc_driver }}
+            driver_properties: >-
               {{ base_driver_properties | combine(_dbms_specific_odbc_properties) }}

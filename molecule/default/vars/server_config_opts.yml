@@ -1,4 +1,9 @@
 ---
+irods_cfg_catalog_provider_hosts:
+  - provider1
+  - provider2
+irods_cfg_catalog_service_role: consumer
+irods_cfg_database_user_password_salt: salt
 irods_cfg_default_number_of_transfer_threads: 16
 irods_cfg_default_resource_directory: vault
 irods_cfg_default_resource_name: resc
@@ -7,11 +12,15 @@ irods_cfg_environment_variables:
   var1: val1
   var2: val2
 irods_cfg_federation:
-  - icat_host: icat1
+  - catalog_provider_hosts:
+      - icat1
+      - icat2
+      - icat3
     zone_name: zone1
     zone_key: key1
     negotiation_key: TEMPORARY_32byte_negotiation_ke1
-  - icat_host: icat2
+  - catalog_provider_hosts:
+      - icat2
     zone_name: zone2
     zone_key: key2
     negotiation_key: TEMPORARY_32byte_negotiation_ke2
@@ -32,6 +41,7 @@ irods_cfg_re_additional_function_name_mappings:
 irods_cfg_re_additional_rulebases:
   - re1
   - re2
+irods_cfg_rule_engine_server_sleep_time: 20
 irods_cfg_transfer_buffer_size_for_parallel_transfer: 32
 irods_cfg_transfer_chunk_size_for_parallel_transfer: 5
 irods_cfg_xmsg_port: 3
