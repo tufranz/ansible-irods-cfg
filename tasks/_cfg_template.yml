@@ -15,7 +15,7 @@
   vars:
     _system_account_own_path: "{{ (_root_dir ~ '/' ~ _cfg_template_dest_file) | dirname }}"
 
-- name: cfg_tempate | generate {{ _cfg_template_dest_name }}
+- name: cfg_tempate | generate {{ _cfg_template_dest_file }}
   template:
     src: "{{ _cfg_template_name | default((_cfg_template_dest_file | basename) ~ '.j2') }}"
     dest: "{{ _root_dir }}/{{ _cfg_template_dest_file }}"
