@@ -12,6 +12,9 @@
         url: https://schemas.irods.org/configuration/v3/{{ item }}
         dest: /var/lib/irods/
         timeout: 120
+      register: download
+      until: download is not failed
+      retries: 2
       with_items:
         - host_access_control_config.json
         - hosts_config.json

@@ -12,3 +12,6 @@
         url: https://schemas.irods.org/configuration/v3/client_environment.json
         dest: /var/lib/irods/
         timeout: 120
+      register: download
+      until: download is not failed 
+      retries: 2
