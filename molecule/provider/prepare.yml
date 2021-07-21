@@ -16,7 +16,6 @@
       until: download is not failed
       retries: 2
       with_items:
-        - database_config.json
         - host_access_control_config.json
         - hosts_config.json
         - server_config.json
