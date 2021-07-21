@@ -9,15 +9,15 @@
 
 
 {% macro access_entries() -%}
-{% if _access_entries %}
+{%   if _access_entries %}
 [
-{%   for e in _access_entries %}
+{%     for e in _access_entries %}
     {{ mk_access_entry(e) | indent(4) }}{% if not loop.last %},{% endif +%}
-{%   endfor %}
+{%     endfor %}
 ]
-{%- else %}
+{%-  else %}
 []
-{%- endif %}
+{%-  endif %}
 {%- endmacro %}
 
 
