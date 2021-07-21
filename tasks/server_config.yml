@@ -30,7 +30,7 @@
           - _catalog_provider_hosts|length >= 1
           - _catalog_service_role in ['consumer', 'provider']
           - _default_number_of_transfer_threads|int > 0
-          - _default_temporary_password_lifetime|int > 0 
+          - _default_temporary_password_lifetime|int > 0
           - _maximum_temporary_password_lifetime|int >= _default_temporary_password_lifetime|int
           - >
             not _maximum_number_of_concurrent_rule_engine_server_processes
@@ -49,7 +49,7 @@
           - >
             not _pam_password_min_time
             or ((
-                _pam_password_min_time|int > 0 
+                _pam_password_min_time|int > 0
                 and _pam_password_min_time|int <= _pam_password_max_time|int)
                   if _pam_password_max_time else
               _pam_password_min_time|int > 0)
@@ -70,7 +70,7 @@
             _xmsg_port|int >= 1 and _xmsg_port|int <= 65535
             and _xmsg_port != _server_control_plane_port
             and (
-              _xmsg_port|int < _server_port_range_start|int 
+              _xmsg_port|int < _server_port_range_start|int
               or _xmsg_port|int > _server_port_range_end|int)
           - _zone_auth_scheme in ['', 'gsi', 'krb', 'native', 'pam']
           - not _zone_key is match('.*-.*')
