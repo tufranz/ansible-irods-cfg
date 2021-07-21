@@ -9,7 +9,7 @@ jobs:
         with: 
           path: "${{ github.repository }}"
  
-      - uses: gofrolist/molecule-action
+      - uses: gofrolist/molecule-action@master
         with:
           molecule_options: --base-config molecule/_shared/base.yml
           molecule_command: test
