@@ -1,4 +1,14 @@
 ---
+- name: prepare | control node
+  hosts: localhost
+  collections:
+    - ansible.builtin
+  tasks:
+    - name: install Jinja 3
+      pip:
+        name: Jinja2>3
+
+
 - name: prepare | centos
   hosts: centos
   collections:
