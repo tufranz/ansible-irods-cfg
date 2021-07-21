@@ -10,4 +10,8 @@
 
 - name: validate {{ cfg_path }} with schema
   ansible.builtin.shell: jsonschema --instance '{{ cfg_path }}' '/var/lib/irods/{{ schema }}'
+  register: response
+  until: response.stderr is not search('Connection timed out')
+  retries: 2 
+  throttle: 1
   changed_when: false
