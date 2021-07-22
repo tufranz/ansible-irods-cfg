@@ -197,8 +197,8 @@ to `true`.
         - client.yml
         - init_zone_user.yml
 
-# IES
-- hosts: ies
+# Catalog Service Provider
+- hosts: irods_catalog_provider
   roles:
     - role: cyverse-ansible.irods-cfg
       vars:
@@ -232,8 +232,8 @@ to `true`.
         irods_cfg_zone_name: iplant
         irods_cfg_zone_user: cyverse_admin
 
-# Resource Server
-- hosts: rs
+# Catalog Service Consumer Acting as a Resource Server
+- hosts: irods_resource_server
   roles:
     - role: cyverse-ansible.irods-cfg
       vars:
