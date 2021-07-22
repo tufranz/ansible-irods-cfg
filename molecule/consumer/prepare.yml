@@ -14,8 +14,7 @@
         timeout: 120
       register: download
       until: download is not failed
-      retries: 2
-      throttle: 1
+      retries: 5
       with_items:
         - host_access_control_config.json
         - hosts_config.json
