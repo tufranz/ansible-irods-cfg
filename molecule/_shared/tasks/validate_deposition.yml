@@ -12,5 +12,5 @@
   ansible.builtin.shell: jsonschema --instance '{{ cfg_path }}' '/var/lib/irods/{{ schema }}'
   register: response
   until: response.stderr is not search('Connection timed out')
-  retries: 5 
+  retries: 10
   changed_when: false

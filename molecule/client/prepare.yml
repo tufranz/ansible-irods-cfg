@@ -14,4 +14,4 @@
         timeout: 120
       register: download
       until: download is not failed 
-      retries: 5
+      retries: 10
