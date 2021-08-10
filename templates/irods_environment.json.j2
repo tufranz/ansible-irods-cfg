@@ -86,5 +86,7 @@
 {% if _client_xmsg_port %}
     "irods_xmsg_port": {{ _client_xmsg_port }},
 {% endif %}
-    "irods_zone_name": "{{ _zone_name }}"
+    "irods_zone_name": "{{ _zone_name }}",
+    "schema_name": "{{ _environment_schema_name }}",
+    "schema_version": "v3"
 }

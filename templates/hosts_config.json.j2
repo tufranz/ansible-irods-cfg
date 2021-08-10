@@ -1,4 +1,6 @@
 {% import 'server_config_macros.j2' as sc with context %}
 {
-    "host_entries": {{ sc.host_entries() | indent(4) }}
+    "host_entries": {{ sc.host_entries() | indent(4) }},
+    "schema_name": "hosts_config",
+    "schema_version": "v3"
 }

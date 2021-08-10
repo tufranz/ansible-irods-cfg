@@ -6,6 +6,7 @@
     - ansible.builtin
   vars_files:
     - ../../vars/main.yml
+    - ../../vars/irods_environment_client.yml
   vars:
     irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
@@ -44,6 +45,8 @@
           - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port is not defined
           - irods_environment.irods_zone_name == 'tempZone'
+          - irods_environment.schema_name == 'client_environment'
+          - irods_environment.schema_version == 'v3'
 
 
 - name: verify | default variables generate correct server side irods_environment
@@ -95,6 +98,8 @@
           - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port is not defined
           - irods_environment.irods_zone_name == 'tempZone'
+          - irods_environment.schema_name == 'service_account_environment'
+          - irods_environment.schema_version == 'v3'
 
 
 - name: verify | default variables generate correct server_config
@@ -167,7 +172,11 @@
           - >-
             server_config.plugin_configuration.rule_engines[0].plugin_specific_configuration.re_rulebase_set[0]
             == 'core'
+          - server_config.rule_engine_namespaces | length == 1
+          - server_config.rule_engine_namespaces[0] == ''
+          - server_config.schema_name == 'server_config'
           - server_config.schema_validation_base_uri == 'https://schemas.irods.org/configuration'
+          - server_config.schema_version == 'v3'
           - server_config.server_control_plane_encryption_algorithm == 'AES-256-CBC'
           - server_config.server_control_plane_encryption_num_hash_rounds == 16
           - server_config.server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
@@ -204,11 +213,15 @@
       assert:
         that:
           - hacc.access_entries | length == 0
+          - hacc.schema_name == 'host_access_control_config'
+          - hacc.schema_version == 'v3'
 
     - name: verify hosts_config.json is correct
       assert:
         that:
           - hosts_config.host_entries | length == 0
+          - hosts_config.schema_name == 'hosts_config'
+          - hosts_config.schema_version == 'v3'
 
     - name: verify service_account.config is correct
       assert:
@@ -269,6 +282,7 @@
   vars_files:
     - vars/irods_environment_opts.yml
     - ../../vars/main.yml
+    - ../../vars/irods_environment_server.yml
   vars:
     irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
   tasks:
@@ -490,6 +504,7 @@
     - vars/jinja2_quirks.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
+    - ../../vars/irods_environment_server.yml
   vars:
     irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
     server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"

@@ -1,7 +1,7 @@
 ---
-- name: irods_environment | load values for server
-  when: _for_server | bool
-  include_vars: irods_environment_server.yml
+- name: irods_environment | load variable values
+  include_vars: >-
+    {{ 'irods_environment_server.yml' if _for_server|bool else 'irods_environment_client.yml' }}
 
 - when: _validate | bool
   ignore_errors: true

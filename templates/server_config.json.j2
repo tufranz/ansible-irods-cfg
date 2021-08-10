@@ -32,7 +32,10 @@
     "pam_password_min_time": {{ _pam_password_min_time }},
 {% endif %}
     "plugin_configuration": {{ sc.plugin_configuration() | indent(4) }},
+    "rule_engine_namespaces": [ "" ],
+    "schema_name": "server_config",
     "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",
+    "schema_version": "v3",
     "server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
     "server_control_plane_encryption_num_hash_rounds": {{ _server_control_plane_encryption_num_hash_rounds }},
     "server_control_plane_key": "{{ _server_control_plane_key }}",
