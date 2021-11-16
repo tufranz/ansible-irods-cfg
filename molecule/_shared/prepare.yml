@@ -36,6 +36,11 @@
   collections:
     - ansible.builtin
   tasks:
+    - name: update ca-certificates
+      package:
+        name: ca-certificates
+        state: latest
+        
     - name: install setuptools
       package:
         name: python-setuptools
