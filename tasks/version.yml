@@ -1,0 +1,57 @@
+---
+- name: version | get current time
+  when: ansible_date_time is not defined
+  local_action:
+    module: ansible.builtin.setup
+    filter:
+      - ansible_date_time
+  run_once: true
+
+- name: version | retrieve VERSION.json.dist
+  slurp:
+    path: "{{ _root_dir }}/var/lib/irods/VERSION.json.dist"
+  register: distVerSlurp
+
+- name: version | extract dist version
+  ansible.builtin.set_fact:
+    distVer: "{{ distVerSlurp.content | b64decode }}"
+
+- name: version | check if VERSION.json exists
+  ansible.builtin.stat:
+    path: "{{ _root_dir }}/var/lib/irods/VERSION.json"
+  register: statResp
+
+- name: version | create VERSION.json
+  when: not statResp.stat.exists
+  ansible.builtin.copy:
+    dest: "{{ _root_dir }}/var/lib/irods/VERSION.json"
+    content: "{{ 
+      distVer 
+        | combine({ 'installation_time': ansible_date_time.iso8601_micro }) 
+        | to_nice_json(indent=4) }}"
+    mode: u+r
+
+- when: statResp.stat.exists
+  block:
+    - name: version | retrieve VERSION.json
+      ansible.builtin.slurp:
+        path: "{{ _root_dir }}/var/lib/irods/VERSION.json"
+      register: verSlurp
+
+    - name: version | extract version
+      ansible.builtin.set_fact:
+        ver: "{{ verSlurp.content | b64decode }}"
+
+    - name: version | update VERSION.json
+      when: distVer['irods_version'] is version(ver['irods_version'], '>')
+      ansible.builtin.copy:
+        dest: "{{ _root_dir }}/var/lib/irods/VERSION.json"
+        content: "{{ 
+          distVer 
+            | combine(
+              { 'installation_time': ansible_date_time.iso8601_micro, 'previous_version': ver } ) 
+            | to_nice_json(indent=4) }}"
+
+- ansible.builtin.include_tasks: _system_account_own.yml
+  vars:
+    _system_account_own_path: "{{ _root_dir }}/var/lib/irods/VERSION.json"
