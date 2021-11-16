@@ -27,4 +27,4 @@
 - name: cfg_template | ensure system account owns file
   ansible.builtin.include_tasks: _system_account_own.yml
   vars:
-    _system_account_own_path: "{{ _root_dir }}/{{  _cfg_template_dest_file }}"
+    _system_account_own_path: "{{ _root_dir }}/{{ _cfg_template_dest_file }}"
