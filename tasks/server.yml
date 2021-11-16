@@ -1,16 +1,23 @@
 ---
-- import_tasks: odbc.yml
+- name: server | generate .odbc.ini
+  ansible.builtin.import_tasks: odbc.yml
 
-- import_tasks: host_access_control_config.yml
+- name: server | generate host_access_control_config.json
+  ansible.builtin.import_tasks: host_access_control_config.yml
 
-- import_tasks: hosts_config.yml
+- name: server | generate hosts_config.json
+  ansible.builtin.import_tasks: hosts_config.yml
 
-- include_tasks: irods_environment.yml
+- name: server | generate server version of irods_environment.json
+  ansible.builtin.include_tasks: irods_environment.yml
   vars:
     _for_server: true
 
-- import_tasks: server_config.yml
+- name: server | generate server_config.json
+  ansible.builtin.import_tasks: server_config.yml
 
-- import_tasks: service_account.yml
+- name: server | generate service_account.config
+  ansible.builtin.import_tasks: service_account.yml
 
-- import_tasks: version.yml
+- name: server | ensure VERSION.json is correct
+  ansible.builtin.import_tasks: version.yml

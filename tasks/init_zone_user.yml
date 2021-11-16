@@ -1,6 +1,6 @@
 ---
 - name: init_zone_user | initialize connection to server
-  shell: |
+  ansible.builtin.shell: |
     bak='{{ _authentication_file }}.bak'
     trap "rm --force '$bak'" EXIT
     if [[ -f '{{ _authentication_file }}' ]]; then

@@ -2,10 +2,10 @@
 - when: _icat is mapping
   block:
     - name: odbc | load vars for chosen database type
-      include_vars: "{{ _icat.catalog_database_type }}.yml"
+      ansible.builtin.include_vars: "{{ _icat.catalog_database_type }}.yml"
 
     - name: odbc | create .odbc.ini
-      include_role:
+      ansible.builtin.include_role:
         name: cyverse.unixodbc_cfg
         tasks_from: odbc.yml
       vars:
