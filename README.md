@@ -11,7 +11,6 @@ installed. At the moment, it can maintain the following configuration files.
 * etc/irods/hosts_config.json
 * etc/irods/server_config.json
 * etc/irods/service_account.config
-* var/lib/irods/VERSION.json
 
 ## Requirements
 
@@ -31,7 +30,7 @@ configuration file. `irods_environment.yml` deploys the client or clerver config
 _irods_environment.json_ by default. In the `etc/irods/` directory, `host_access_control_config.yml` 
 deploys host_access_control_config.json, `hosts_config.yml` deploys hosts_config.json, 
 `server_config.yml` deploys server_config.json, and `service_account.yml` deploys 
-service_account.config. In the `var/lib/irods` directory, `version.yml` deploys VERSION.json
+service_account.config.
 
 The `init_zone_user.yml` tasks file is not part of `main.yml` or either of the tier-specific tasks 
 files. It initializes the iRODS zone user on the inventory host.

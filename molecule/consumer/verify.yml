@@ -32,32 +32,3 @@
         not response.stat.exists or
         response.stat.pw_name != 'irods' or
         response.stat.gr_name != 'irods'
-
-    - name: verify VERSION.json deposition
-      stat:
-        path: /var/lib/irods/VERSION.json
-      register: response
-      failed_when: >-
-        not response.stat.exists or
-        response.stat.pw_name != 'irods' or
-        response.stat.gr_name != 'irods' or
-        not response.stat.rusr
-
-    - name: retrieve VERSION.json
-      slurp:
-        path: /var/lib/irods/VERSION.json
-      register: slurpResp
-
-    - name: extract version
-      set_fact:
-        ver: "{{ slurpResp.content | b64decode }}"
-
-    - name: verify version is correct
-      assert:
-        that:
-          - ver.catalog_schema_version|int == 7
-          - ver.commit_id == '9eb6c23df45cdedff8ee9c3af71a65d304635037'
-          - ver.configuration_schema_version|int == 3
-          - ver.installation_time is defined
-          - ver.irods_version == '4.2.8'
-          - ver.previous_version is not defined

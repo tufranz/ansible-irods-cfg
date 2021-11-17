@@ -15,6 +15,3 @@
 
 - name: server | generate service_account.config
   ansible.builtin.import_tasks: service_account.yml
-
-- name: server | ensure VERSION.json is correct
-  ansible.builtin.import_tasks: version.yml
