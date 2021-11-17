@@ -1,4 +1,4 @@
-# cyverse.
+# cyverse-ansible.irods-cfg
 
 [![Ansible Galaxy](https://img.shields.io/badge/role-cyverse--ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/cyverse-ansible/irods-cfg/)
 [![Test Status](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml/badge.svg)](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml)
