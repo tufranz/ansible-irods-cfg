@@ -21,9 +21,4 @@ galaxy_info:
     - irods
     - configuration
 
-dependencies:
-  - name: cyverse.unixodbc_cfg
-    src: cyverse-ansible.unixodbc-cfg
-    version: master
-    vars:
-      unixodbc_cfg_defer: true
+dependencies: []

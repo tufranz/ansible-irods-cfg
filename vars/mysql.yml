@@ -1,5 +1,2 @@
 ---
 _dbms_default_odbc_driver: MySQL
-
-_dbms_specific_odbc_properties:
-  Options: 2

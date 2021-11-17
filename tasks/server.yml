@@ -1,7 +1,4 @@
 ---
-- name: server | generate .odbc.ini
-  ansible.builtin.import_tasks: odbc.yml
-
 - name: server | generate host_access_control_config.json
   ansible.builtin.import_tasks: host_access_control_config.yml
 

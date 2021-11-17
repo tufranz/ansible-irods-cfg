@@ -1,12 +1,2 @@
 ---
 _dbms_default_odbc_driver: PostgreSQL
-
-_dbms_specific_odbc_properties:
-  CommLog: 0
-  Debug: 0
-  FakeOidIndex: 'No'
-  Ksqo: 0
-  ReadOnly: 'No'
-  RowVersioning: 'No'
-  ShowOidColumn: 'No'
-  ShowSystemTables: 'No'

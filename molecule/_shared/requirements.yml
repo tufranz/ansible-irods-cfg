@@ -1,7 +1,4 @@
 ---
-roles:
-  - name: cyverse.unixodbc_cfg
-    src: cyverse-ansible.unixodbc-cfg
-    version: master
+roles: []
 
 collections: []

@@ -1,5 +1,4 @@
 ---
-mock_roles:
-  - cyverse.unixodbc_cfg
+mock_roles: []
 
 offline: true
