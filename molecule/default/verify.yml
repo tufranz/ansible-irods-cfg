@@ -96,9 +96,6 @@
           - irods_environment.irods_ssl_certificate_key_file is not defined
           - irods_environment.irods_ssl_dh_params_file is not defined
           - irods_environment.irods_ssl_verify_server is not defined
-          - >-
-            irods_environment.irods_transfer_buffer_size_for_parallel_transfer_in_megabytes 
-            is not defined
           - irods_environment.irods_user_name == 'rods'
           - irods_environment.irods_xmsg_host is not defined
           - irods_environment.irods_xmsg_port is not defined
@@ -325,9 +322,6 @@
           - irods_environment.irods_ssl_certificate_key_file == 'key_file'
           - irods_environment.irods_ssl_dh_params_file == 'params_file'
           - irods_environment.irods_ssl_verify_server == 'cert'
-          - >-
-            irods_environment.irods_transfer_buffer_size_for_parallel_transfer_in_megabytes 
-            is not defined
           - irods_environment.irods_user_name == 'user'
           - irods_environment.irods_xmsg_host == 'xmsg_host'
           - irods_environment.irods_xmsg_port == 6
