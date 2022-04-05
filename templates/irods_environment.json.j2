@@ -14,12 +14,6 @@
 {% if _connection_pool_refresh_time %}
     "irods_connection_pool_refresh_time_in_seconds": {{ _connection_pool_refresh_time }},
 {% endif %}
-{% if _server_control_plane_key %}
-    "irods_control_plane_key": "{{ _server_control_plane_key }}",
-{% endif %}
-{% if _server_control_plane_port %}
-    "irods_control_plane_port": {{ _server_control_plane_port }},
-{% endif %}
 {% if _cwd %}
     "irods_cwd": "{{ _cwd }}",
 {% endif %}
@@ -61,6 +55,12 @@
     "irods_plugins_home": "{{ _plugins_home }}",
 {% endif %}
     "irods_port": {{ _zone_port }},
+{% if _for_server %}
+    "irods_server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
+    "irods_server_control_plane_encryption_num_hash_rounds": {{ _server_control_plane_encryption_num_hash_rounds }},
+    "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
+    "irods_server_control_plane_port": {{ _server_control_plane_port }},
+{% endif %}
 {% if _ssl_ca_certificate_file %}
     "irods_ssl_ca_certificate_file": "{{ _ssl_ca_certificate_file }}",
 {% endif %}

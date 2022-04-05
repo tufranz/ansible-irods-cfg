@@ -18,8 +18,6 @@
           - irods_environment.irods_client_server_negotiation is not defined
           - irods_environment.irods_client_server_policy is not defined
           - irods_environment.irods_connection_pool_refresh_time_in_seconds is not defined
-          - irods_environment.irods_control_plane_key is not defined
-          - irods_environment.irods_control_plane_port is not defined
           - irods_environment.irods_cwd is not defined
           - irods_environment.irods_debug is not defined
           - irods_environment.irods_default_hash_scheme is not defined
@@ -35,6 +33,10 @@
           - irods_environment.irods_match_hash_policy is not defined
           - irods_environment.irods_plugins_home is not defined
           - irods_environment.irods_port == 1247
+          - irods_environment.irods_server_control_plane_encryption_algorithm is not defined
+          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds is not defined
+          - irods_environment.irods_server_control_plane_key is not defined
+          - irods_environment.irods_server_control_plane_port is not defined
           - irods_environment.irods_ssl_ca_certificate_file is not defined
           - irods_environment.irods_ssl_ca_certificate_path is not defined
           - irods_environment.irods_ssl_certificate_chain_file is not defined
@@ -55,6 +57,7 @@
   collections:
     - ansible.builtin
   vars_files:
+    - vars/irods_environment_server.yml
     - ../../vars/main.yml
     - ../../vars/irods_environment_server.yml
   vars:
@@ -68,8 +71,6 @@
           - irods_environment.irods_client_server_negotiation == 'request_server_negotiation'
           - irods_environment.irods_client_server_policy == 'CS_NEG_DONT_CARE'
           - irods_environment.irods_connection_pool_refresh_time_in_seconds == 300
-          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
-          - irods_environment.irods_control_plane_port == 1248
           - irods_environment.irods_cwd == '/tempZone/home/rods'
           - irods_environment.irods_debug is not defined
           - irods_environment.irods_default_hash_scheme == 'SHA256'
@@ -85,6 +86,10 @@
           - irods_environment.irods_match_hash_policy == 'compatible'
           - irods_environment.irods_plugins_home is not defined
           - irods_environment.irods_port == 1247
+          - irods_environment.irods_server_control_plane_encryption_algorithm == 'AES-256-CBC'
+          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 16
+          - irods_environment.irods_server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_key'
+          - irods_environment.irods_server_control_plane_port == 1248
           - irods_environment.irods_ssl_ca_certificate_file is not defined
           - irods_environment.irods_ssl_ca_certificate_path is not defined
           - irods_environment.irods_ssl_certificate_chain_file is not defined
@@ -281,6 +286,7 @@
     - ansible.builtin
   vars_files:
     - vars/irods_environment_opts.yml
+    - vars/irods_environment_server.yml
     - ../../vars/main.yml
     - ../../vars/irods_environment_server.yml
   vars:
@@ -294,8 +300,6 @@
           - irods_environment.irods_client_server_negotiation == 'off'
           - irods_environment.irods_client_server_policy == 'CS_NEG_REFUSE'
           - irods_environment.irods_connection_pool_refresh_time_in_seconds == 100
-          - irods_environment.irods_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_ke1'
-          - irods_environment.irods_control_plane_port == 5
           - irods_environment.irods_cwd == '/zone'
           - irods_environment.irods_debug == 'CAT'
           - irods_environment.irods_default_hash_scheme == 'MD5'
@@ -311,6 +315,10 @@
           - irods_environment.irods_match_hash_policy == 'strict'
           - irods_environment.irods_plugins_home == '/plugins'
           - irods_environment.irods_port == 7
+          - irods_environment.irods_server_control_plane_encryption_algorithm == 'svr_alg'
+          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds == 3
+          - irods_environment.irods_server_control_plane_key == 'TEMPORARY__32byte_ctrl_plane_ke1'
+          - irods_environment.irods_server_control_plane_port == 5
           - irods_environment.irods_ssl_ca_certificate_file == 'certificate_file'
           - irods_environment.irods_ssl_ca_certificate_path == '/path/to/certificates'
           - irods_environment.irods_ssl_certificate_chain_file == 'chain'
@@ -324,10 +332,6 @@
           - irods_environment.irods_xmsg_host == 'xmsg_host'
           - irods_environment.irods_xmsg_port == 6
           - irods_environment.irods_zone_name == 'zone'
-          - irods_environment.irods_server_control_plane_key is not defined
-          - irods_environment.irods_server_control_plane_port is not defined
-          - irods_environment.irods_server_control_plane_encryption_algorithm is not defined
-          - irods_environment.irods_server_control_plane_encryption_num_hash_rounds is not defined
 
 
 - name: verify | server_config options

@@ -25,12 +25,12 @@
           - _home is match('/..*')
           - not _log_level or (_log_level|int >= 1 and _log_level|int <= 10)
           - _match_hash_policy in ['compatible', 'strict']
-          - not _server_control_plane_key or _server_control_plane_key | length == 32
+          - _server_control_plane_encryption_algorithm != ''
+          - _server_control_plane_encryption_num_hash_rounds|int >= 0
+          - _server_control_plane_key | length == 32
           - >
-            not _server_control_plane_port
-            or (
-              _server_control_plane_port|int >= 1 and _server_control_plane_port|int <= 65535
-              and _server_control_plane_port|int != _zone_port|int )
+            _server_control_plane_port|int >= 1 and _server_control_plane_port|int <= 65535
+            and _server_control_plane_port|int != _zone_port|int
           - not _ssl_verify_server or _ssl_verify_server in ['cert', 'hostname', 'none']
           - >
             not _client_xmsg_port

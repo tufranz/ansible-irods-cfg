@@ -18,6 +18,8 @@ irods_cfg_host: host
 irods_cfg_log_level: 4
 irods_cfg_match_hash_policy: strict
 irods_cfg_plugins_home: /plugins
+irods_cfg_server_control_plane_encryption_algorithm: svr_alg
+irods_cfg_server_control_plane_encryption_num_hash_rounds: 3
 irods_cfg_server_control_plane_key: TEMPORARY__32byte_ctrl_plane_ke1
 irods_cfg_server_control_plane_port: 5
 irods_cfg_system_account_name: root
