@@ -523,6 +523,52 @@
           - server_config.server_control_plane_encryption_num_hash_rounds == 0
 
 
+- name: verify | setup_configuration default expansion
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../../vars/main.yml
+    - ../../vars/irods_environment_server.yml
+  vars:
+    host_access_control_config: >-
+      {{ lookup('template', '../../templates/host_access_control_config.json.j2') }}
+    hosts_config: "{{ lookup('template', '../../templates/hosts_config.json.j2') }}"
+    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
+    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
+    setup_configuration: "{{ lookup('template', '../../templates/setup_configuration.json.j2') }}"
+  tasks:
+    - name: verify contents
+      assert:
+        that:
+          - setup_configuration.host_system_information.service_account_user_name == 'irods'
+          - setup_configuration.host_system_information.service_account_group_name == 'irods'
+          - setup_configuration.server_config == server_config
+          - setup_configuration.hosts_config == hosts_config
+          - setup_configuration.host_access_control_config == host_access_control_config
+          - setup_configuration.service_account_environment == irods_environment
+          - setup_configuration.admin_password == 'rods'
+          - setup_configuration.default_resource_directory == None
+
+
+- name: verify | setup_configuration customization
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/setup_configuration_opts.yml
+    - ../../vars/main.yml
+    - ../../vars/irods_environment_server.yml
+  vars:
+    setup_configuration: "{{ lookup('template', '../../templates/setup_configuration.json.j2') }}"
+  tasks:
+    - name: verify contents
+      assert:
+        that:
+          - setup_configuration.host_system_information.service_account_user_name == 'account'
+          - setup_configuration.host_system_information.service_account_group_name == 'group'
+          - setup_configuration.admin_password == 'password'
+          - setup_configuration.default_resource_directory == '/tmp'
+
+
 - name: verify | service ownership assignment
   hosts: all
   collections:

@@ -1,0 +1,24 @@
+---
+TODO test
+- name: setup_irods | determine if ICAT schema initialized
+  ansible.builtin.stat:
+    path: /var/lib/irods/.odbc.ini
+  register: response
+
+- when: not response.stat.exists
+  block:
+    - name: setup_irods | create setup configuration file
+      ansible.builtin.include_tasks: _cfg_template.yml
+      vars:
+        _cfg_template_dest_file: tmp/setup_configuration.json
+
+    - name: setup_irods | initialize ICAT schema
+      ansible.builtin.shell: |
+        python /var/lib/irods/scripts/setup_irods.py \
+          --json_configuration_file=tmp/setup_configuration.json
+        rm --force tmp/setup_configuration.json
+      register: response
+      failed_when:
+        - not response.stderr is search('Database specified already in use by iRODS')
+        - not response.stdout is search('Attempting test put')
+      changed_when: not response.stderr is search('Database specified already in use by iRODS')
