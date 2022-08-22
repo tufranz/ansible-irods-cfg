@@ -9,7 +9,7 @@
         name: Jinja2>3
 
 
-- name: prepare | centos
+- name: prepare | base | centos
   hosts: centos
   collections:
     - ansible.builtin
@@ -20,7 +20,7 @@
         state: present
 
 
-- name: prepare | ubuntu
+- name: prepare | base | ubuntu
   hosts: ubuntu
   collections:
     - ansible.builtin
@@ -39,7 +39,7 @@
     - name: update ca-certificates
       package:
         name: ca-certificates
-        state: latest
+        state: latest  # noqa package-latest
         
     - name: install setuptools
       package:

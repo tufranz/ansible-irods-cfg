@@ -6,7 +6,7 @@
       vars:
         irods_cfg_icat:
           catalog_database_type: postgres
-          db_host: icat.domain
+          db_host: localhost
           db_name: db
           db_odbc_type: postgres
           db_password: secret
