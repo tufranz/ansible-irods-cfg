@@ -6,10 +6,16 @@
       vars:
         irods_cfg_icat:
           catalog_database_type: postgres
-          db_host: icat.domain
+          db_host: localhost
           db_name: db
           db_odbc_type: postgres
           db_password: secret
           db_port: 1
           db_username: irodsuser
           odbc_driver: PostgreSQL12
+
+  post_tasks:
+    - name: place setup_configuration.json
+      import_role:
+        name: ansible-irods-cfg
+        tasks_from: setup_irods.yml

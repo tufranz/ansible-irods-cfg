@@ -2,15 +2,20 @@
 dependency:
   name: galaxy
   options:
-    role-file: molecule/_shared/requirements.yml
     requirements-file: molecule/_shared/requirements.yml
 driver:
   name: docker
 platforms:
   - name: centos
-    image: centos:7
+    image: centos/systemd:latest
+    command: /usr/sbin/init
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    hostname: centos.localdomain
   - name: ubuntu
     image: ubuntu:bionic
+    hostname: ubuntu.localdomain
 provisioner:
   name: ansible
   inventory:
