@@ -3,7 +3,7 @@
 [![Ansible Galaxy](https://img.shields.io/badge/role-cyverse--ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/cyverse-ansible/irods-cfg/)
 [![Test Status](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml/badge.svg)](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml)
 
-This role will eventually be able to be used to completely configure an iRODS server once iRODS is 
+This role will eventually be able to be used to completely configure an iRODS server once iRODS is
 installed. At the moment, it can maintain the following configuration files.
 
 * irods_environment.json
@@ -18,21 +18,21 @@ iRODS 4.2.8 is installed.
 
 ## Tasks Files
 
-The `main.yml` tasks file that is called by default performs the same tasks as `server.yml`, i.e., 
+The `main.yml` tasks file that is called by default performs the same tasks as `server.yml`, i.e.,
 it deploys the set of files required by an iRODS server.
 
-There are two tier-specific tasks files. `client.yml` deploys the configuration files required by a 
-client, e.g., the iCommands. Currently, it deploys the irods_environment.json file. `server.yml` 
+There are two tier-specific tasks files. `client.yml` deploys the configuration files required by a
+client, e.g., the iCommands. Currently, it deploys the irods_environment.json file. `server.yml`
 deploys the configuration files required by an iRODS server.
 
-For each iRODS configuration file there is a corresponding tasks file that deploys only that 
-configuration file. `irods_environment.yml` deploys the client or clerver configuration file, 
-_irods_environment.json_ by default. In the `etc/irods/` directory, `host_access_control_config.yml` 
-deploys host_access_control_config.json, `hosts_config.yml` deploys hosts_config.json, 
-`server_config.yml` deploys server_config.json, and `service_account.yml` deploys 
+For each iRODS configuration file there is a corresponding tasks file that deploys only that
+configuration file. `irods_environment.yml` deploys the client or clerver configuration file,
+_irods_environment.json_ by default. In the `etc/irods/` directory, `host_access_control_config.yml`
+deploys host_access_control_config.json, `hosts_config.yml` deploys hosts_config.json,
+`server_config.yml` deploys server_config.json, and `service_account.yml` deploys
 service_account.config.
 
-The `init_zone_user.yml` tasks file is not part of `main.yml` or either of the tier-specific tasks 
+The `init_zone_user.yml` tasks file is not part of `main.yml` or either of the tier-specific tasks
 files. It initializes the iRODS zone user on the inventory host.
 
 ## Role Variables
@@ -53,11 +53,11 @@ Variable                                                              | Default 
 `irods_cfg_client_encryption_salt_size`                               | 8                                                                                    |                                                  | salt size for parallel transfer encryption
 `irods_cfg_client_server_negotiation`                                 | request_server_negotiation                                                           | none, request_server_negotiation                 | whether or not advanced negotiation is desired for the client or clerver
 `irods_cfg_client_server_policy`                                      | CS_NEG_DONT_CARE                                                                     | CS_NEG_DONT_CARE, CS_NEG_REFUSE, CS_NEG_REQUIRE  | which SSL policy for the client or clerver to use
-`irods_cfg_client_xmsg_port`                                          |                                                                                      |                                                  | the port used by the XMessage server 
+`irods_cfg_client_xmsg_port`                                          |                                                                                      |                                                  | the port used by the XMessage server
 `irods_cfg_chown`                                                     | true                                                                                 |                                                  | whether or not to make the service account the owner of the generate files
 `irods_cfg_connection_pool_refresh_time`                              | 300                                                                                  |                                                  | the number of seconds after which an existing connection in a connection pool is refreshed
 `irods_cfg_cwd`                                                       | `irods_cfg_home`                                                                     |                                                  | the initial working collection for the admin user
-`irods_cfg_database_user_password_salt`                               |                                                                                      |                                                  | the salt used when obfuscating user passwords stored in the catalog database                           
+`irods_cfg_database_user_password_salt`                               |                                                                                      |                                                  | the salt used when obfuscating user passwords stored in the catalog database
 `irods_cfg_debug`                                                     | ''                                                                                   | '' or any combination of 'CAT', 'RDA', and 'SQL' | desired verbosity of the debug logging level for client or  clerver. e.g., 'CATRDA' means include CAT and RDA debugging in debug log messages
 `irods_cfg_default_dir_mode`                                          | 0750                                                                                 |                                                  | the Unix file system octal permission mode for a newly created directory
 `irods_cfg_default_file_mode`                                         | 0600                                                                                 |                                                  | the Unix file system octal permission mode for a newly created file
@@ -78,7 +78,7 @@ Variable                                                              | Default 
 `irods_cfg_kerberos_name`                                             |                                                                                      |                                                  | Kerberos distinguished name for KRB and GSI authentication
 `irods_cfg_log_level`                                                 | 5                                                                                    | 1 - 10                                           | desired verbosity of logging
 `irods_cfg_match_hash_policy`                                         | compatible                                                                           | compatible, strict                               | indicates to iRODS whether to use the hash used by the client or the data at rest, or to force the use of the default hash scheme
-`irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes` | 4                                                                                    |                                                  | the maximum number of rule engine processes to run    
+`irods_cfg_maximum_number_of_concurrent_rule_engine_server_processes` | 4                                                                                    |                                                  | the maximum number of rule engine processes to run
 `irods_cfg_maximum_size_for_single_buffer`                            | 32                                                                                   |                                                  | the maximum size in mebibytes for a single buffer
 `irods_cfg_maximum_temporary_password_lifetime`                       | 1000                                                                                 |                                                  | the maximum number of seconds a server-side temporary password can be valid
 `irods_cfg_negotiation_key`                                           | TEMPORARY_32byte_negotiation_key                                                     |                                                  | a 32-byte encryption key shared by the zone for use in the advanced negotiation handshake at the beginning of an iRODS client connection
@@ -86,13 +86,13 @@ Variable                                                              | Default 
 `irods_cfg_pam_password_length`                                       |                                                                                      |                                                  | maximum length of a PAM password
 `irods_cfg_pam_password_max_time`                                     |                                                                                      |                                                  | maximum allowed PAM password lifetime
 `irods_cfg_pam_password_min_time`                                     |                                                                                      |                                                  | minimum allowed PAM password lifetime
-`irods_cfg_plugins_home`                                              |                                                                                      |                                                  | directory to use for the client side plugins                       
+`irods_cfg_plugins_home`                                              |                                                                                      |                                                  | directory to use for the client side plugins
 `irods_cfg_re_additional_data_variable_mappings`                      | []                                                                                   |                                                  | an array of file names (without the .dvm extension) that will be loaded in order before core.dvm is loaded
 `irods_cfg_re_additional_function_name_mappings`                      | []                                                                                   |                                                  | an array of file names (without the .fnm extension) that will be loaded in order before core.fnm is loaded
 `irods_cfg_re_additional_rulebases`                                   | []                                                                                   |                                                  | an array of file names (without the .re extension) that will be loaded in order before core.re is loaded
 `irods_cfg_root_dir`                                                  | /                                                                                    |                                                  | The root directory where all depositions are relative to
 `irods_cfg_rule_engine_server_sleep_time`                             | 30                                                                                   |                                                  | how frequently the rule engine polls for scheduled rules when idle in seconds
-`irods_cfg_schema_validation_base_uri`                                | https://schemas.irods.org/configuration                                              | a URI or 'off'                                   | the URI against which the iRODS server configuration is validated. 'off' means to skip validation
+`irods_cfg_schema_validation_base_uri`                                | 'https://schemas.irods.org/configuration'                                            | a URI or 'off'                                   | the URI against which the iRODS server configuration is validated. 'off' means to skip validation
 `irods_cfg_server_control_plane_encryption_algorithm`                 | AES-256-CBC                                                                          |                                                  | the algorithm used to encrypt control plane communications
 `irods_cfg_server_control_plane_encryption_num_hash_rounds`           | 16                                                                                   |                                                  | the number of hash rounds used in the control plane communications
 `irods_cfg_server_control_plane_key`                                  | TEMPORARY__32byte_ctrl_plane_key                                                     |                                                  | the the encryption key required for communicating with the iRODS grid control plane, must be 32 bytes
@@ -100,18 +100,18 @@ Variable                                                              | Default 
 `irods_cfg_server_control_plane_timeout`                              | 10000                                                                                |                                                  | the number of milliseconds before control plane times out
 `irods_cfg_server_port_range_end`                                     | 20199                                                                                |                                                  | the ending of the port range available for re-connections, parallel transfer and RBUDP transfer
 `irods_cfg_server_port_range_start`                                   | 20000                                                                                |                                                  | the beginning of the port range available for re-connections, parallel transfer and RBUDP transfer
-`irods_cfg_ssl_ca_certificate_file`                                   |                                                                                  |                                                  | location of a file of trusted CA certificates in PEM format
-`irods_cfg_ssl_ca_certificate_path`                                   |                                                                                  |                                                  | location of a directory containing CA certificates in PEM format
-`irods_cfg_ssl_certificate_chain_file`                                |                                                                                  |                                                  | the file containing the server's certificate chain
-`irods_cfg_ssl_certificate_key_file`                                  |                                                                                  |                                                  | private key corresponding to the server's certificate in the certificate chain file
-`irods_cfg_ssl_dh_params_file`                                        |                                                                                  |                                                  | the Diffie-Hellman parameter file location
+`irods_cfg_ssl_ca_certificate_file`                                   |                                                                                      |                                                  | location of a file of trusted CA certificates in PEM format
+`irods_cfg_ssl_ca_certificate_path`                                   |                                                                                      |                                                  | location of a directory containing CA certificates in PEM format
+`irods_cfg_ssl_certificate_chain_file`                                |                                                                                      |                                                  | the file containing the server's certificate chain
+`irods_cfg_ssl_certificate_key_file`                                  |                                                                                      |                                                  | private key corresponding to the server's certificate in the certificate chain file
+`irods_cfg_ssl_dh_params_file`                                        |                                                                                      |                                                  | the Diffie-Hellman parameter file location
 `irods_cfg_ssl_verify_server`                                         | hostname                                                                             | cert, hostname, none                             | level of server certificate based authentication to perform
 `irods_cfg_system_account_name`                                       | irods                                                                                |                                                  | the account used to run iRODS
 `irods_cfg_system_group_name`                                         | `irods_cfg_system_account_name`                                                      |                                                  | the group used to run iRODS
-`irods_cfg_transfer_buffer_size_for_parallel_transfer`                | 4                                                                                    |                                                  | the buffer size in mebibytes for parallel transfer                    
+`irods_cfg_transfer_buffer_size_for_parallel_transfer`                | 4                                                                                    |                                                  | the buffer size in mebibytes for parallel transfer
 `irods_cfg_transfer_chunk_size_for_parallel_transfer`                 | 40                                                                                   |                                                  | the chunk size in mebibytes for parallel transfer
 `irods_cfg_validate`                                                  | true                                                                                 |                                                  | whether or not the configuration values should be validated when the configuration files are generated
-`irods_cfg_xmsg_host`                                                 |                                                                                  |                                                  | the host name of the XMessage server
+`irods_cfg_xmsg_host`                                                 |                                                                                      |                                                  | the host name of the XMessage server
 `irods_cfg_xmsg_port`                                                 | 1279                                                                                 |                                                  | the port on which the XMessage server operates should it be enabled
 `irods_cfg_zone_auth_scheme`                                          | native                                                                               | gsi, krb, native, pam                            | the authentication scheme used by `irods_cfg_zone_user`
 `irods_cfg_zone_key`                                                  | TEMPORARY_zone_key                                                                   |                                                  | the shared secret used for authentication and identification on server-to-server communication, it cannot contain hyphens (`-`)
@@ -120,7 +120,7 @@ Variable                                                              | Default 
 `irods_cfg_zone_port`                                                 | 1247                                                                                 |                                                  | the main port used by the zone for communication
 `irods_cfg_zone_user`                                                 | rods                                                                                 |                                                  | the name of the rodsadmin user running this iRODS instance
 
-The `irods_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry` 
+The `irods_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry`
 object has the following fields, all of them required.
 
 Field     | Choices | Comments
@@ -130,20 +130,20 @@ Field     | Choices | Comments
 `mask`    |         | the network mask when `address` is a network address
 `user`    |         | the iRODS user able to access
 
-The `irods_cfg_environment_variables` variable is a dictionary where the key is the name of a server 
+The `irods_cfg_environment_variables` variable is a dictionary where the key is the name of a server
 process environment variable, and the value is the value of the environment variable.
 
-The `irods_cfg_federation` variable is an array of `federation` objects. A `federation` object has 
+The `irods_cfg_federation` variable is an array of `federation` objects. A `federation` object has
 the following fields, all of them required.
 
 Field                    | Choices | Comments
 ------------------------ | --------| --------
 `catalog_provider_hosts` |         | a list of FQDNs or IP addresses of the catalog service providers in the federated zone
 `negotiation_key`        |         | the 32-byte encryption key of the federated zone
-`zone_key `              |         | the shared authentication secret with the federated zone
+`zone_key`               |         | the shared authentication secret with the federated zone
 `zone_name`              |         | the name of the federated zone
 
-The `irods_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry` object has 
+The `irods_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry` object has
 the following fields, all of them required.
 
 Field          | Choices       | Comments
@@ -151,12 +151,12 @@ Field          | Choices       | Comments
 `address_type` | local, remote | indicates if this host is localhost.
 `addresses`    |               | an array of names and addresses referring to this host
 
-The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none 
+The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none
 of them are required.
 
 Field                   | Default      | Choices                 | Comments
 ----------------------- | ------------ | ----------------------- | --------
-`catalog_database_type` | postgres     | mysql, oracle, postgres | the type of database iRODS is using for the iCAT. _see below_           
+`catalog_database_type` | postgres     | mysql, oracle, postgres | the type of database iRODS is using for the iCAT. _see below_
 `db_host`               | localhost    |                         | the hostname of the DBMS
 `db_name`               | ICAT         |                         | the name of the database used as the iCAT
 `db_password`           | testpassword |                         | the password used by `db_username` to connect to `db_name`
@@ -168,7 +168,7 @@ For `catalog_database_type`, only `postgres` has been fully tested.
 
 ## Facts Set
 
-If any of the iRODS configuration files are changed, the fact `irods_cfg_made_changes` will be set 
+If any of the iRODS configuration files are changed, the fact `irods_cfg_made_changes` will be set
 to `true`.
 
 ## Dependencies
@@ -254,7 +254,6 @@ None
 ## License
 
 See [license](/LICENSE.txt).
-
 
 ## Author Information
 
