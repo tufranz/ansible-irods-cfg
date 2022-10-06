@@ -6,7 +6,7 @@ galaxy_info:
   company: CyVerse
   author: Tony Edgin
   license: See LICENSE.txt
-  min_ansible_version: 2.11
+  min_ansible_version: "2.11"
 
   platforms:
     - name: Ubuntu
@@ -14,7 +14,7 @@ galaxy_info:
         - bionic
     - name: EL
       versions:
-        - 7
+        - "7"
 
   galaxy_tags:
     - cyverse

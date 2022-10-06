@@ -1,17 +1,18 @@
 ---
-- name: irods_environment | load variable values
+- name: Irods_environment | load variable values
   ansible.builtin.include_vars: >-
-    {{ 'irods_environment_server.yml' if _for_server|bool else 'irods_environment_client.yml' }}
+    {{ 'irods_environment_server.yml' if _for_server | bool else 'irods_environment_client.yml' }}
 
-- when: _validate | bool
+- name: Irods_environment | validate if required
+  when: _validate | bool
   ignore_errors: true
   block:
-    - name: irods_environment | validate core variables
+    - name: Irods_environment | validate core variables
       ansible.builtin.assert:
         that:
           - _zone_port|int >= 1 and _zone_port|int <= 65535
 
-    - name: irods_environment | validate variables
+    - name: Irods_environment | validate variables
       when: _for_server | bool
       ansible.builtin.assert:
         that:
@@ -46,5 +47,5 @@
     _cfg_template_dest_file: "{{ _environment_file }}"
     _cfg_template_name: irods_environment.json.j2
 
-- name: irods_environment | ensure known that changes were made
+- name: Irods_environment | ensure known that changes were made
   ansible.builtin.meta: flush_handlers

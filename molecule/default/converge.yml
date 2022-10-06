@@ -1,11 +1,11 @@
 ---
-- name: converge
+- name: Converge
   hosts: all
   collections:
     - ansible.builtin
   tasks:
-    - name: do not give file irods ownership
-      include_role:
+    - name: Do not give file irods ownership
+      ansible.builtin.include_role:
         name: ansible-irods-cfg
         tasks_from: _system_account_own.yml
       vars:
@@ -13,8 +13,8 @@
         irods_cfg_validate: true
         _system_account_own_path: /etc/irods/not_owner_test
 
-    - name: give file irods ownershop
-      include_role:
+    - name: Give file irods ownershop
+      ansible.builtin.include_role:
         name: ansible-irods-cfg
         tasks_from: _system_account_own.yml
       vars:

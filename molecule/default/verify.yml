@@ -1,17 +1,16 @@
 ---
-- name: verify | default variables generate correct client side irods_environment
+- name: Verify | default variables generate correct client side irods_environment
   hosts: localhost
   connection: local
-  collections:
-    - ansible.builtin
   vars_files:
     - ../../vars/main.yml
     - ../../vars/irods_environment_client.yml
   vars:
-    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
+    irods_environment: >-
+      {{ lookup('ansible.builtin.template', '../../templates/irods_environment.json.j2') }}
   tasks:
-    - name: verify irods_environment.json expands correctly
-      assert:
+    - name: Verify irods_environment.json expands correctly
+      ansible.builtin.assert:
         that:
           - irods_environment.irods_authentication_file is not defined
           - irods_environment.irods_authentication_scheme is not defined
@@ -51,20 +50,19 @@
           - irods_environment.schema_version == 'v3'
 
 
-- name: verify | default variables generate correct server side irods_environment
+- name: Verify | default variables generate correct server side irods_environment
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/irods_environment_server.yml
     - ../../vars/main.yml
     - ../../vars/irods_environment_server.yml
   vars:
-    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
+    irods_environment: >-
+      {{ lookup('ansible.builtin.template', '../../templates/irods_environment.json.j2') }}
   tasks:
-    - name: verify irods_environment.json expands correctly
-      assert:
+    - name: Verify irods_environment.json expands correctly
+      ansible.builtin.assert:
         that:
           - irods_environment.irods_authentication_file == '/var/lib/irods/.irods/.irodsA'
           - irods_environment.irods_authentication_scheme is not defined
@@ -104,19 +102,18 @@
           - irods_environment.schema_version == 'v3'
 
 
-- name: verify | default variables generate correct server_config
+- name: Verify | default variables generate correct server_config
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - ../../vars/main.yml
     - ../../vars/server_config.yml
   vars:
-    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
-  tasks:
-    - name: verify server_config.json is correct
-      assert:
+    server_config: >-
+      {{ lookup('ansible.builtin.template', '../../templates/server_config.json.j2') }}
+  tasks:        
+    - name: Verify server_config.json is correct
+      ansible.builtin.assert:
         that:
           - server_config.advanced_settings.default_number_of_transfer_threads == 4
           - server_config.advanced_settings.default_temporary_password_lifetime_in_seconds == 120
@@ -194,57 +191,55 @@
           - server_config.zone_user == 'rods'
 
 
-- name: verify | default variables generate correct remaining configuration files
+- name: Verify | default variables generate correct remaining configuration files
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - ../../vars/main.yml
   vars:
-    hacc: "{{ lookup('template', '../../templates/host_access_control_config.json.j2') }}"
-    hosts_config: "{{ lookup('template', '../../templates/hosts_config.json.j2') }}"
-    service_account: "{{ lookup('template', '../../templates/service_account.config.j2') }}"
+    hacc: >-
+      {{ lookup('ansible.builtin.template', '../../templates/host_access_control_config.json.j2') }}
+    hosts_config: "{{ lookup('ansible.builtin.template', '../../templates/hosts_config.json.j2') }}"
+    service_account: >-
+      {{ lookup('ansible.builtin.template', '../../templates/service_account.config.j2') }}
   tasks:
-    - name: verify that derived irods_cfg_icat is null
-      assert:
-        that:
-          - _icat is not mapping
+    - name: Verify that derived irods_cfg_icat is null
+      ansible.builtin.assert:
+        that: _icat is not mapping
 
-    - name: verify host_access_control_config.json is correct
-      assert:
+    - name: Verify host_access_control_config.json is correct
+      ansible.builtin.assert:
         that:
           - hacc.access_entries | length == 0
           - hacc.schema_name == 'host_access_control_config'
           - hacc.schema_version == 'v3'
 
-    - name: verify hosts_config.json is correct
-      assert:
+    - name: Verify hosts_config.json is correct
+      ansible.builtin.assert:
         that:
           - hosts_config.host_entries | length == 0
           - hosts_config.schema_name == 'hosts_config'
           - hosts_config.schema_version == 'v3'
 
-    - name: verify service_account.config is correct
-      assert:
+    - name: Verify service_account.config is correct
+      ansible.builtin.assert:
         that:
           - service_account is search('IRODS_SERVICE_ACCOUNT_NAME=irods')
           - service_account is search('IRODS_SERVICE_GROUP_NAME=irods')
 
 
-- name: verify | host_access_control_config options
+- name: Verify | host_access_control_config options
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/host_access_control_config_opts.yml
     - ../../vars/main.yml
   vars:
-    hacc: "{{ lookup('template', '../../templates/host_access_control_config.json.j2') }}"
+    hacc: >-
+      {{ lookup('ansible.builtin.template', '../../templates/host_access_control_config.json.j2') }}
   tasks:
-    - name: verify entries
-      assert:
+    - name: Verify entries
+      ansible.builtin.assert:
         that:
           - hacc.access_entries | length == 2
           - hacc.access_entries[0].address == 'address1'
@@ -253,19 +248,17 @@
           - hacc.access_entries[1].user == 'user2'
 
 
-- name: verify | hosts_config options
+- name: Verify | hosts_config options
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/hosts_config_opts.yml
     - ../../vars/main.yml
   vars:
-    hosts_config: "{{ lookup('template', '../../templates/hosts_config.json.j2') }}"
+    hosts_config: "{{ lookup('ansible.builtin.template', '../../templates/hosts_config.json.j2') }}"
   tasks:
-    - name: verify entries
-      assert:
+    - name: Verify entries
+      ansible.builtin.assert:
         that:
           - hosts_config.host_entries | length == 2
           - hosts_config.host_entries[0].address_type == 'local'
@@ -276,21 +269,20 @@
           - hosts_config.host_entries[1].addresses[1].address == '1.2.3.4'
 
 
-- name: verify | irods_environment options
+- name: Verify | irods_environment options
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/irods_environment_opts.yml
     - vars/irods_environment_server.yml
     - ../../vars/main.yml
     - ../../vars/irods_environment_server.yml
   vars:
-    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
+    irods_environment: >-
+      {{ lookup('ansible.builtin.template', '../../templates/irods_environment.json.j2') }}
   tasks:
-    - name: verify irods_environment
-      assert:
+    - name: Verify irods_environment
+      ansible.builtin.assert:
         that:
           - irods_environment.irods_authentication_file == '/auth'
           - irods_environment.irods_authentication_scheme == 'gsi'
@@ -328,20 +320,19 @@
           - irods_environment.irods_zone_name == 'zone'
 
 
-- name: verify | server_config options
+- name: Verify | server_config options
   hosts: localhost
-  gather_facts: 
-  collections:
-    - ansible.builtin
+  gather_facts: false
   vars_files:
     - vars/server_config_opts.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
   vars:
-    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
+    server_config: >-
+      {{ lookup('ansible.builtin.template', '../../templates/server_config.json.j2') }}
   tasks:
-    - name: verify optional fields
-      assert:
+    - name: Verify optional fields
+      ansible.builtin.assert:
         that:
           - server_config.advanced_settings.default_number_of_transfer_threads == 16
           - server_config.advanced_settings.default_temporary_password_lifetime_in_seconds == 1
@@ -409,21 +400,20 @@
           - server_config.xmsg_port == 3
 
 
-- name: verify | default database plugin configuration
+- name: Verify | default database plugin configuration
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/database_plugin_defaults.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
     - ../../vars/postgres.yml
   vars:
-    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
+    server_config: >-
+      {{ lookup('ansible.builtin.template', '../../templates/server_config.json.j2') }}
   tasks:
-    - name: verify server_config.plugin_configuration.database is correct
-      assert:
+    - name: Verify server_config.plugin_configuration.database is correct
+      ansible.builtin.assert:
         that:
           - server_config.plugin_configuration.database.postgres.db_host == 'localhost'
           - server_config.plugin_configuration.database.postgres.db_name == 'ICAT'
@@ -433,21 +423,20 @@
           - server_config.plugin_configuration.database.postgres.db_username == 'irods'
 
 
-- name: verify | database plugin configuration
+- name: Verify | database plugin configuration
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/database_plugin_opts.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
     - ../../vars/mysql.yml
   vars:
-    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
+    server_config: >-
+      {{ lookup('ansible.builtin.template', '../../templates/server_config.json.j2') }}
   tasks:
-    - name: verify server_config.plugin_configuration.database is correct
-      assert:
+    - name: Verify server_config.plugin_configuration.database is correct
+      ansible.builtin.assert:
         that:
           - server_config.plugin_configuration.database.mysql.db_host == 'icat.domain'
           - server_config.plugin_configuration.database.mysql.db_name == 'db'
@@ -457,73 +446,71 @@
           - server_config.plugin_configuration.database.mysql.db_username == 'irodsuser'
 
 
-- name: verify | custom system account name
+- name: Verify | custom system account name
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/system_account_name.yml
     - ../../vars/main.yml
   vars:
-    service_account: "{{ lookup('template', '../../templates/service_account.config.j2') }}"
+    service_account: >-
+      {{ lookup('ansible.builtin.template', '../../templates/service_account.config.j2') }}
   tasks:
-    - name: verify service_account.config is correct
-      assert:
+    - name: Verify service_account.config is correct
+      ansible.builtin.assert:
         that:
           - service_account is search('IRODS_SERVICE_ACCOUNT_NAME=custom')
           - service_account is search('IRODS_SERVICE_GROUP_NAME=custom')
 
 
-- name: verify | custom system group name
+- name: Verify | custom system group name
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/system_group_name.yml
     - ../../vars/main.yml
   vars:
-    service_account: "{{ lookup('template', '../../templates/service_account.config.j2') }}"
+    service_account: >-
+      {{ lookup('ansible.builtin.template', '../../templates/service_account.config.j2') }}
   tasks:
-    - name: verify service_account.config is correct
-      assert:
+    - name: Verify service_account.config is correct
+      ansible.builtin.assert:
         that:
           - service_account is search('IRODS_SERVICE_ACCOUNT_NAME=irods')
           - service_account is search('IRODS_SERVICE_GROUP_NAME=custom')
 
 
-- name: verify | jinja2 falsy quirks
+- name: Verify | jinja2 falsy quirks
   hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.builtin
   vars_files:
     - vars/jinja2_quirks.yml
     - ../../vars/main.yml
     - ../../vars/server_config.yml
     - ../../vars/irods_environment_server.yml
   vars:
-    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
-    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
+    irods_environment: >-
+      {{ lookup('ansible.builtin.template', '../../templates/irods_environment.json.j2') }}
+    server_config: >-
+      {{ lookup('ansible.builtin.template', '../../templates/server_config.json.j2') }}
   tasks:
-    - name: verify irods_environment.json is correct
-      assert:
+    - name: Verify irods_environment.json is correct
+      ansible.builtin.assert:
         that:
           - irods_environment.irods_client_server_negotiation == 'off'
           - irods_environment.irods_encryption_key_size == 0
           - irods_environment.irods_encryption_num_hash_rounds == 0
           - irods_environment.irods_encryption_salt_size == 0
 
-    - name: verify server_config.json is correct
-      assert:
+    - name: Verify server_config.json is correct
+      ansible.builtin.assert:
         that:
           - server_config.advanced_settings.default_number_of_transfer_threads == 0
           - server_config.pam_password_length == 0
           - server_config.server_control_plane_encryption_num_hash_rounds == 0
 
 
-- name: verify | setup_configuration default expansion
+- name: Verify | setup_configuration default expansion
   hosts: localhost
   gather_facts: false
   vars_files:
@@ -531,14 +518,17 @@
     - ../../vars/irods_environment_server.yml
   vars:
     host_access_control_config: >-
-      {{ lookup('template', '../../templates/host_access_control_config.json.j2') }}
-    hosts_config: "{{ lookup('template', '../../templates/hosts_config.json.j2') }}"
-    irods_environment: "{{ lookup('template', '../../templates/irods_environment.json.j2') }}"
-    server_config: "{{ lookup('template', '../../templates/server_config.json.j2') }}"
-    setup_configuration: "{{ lookup('template', '../../templates/setup_configuration.json.j2') }}"
+      {{ lookup('ansible.builtin.template', '../../templates/host_access_control_config.json.j2') }}
+    hosts_config: "{{ lookup('ansible.builtin.template', '../../templates/hosts_config.json.j2') }}"
+    irods_environment: >-
+      {{ lookup('ansible.builtin.template', '../../templates/irods_environment.json.j2') }}
+    server_config: >-
+      {{ lookup('ansible.builtin.template', '../../templates/server_config.json.j2') }}
+    setup_configuration: >-
+      {{ lookup('ansible.builtin.template', '../../templates/setup_configuration.json.j2') }}
   tasks:
-    - name: verify contents
-      assert:
+    - name: Verify contents
+      ansible.builtin.assert:
         that:
           - setup_configuration.host_system_information.service_account_user_name == 'irods'
           - setup_configuration.host_system_information.service_account_group_name == 'irods'
@@ -550,7 +540,7 @@
           - setup_configuration.default_resource_directory == None
 
 
-- name: verify | setup_configuration customization
+- name: Verify | setup_configuration customization
   hosts: localhost
   gather_facts: false
   vars_files:
@@ -558,10 +548,11 @@
     - ../../vars/main.yml
     - ../../vars/irods_environment_server.yml
   vars:
-    setup_configuration: "{{ lookup('template', '../../templates/setup_configuration.json.j2') }}"
+    setup_configuration: >-
+      {{ lookup('ansible.builtin.template', '../../templates/setup_configuration.json.j2') }}
   tasks:
-    - name: verify contents
-      assert:
+    - name: Verify contents
+      ansible.builtin.assert:
         that:
           - setup_configuration.host_system_information.service_account_user_name == 'account'
           - setup_configuration.host_system_information.service_account_group_name == 'group'
@@ -569,19 +560,17 @@
           - setup_configuration.default_resource_directory == '/tmp'
 
 
-- name: verify | service ownership assignment
+- name: Verify | service ownership assignment
   hosts: all
-  collections:
-    - ansible.builtin
   tasks:
-    - name: verify file not owned
-      stat:
+    - name: Verify file not owned
+      ansible.builtin.stat:
         path: /etc/irods/not_owner_test
       register: response
       failed_when: response.stat.pw_name == 'irods' or response.stat.gr_name == 'irods'
 
-    - name: verify file is owned
-      stat:
+    - name: Verify file is owned
+      ansible.builtin.stat:
         path: /etc/irods/owner_test
       register: response
       failed_when: response.stat.pw_name != 'irods' or response.stat.gr_name != 'irods'

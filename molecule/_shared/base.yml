@@ -7,11 +7,7 @@ driver:
   name: docker
 platforms:
   - name: centos
-    image: centos/systemd:latest
-    command: /usr/sbin/init
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    image: centos:7
     hostname: centos.localdomain
   - name: ubuntu
     image: ubuntu:bionic
@@ -22,5 +18,12 @@ provisioner:
     group_vars:
       all:
         irods_cfg_validate: true
+    host_vars:
+      centos:
+        pg_hba_path: /var/lib/pgsql/data/pg_hba.conf
+      ubuntu:
+        pg_hba_path: /etc/postgresql/10/main/pg_hba.conf
+        irods_config_icat:
+          odbc_driver: PostgreSQL Unicode
 verifier:
   name: ansible

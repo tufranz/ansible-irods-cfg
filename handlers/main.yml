@@ -1,4 +1,4 @@
 ---
-- name: changed config
-  set_fact:
+- name: Changed config
+  ansible.builtin.set_fact:
     irods_cfg_made_changes: true

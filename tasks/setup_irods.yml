@@ -1,21 +1,27 @@
 ---
-TODO test
-- name: setup_irods | determine if ICAT schema initialized
+- name: Setup_irods | determine if ICAT schema initialized
   ansible.builtin.stat:
     path: /var/lib/irods/.odbc.ini
   register: response
 
-- when: not response.stat.exists
+- name: Setup_irods | Initialize ICAT schema if needed
+  when: not response.stat.exists
   block:
     - name: setup_irods | create setup configuration file
       ansible.builtin.include_tasks: _cfg_template.yml
       vars:
         _cfg_template_dest_file: tmp/setup_configuration.json
 
-    - name: setup_irods | initialize ICAT schema
+    - name: Setup_irods | initialize ICAT schema
       ansible.builtin.shell: |
-        python /var/lib/irods/scripts/setup_irods.py \
-          --json_configuration_file=tmp/setup_configuration.json
+        set -o errexit
+        if ! \
+          python /var/lib/irods/scripts/setup_irods.py \
+            --json_configuration_file=tmp/setup_configuration.json
+        then
+          rm --force /var/lib/irods/.odbc.ini
+          exit 1
+        fi
         rm --force tmp/setup_configuration.json
       register: response
       failed_when:

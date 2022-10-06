@@ -1,7 +1,7 @@
 {% import 'server_config_macros.j2' as sc with context %}
 {
-    "advanced_settings": {{ sc.advanced_settings() | indent(4) }},
-    "catalog_provider_hosts": {{ sc.mk_catalog_provider_hosts(_catalog_provider_hosts) | indent(4) }},
+    "advanced_settings": {{ sc.advanced_settings() | indent }},
+    "catalog_provider_hosts": {{ sc.mk_catalog_provider_hosts(_catalog_provider_hosts) | indent }},
     "catalog_service_role": "{{ _catalog_service_role }}",
     "default_dir_mode": "{{ _default_dir_mode }}",
     "default_file_mode": "{{ _default_file_mode }}",
@@ -11,9 +11,11 @@
 {% endif %}
 {% if _default_resource_name %}
     "default_resource_name": "{{ _default_resource_name }}",
+{% else %}
+    "default_resource_name": null,
 {% endif %}
-    "environment_variables": {{ sc.environment_variables() | indent(4) }},
-    "federation": {{ sc.federation() | indent(4) }},
+    "environment_variables": {{ sc.environment_variables() | indent }},
+    "federation": {{ sc.federation() | indent }},
 {% if _kerberos_name %}
     "kerberos_name": "{{ _kerberos_name }}",
 {% endif %}
@@ -31,7 +33,7 @@
 {% if _pam_password_min_time %}
     "pam_password_min_time": {{ _pam_password_min_time }},
 {% endif %}
-    "plugin_configuration": {{ sc.plugin_configuration() | indent(4) }},
+    "plugin_configuration": {{ sc.plugin_configuration() | indent }},
     "rule_engine_namespaces": [ "" ],
     "schema_name": "server_config",
     "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",

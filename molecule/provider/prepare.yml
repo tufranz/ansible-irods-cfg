@@ -2,30 +2,31 @@
 - import_playbook: ../_shared/prepare.yml
 
 
-- name: prepare | provider | centos
+- name: Prepare | provider
   hosts: centos
+  become: true
   collections:
-    - ansible.builtin
     - community.general
   tasks:
-    - name: install yum_versionlock requirements
-      package:
+    - name: CentOS | install yum_versionlock requirements
+      ansible.builtin.package:
         name:
           - yum
           - yum-versionlock
         state: present
 
-    - name: install iRODS package repository signing key
-      rpm_key:
+    - name: CentOS | install iRODS package repository signing key
+      ansible.builtin.rpm_key:
         key: https://packages.irods.org/irods-signing-key.asc
 
-    - name:  install iRODS repository
-      get_url:
+    - name: CentOS | install iRODS repository
+      ansible.builtin.get_url:
         url: https://packages.irods.org/renci-irods.yum.repo
         dest: /etc/yum.repos.d/renci-irods.yum.repo
+        mode: u+r
 
-    - name: force import of GPG key
-      shell: |
+    - name: CentOS | force import of GPG key
+      ansible.builtin.shell: |
         if ! resp="$(yum --assumeyes updateinfo)"; then
           exit 1
         fi
@@ -35,7 +36,7 @@
       register: response
       changed_when: response.stdout == 'changed'
 
-    - name: lock irods packages to required version
+    - name: CentOS | lock irods packages to required version
       yum_versionlock:
         name:
           - irods-icommands-4.2.8
@@ -44,56 +45,86 @@
           - irods-server-4.2.8
         state: present
 
-    - name: install OS specific required packages
-      package:
+    - name: CentOS | install OS specific required packages
+      ansible.builtin.package:
         name: which
         state: present
 
-      # TODO: When upgrading to iRODS 4.2.9, remove this task.
-    - name: ensure unixODBC is installed (irods issue 5389)
-      package:
+      # TODO: When upgrading to iRODS 4.2.9+, remove this task.
+    - name: CentOS | ensure unixODBC is installed (irods issue 5389)
+      ansible.builtin.package:
         name: unixODBC
         state: present
 
-    - name: install PostgreSQL server
-      package:
+    - name: CentOS | install PostgreSQL server
+      ansible.builtin.package:
         name:
- #         - postgresql-odbc
+          - postgresql-contrib
+          - postgresql-odbc
           - postgresql-server
         state: present
 
-    - name: initialize PostgreSQL database cluster
-      shell: |
-        if [[ -e /var/lib/pgsql/data ]] && [[ -z "$(ls --almost-all /var/lib/pgsql/data)" ]]; then
-          postgresql-setup initdb
+    - name: CentOS | install prerequisites for psycopg2
+      ansible.builtin.yum:
+        name: 
+          - "@Development tools"
+          - postgresql-devel
+        state: present
+
+
+- name: Prepare | provider
+  hosts: centos
+  become: true
+  become_user: postgres
+  become_flags: '-i'
+  gather_facts: false
+  tasks:
+    - name: CentOS | initialize PostgreSQL database cluster
+      ansible.builtin.shell: |
+        if [[ -e "$PGDATA" ]] && [[ -z "$(ls --almost-all "$PGDATA")" ]]; then
+          initdb --pgdata="$PGDATA" --auth=ident
         fi
       register: response
-      changed_when: response.stdout is match('Initializing database ')
+      changed_when: response.stdout != ''
+
+    - name: CentOS | create PostgreSQL log directory
+      ansible.builtin.file:
+        path: /var/lib/pgsql/data/pg_log
+        state: directory
+        mode: u+r
+
+    - name: CentOS | start PostgreSQL
+      ansible.builtin.shell: |
+        set -o errexit
+        if ! [[ -e "$PGDATA"/postmaster.pid ]]; then
+          pg_ctl start > /dev/null
+          echo changed
+        fi
+      register: response
+      changed_when: response.stdout == 'changed'
 
 
-- name: prepare | provider | ubuntu
+- name: prepare | provider
   hosts: ubuntu
-  collections:
-    - ansible.builtin
   tasks:
-    - name: install apt_key prerequisites
-      package:
+    - name: Ubuntu | install apt_key prerequisites
+      ansible.builtin.package:
         name: gpg
         state: present
 
-    - name: install iRODS package repository signing key
-      apt_key:
+    - name: Ubuntu | install iRODS package repository signing key
+      ansible.builtin.apt_key:
         url: https://packages.irods.org/irods-signing-key.asc
 
-    - name: install iRODS repository
-      copy:
+    - name: Ubuntu | install iRODS repository
+      ansible.builtin.copy:
         dest: /etc/apt/sources.list.d/renci-irods.list
         mode: u+rw
         content: |
           deb [arch=amd64] https://packages.irods.org/apt/ {{ ansible_lsb.codename }} main
 
-    - name: lock iRODS packages to required version
-      copy:
+    - name: Ubuntu | lock iRODS packages to required version
+      ansible.builtin.copy:
         dest: /etc/apt/preferences.d/irods
         mode: u+rw
         content: |
@@ -101,62 +132,87 @@
           Pin: version 4.2.8
           Pin-Priority: 1001
 
-    - name: update apt cache
-      apt:
+    - name: Ubuntu | update apt cache
+      ansible.builtin.apt:
         update_cache: true
 
-    - name: install PostgreSQL server
-      package:
+    - name: Ubuntu | install PostgreSQL server
+      ansible.builtin.package:
         name: postgresql
+        state: present
+
+    - name: Ubuntu | start PostgreSQL 
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+        enabled: true
+
+    - name: Ubuntu | install prerequisites for psycopg2
+      ansible.builtin.package:
+        name: libpq-dev
         state: present
 
 
 - name: prepare | provider
   hosts: all
-  collections:
-    - ansible.builtin
   gather_facts: false
   tasks:
-    - name: install iRODS server
-      package:
+    - name: Install prerequisites for psycopg2
+      ansible.builtin.pip:
+        name: wheel
+
+    - name: Install postgresql module prerequisites
+      ansible.builtin.pip:
+        name: psycopg2
+
+    - name: Install iRODS server
+      ansible.builtin.package:
         name: 
           - irods-database-plugin-postgres
           - irods-server
         state: present
 
-    - name: start PostgreSQL 
-      service:
-        name: postgresql
-        state: started
-        enabled: true
 
-TODO Deal with bullshit related to ansible and Python 2
-
-    - name: install pip module prerequisites
-      package:
-        name: python-pip
-        state: present
-
-    - name: install postgresql module prerequisites
-      pip:
-        name: psycopg2
-
-
-- name: prepare | provider | ICAT DB
+- name: Prepare | provider
   hosts: all
   become: true
   become_user: postgres
+  become_flags: '-i'
   gather_facts: false
   collections:
     - community.postgresql
   tasks:
-    - name: create ICAT DB
+    - name: Create ICAT DB
       postgresql_db:
         name: ICAT
 
-    - name: create iRODS user
+    - name: Create iRODS user
       postgresql_user:
         db: ICAT
         name: irods
         password: testpassword
-        privs: ALL
+        priv: ALL
+
+    - name: Ensure postgres_pg_hba prerequisites are installed
+      ansible.builtin.pip:
+        name: ipaddress
+
+    - name: Configure irods user ICAT access
+      postgresql_pg_hba:
+        dest: "{{ pg_hba_path }}"
+        contype: host
+        users: irods
+        source: 127.0.0.1/32
+        databases: ICAT
+        method: md5
+        state: present
+      notify: Reload postgres, {{ inventory_hostname }}
+
+  handlers:
+    - name: Reload postgres, centos
+      command: pg_ctl reload
+
+    - name: Reload postgres, ubuntu
+      service:
+        name: postgresql
+        state: reloaded

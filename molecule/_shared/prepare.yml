@@ -1,40 +1,60 @@
 ---
 - name: prepare | control node
   hosts: localhost
-  collections:
-    - ansible.builtin
   tasks:
     - name: install Jinja 3
       pip:
         name: Jinja2>3
 
 
-- name: prepare | base | centos
+- name: Prepare | base 
   hosts: centos
-  collections:
-    - ansible.builtin
   tasks:
-    - name: install epel repo
+    - name: CentOS | install epel repo
       package:
         name: epel-release
         state: present
+ 
+    - name: CentOS | install pip module prerequisites
+      ansible.builtin.package:
+        name: python-pip
+        state: present
+
+    - name: CentOS | get pip version
+      ansible.builtin.shell: |
+        set -o pipefail
+        pip --version | cut --delimiter=' ' --fields=2
+      register: ver_response
+      changed_when: false
+
+    - name: CentOS | update pip to 9
+      when: ver_response.stdout is version_compare('9.0.3', '<')
+      ansible.builtin.pip:
+        name: 'pip==9.0.3'
+        extra_args: '--upgrade'
+
+    - name: CentOS | update pip to 20
+      when: ver_response.stdout is version_compare('20.3.4', '<')
+      ansible.builtin.pip:
+        name: 'pip==20.3.4'
+        extra_args: '--upgrade'
 
 
-- name: prepare | base | ubuntu
+- name: Prepare | base
   hosts: ubuntu
-  collections:
-    - ansible.builtin
   tasks:
-    - name: initialize apt cache
+    - name: Ubuntu | initialize apt cache
       apt:
         update_cache: true
+
+    - name: Ubuntu | install pip module prerequisites
+      ansible.builtin.package:
+        name: python3-pip
 
 
 - name: prepare | base
   hosts: all
   gather_facts: false
-  collections:
-    - ansible.builtin
   tasks:
     - name: update ca-certificates
       package:
@@ -42,14 +62,12 @@
         state: latest  # noqa package-latest
         
     - name: install setuptools
-      package:
-        name: python-setuptools
-        state: present
+      ansible.builtin.pip:
+        name: setuptools
 
     - name: install jsonschema
-      package:
-        name: python-jsonschema
-        state: present
+      ansible.builtin.pip:
+        name: jsonschema
         
     - name: create irods user
       user:
