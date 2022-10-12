@@ -20,10 +20,15 @@ provisioner:
         irods_cfg_validate: true
     host_vars:
       centos:
+        irods_cfg_icat:
+          db_password: testpassword
+          db_username: irods
         pg_hba_path: /var/lib/pgsql/data/pg_hba.conf
       ubuntu:
-        pg_hba_path: /etc/postgresql/10/main/pg_hba.conf
-        irods_config_icat:
+        irods_cfg_icat:
+          db_password: testpassword
+          db_username: irods
           odbc_driver: PostgreSQL Unicode
+        pg_hba_path: /etc/postgresql/10/main/pg_hba.conf
 verifier:
   name: ansible

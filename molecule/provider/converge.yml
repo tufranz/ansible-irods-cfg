@@ -3,16 +3,6 @@
   hosts: all
   roles:
     - role: ansible-irods-cfg  # XXX: ansible-lint<6 generates internal error here in vscode
-      vars:
-        irods_cfg_icat:
-          catalog_database_type: postgres
-          db_host: localhost
-          db_name: ICAT
-          db_odbc_type: postgres
-          db_password: testpassword
-          db_port: 5432
-          db_username: irods
-          odbc_driver: PostgreSQL
 
   post_tasks:
     - name: place setup_configuration.json

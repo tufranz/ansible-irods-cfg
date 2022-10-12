@@ -1,15 +1,16 @@
 ---
-- name: verify
+- name: verify | irods
   hosts: all
   become: true
   become_user: irods
   collections:
     - ansible.builtin
+    - community.postgresql
   tasks:
     - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /etc/irods/{{ item }}
-        schema: "{{ item }}"
+        schema_path: /var/lib/irods/configuration_schemas/v3/{{ item }}
       with_items:
         - host_access_control_config.json
         - hosts_config.json
@@ -24,7 +25,7 @@
     - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /var/lib/irods/.irods/irods_environment.json
-        schema: service_account_environment.json
+        schema_path: /var/lib/irods/configuration_schemas/v3/service_account_environment.json
 
     - name: check service_account.config deposition
       stat:
@@ -34,3 +35,15 @@
         not response.stat.exists or
         response.stat.pw_name != 'irods' or
         response.stat.gr_name != 'irods'
+
+    - name: verify ICAT schema version
+      postgresql_query:
+        db: ICAT
+        login_user: irods
+        login_password: testpassword
+        query: >
+          SELECT option_value 
+          FROM r_grid_configuration
+          WHERE namespace = 'database' AND option_name = 'schema_version'
+      register: response
+      failed_when: response.failed or response.query_result[0]['option_value'] != '7'

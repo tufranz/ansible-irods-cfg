@@ -7,7 +7,7 @@
     - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /etc/irods/{{ item }}
-        schema: "{{ item }}"
+        schema_path: /var/lib/irods/{{ item }}
       with_items:
         - host_access_control_config.json
         - hosts_config.json
@@ -22,7 +22,7 @@
     - include_tasks: ../_shared/tasks/validate_deposition.yml
       vars:
         cfg_path: /var/lib/irods/.irods/irods_environment.json
-        schema: service_account_environment.json
+        schema_path: /var/lib/irods/service_account_environment.json
 
     - name: check service_account.config deposition
       stat:

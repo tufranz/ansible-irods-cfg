@@ -2,10 +2,30 @@
 - name: Setup_irods | determine if ICAT schema initialized
   ansible.builtin.stat:
     path: /var/lib/irods/.odbc.ini
-  register: response
+  register: odbc
+
+- name: Setup_irods | backup existing configuration files
+  when: not odbc.stat.exists
+  block:
+    - name: Setup_irods | identify files
+      ansible.builtin.set_fact:
+        config_files:
+          - etc/irods/host_access_control_config.json
+          - etc/irods/hosts_config.json
+          - etc/irods/server_config.json
+          - var/lib/irods/.irods/irods_environment.json
+
+    - name: Setup_irods | backup files 
+      ansible.builtin.copy:
+        remote_src: true
+        src: "{{ item }}"
+        dest: "{{ item }}.bak"
+        force: false
+        mode: preserve
+      with_items: "{{ config_files }}"
 
 - name: Setup_irods | Initialize ICAT schema if needed
-  when: not response.stat.exists
+  when: not odbc.stat.exists
   block:
     - name: setup_irods | create setup configuration file
       ansible.builtin.include_tasks: _cfg_template.yml
@@ -14,7 +34,6 @@
 
     - name: Setup_irods | initialize ICAT schema
       ansible.builtin.shell: |
-        set -o errexit
         if ! \
           python /var/lib/irods/scripts/setup_irods.py \
             --json_configuration_file=tmp/setup_configuration.json
@@ -22,9 +41,24 @@
           rm --force /var/lib/irods/.odbc.ini
           exit 1
         fi
-        rm --force tmp/setup_configuration.json
+        rm --force tmp/setup_configuration.json || true
       register: response
       failed_when:
         - not response.stderr is search('Database specified already in use by iRODS')
         - not response.stdout is search('Attempting test put')
       changed_when: not response.stderr is search('Database specified already in use by iRODS')
+
+  always:
+    - name: Setup_irods | restore configuration files
+      ansible.builtin.copy:
+        remote_src: true
+        src: "{{ item }}.bak"
+        dest: "{{ item }}"
+        mode: preserve
+      with_items: "{{ config_files }}"
+
+    - name: Setup_irods | delete backup configuration files
+      ansible.builtin.file:
+        path: "{{ item }}.bak"
+        state: absent
+      with_items: "{{ config_files }}"
