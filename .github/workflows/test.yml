@@ -9,8 +9,6 @@ jobs:
         with: 
           path: "${{ github.repository }}"
  
-      - uses: gofrolist/molecule-action@v2.2.21
+      - uses: robertdebock/molecule-action@4.0.8
         with:
-          molecule_options: --base-config molecule/_shared/base.yml
-          molecule_command: test
-          molecule_args: --all
+          command: --base-config molecule/_shared/base.yml test --all
