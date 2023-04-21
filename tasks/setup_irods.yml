@@ -36,7 +36,7 @@
       changed_when: not response.stderr is search('Database specified already in use by iRODS')
   rescue:
     - name: setup_irods | ensure .odbc.ini missing on failure
-      file:
+      ansible.builtin.file:
         path: "{{ _root_dir }}/var/lib/irods/.odbc.ini"
         state: absent
 

@@ -17,7 +17,6 @@
 
 - name: Server_config | validate rest if requested
   when: _validate | bool
-  ignore_errors: true
   block:
     - name: Server_config | validate federation
       with_items: "{{ _federation }}"

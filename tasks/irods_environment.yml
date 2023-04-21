@@ -5,7 +5,6 @@
 
 - name: Irods_environment | validate if required
   when: _validate | bool
-  ignore_errors: true
   block:
     - name: Irods_environment | validate core variables
       ansible.builtin.assert:
