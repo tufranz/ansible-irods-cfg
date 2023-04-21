@@ -32,8 +32,9 @@ deploys host_access_control_config.json, `hosts_config.yml` deploys hosts_config
 `server_config.yml` deploys server_config.json, and `service_account.yml` deploys
 service_account.config.
 
-The `init_zone_user.yml` tasks file is not part of `main.yml` or either of the tier-specific tasks
-files. It initializes the iRODS zone user on the inventory host.
+The `setup_irods.yml` and `init_zone_user.yml` tasks files are not part of `main.yml` or either of
+the tier-specific tasks files. `setup_irods.yml` initializes the ICAT DB before calling
+`server.yml`, and `init_zone_user.yml` initializes the iRODS zone user on the inventory host.
 
 ## Role Variables
 
@@ -43,7 +44,7 @@ Variable                                                              | Default 
 --------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------ | -------
 `irods_cfg_access_entries`                                            | []                                                                                   |                                                  | A list of access entry objects defining who can access iRODS and from where, see below
 `irods_cfg_authentication_file`                                       | /var/lib/irods/.irods/.irodsA                                                        |                                                  | the authentication file for the client or clerver
-`irods_cfg_catalog_provider_hosts`                                    | [ localhost ]                                                                        |                                                  | a list of FQDNs or IP addresses of the catalog service providers
+`irods_cfg_catalog_provider_hosts`                                    | `[ localhost ]`                                                                      |                                                  | a list of FQDNs or IP addresses of the catalog service providers
 `irods_cfg_catalog_service_role`                                      | provider                                                                             | consumer, provider                               | the role of the iRODS server, a provider directly accesses the catalog database, a consumer does not
 `irods_cfg_client_default_hash_scheme`                                | `irods_cfg_default_hash_scheme`                                                      | MD5, SHA256                                      | checksum scheme for the client or clerver
 `irods_cfg_client_default_resource`                                   | `irods_cfg_default_resource_name` _but see comment_                                  |                                                  | the name of the resource used for client or clerver operations if one is not specified, on the clerver, if `irods_cfg_default_resource_name` is undefined, 'demoResc' will be used as the default.
@@ -257,6 +258,6 @@ See [license](/LICENSE.txt).
 
 ## Author Information
 
-Tony Edgin  
-<tedgin@cyverse.org>  
+Tony Edgin
+<tedgin@cyverse.org>
 [CyVerse](https://cyverse.org)

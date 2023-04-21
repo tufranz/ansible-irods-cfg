@@ -42,8 +42,18 @@
         login_user: irods
         login_password: testpassword
         query: >
-          SELECT option_value 
+          SELECT option_value
           FROM r_grid_configuration
           WHERE namespace = 'database' AND option_name = 'schema_version'
       register: response
       failed_when: response.failed or response.query_result[0]['option_value'] != '7'
+
+    - name: verify admin password set
+      postgresql_query:
+        db: ICAT
+        login_user: irods
+        login_password: testpassword
+        query: >
+          SELECT rcat_password
+          FROM r_user_password
+          WHERE user_id = (SELECT user_id FROM r_user_main WHERE user_name = 'rods')
