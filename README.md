@@ -3,8 +3,7 @@
 [![Ansible Galaxy](https://img.shields.io/badge/role-cyverse--ansible.irods--cfg-blue.svg)](https://galaxy.ansible.com/cyverse-ansible/irods-cfg/)
 [![Test Status](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml/badge.svg)](https://github.com/CyVerse-Ansible/ansible-irods-cfg/actions/workflows/test.yml)
 
-This role will eventually be able to be used to completely configure an iRODS server once iRODS is
-installed. At the moment, it can maintain the following configuration files.
+This role will eventually be able to be used to completely configure an iRODS server once iRODS is installed. At the moment, it can maintain the following configuration files.
 
 * irods_environment.json
 * etc/irods/host_access_control_config.json
@@ -18,23 +17,13 @@ iRODS 4.2.8 is installed.
 
 ## Tasks Files
 
-The `main.yml` tasks file that is called by default performs the same tasks as `server.yml`, i.e.,
-it deploys the set of files required by an iRODS server.
+The `main.yml` tasks file that is called by default performs the same tasks as `server.yml`, i.e., it deploys the set of files required by an iRODS server.
 
-There are two tier-specific tasks files. `client.yml` deploys the configuration files required by a
-client, e.g., the iCommands. Currently, it deploys the irods_environment.json file. `server.yml`
-deploys the configuration files required by an iRODS server.
+There are two tier-specific tasks files. `client.yml` deploys the configuration files required by a client, e.g., the iCommands. Currently, it deploys the irods_environment.json file. `server.yml` deploys the configuration files required by an iRODS server.
 
-For each iRODS configuration file there is a corresponding tasks file that deploys only that
-configuration file. `irods_environment.yml` deploys the client or clerver configuration file,
-_irods_environment.json_ by default. In the `etc/irods/` directory, `host_access_control_config.yml`
-deploys host_access_control_config.json, `hosts_config.yml` deploys hosts_config.json,
-`server_config.yml` deploys server_config.json, and `service_account.yml` deploys
-service_account.config.
+For each iRODS configuration file there is a corresponding tasks file that deploys only that configuration file. `irods_environment.yml` deploys the client or clerver configuration file, _irods_environment.json_ by default. In the `etc/irods/` directory, `host_access_control_config.yml` deploys host_access_control_config.json, `hosts_config.yml` deploys hosts_config.json, `server_config.yml` deploys server_config.json, and `service_account.yml` deploys service_account.config.
 
-The `setup_irods.yml` and `init_zone_user.yml` tasks files are not part of `main.yml` or either of
-the tier-specific tasks files. `setup_irods.yml` initializes the ICAT DB before calling
-`server.yml`, and `init_zone_user.yml` initializes the iRODS zone user on the inventory host.
+The `setup_irods.yml` and `init_zone_user.yml` tasks files are not part of `main.yml` or either of the tier-specific tasks files. `setup_irods.yml` initializes the ICAT DB before calling `server.yml`, and `init_zone_user.yml` initializes the iRODS zone user on the inventory host.
 
 ## Role Variables
 
@@ -121,8 +110,7 @@ Variable                                                              | Default 
 `irods_cfg_zone_port`                                                 | 1247                                                                                 |                                                  | the main port used by the zone for communication
 `irods_cfg_zone_user`                                                 | rods                                                                                 |                                                  | the name of the rodsadmin user running this iRODS instance
 
-The `irods_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry`
-object has the following fields, all of them required.
+The `irods_cfg_access_entries` variables is an array of `access_entry` objects. An `access_entry` object has the following fields, all of them required.
 
 Field     | Choices | Comments
 --------- | ------- | --------
@@ -131,11 +119,9 @@ Field     | Choices | Comments
 `mask`    |         | the network mask when `address` is a network address
 `user`    |         | the iRODS user able to access
 
-The `irods_cfg_environment_variables` variable is a dictionary where the key is the name of a server
-process environment variable, and the value is the value of the environment variable.
+The `irods_cfg_environment_variables` variable is a dictionary where the key is the name of a server process environment variable, and the value is the value of the environment variable.
 
-The `irods_cfg_federation` variable is an array of `federation` objects. A `federation` object has
-the following fields, all of them required.
+The `irods_cfg_federation` variable is an array of `federation` objects. A `federation` object has the following fields, all of them required.
 
 Field                    | Choices | Comments
 ------------------------ | --------| --------
@@ -144,16 +130,14 @@ Field                    | Choices | Comments
 `zone_key`               |         | the shared authentication secret with the federated zone
 `zone_name`              |         | the name of the federated zone
 
-The `irods_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry` object has
-the following fields, all of them required.
+The `irods_cfg_host_entries` variable is an array of `host_entry` objects. A `host_entry` object has the following fields, all of them required.
 
 Field          | Choices       | Comments
 -------------- | ------------- | --------
 `address_type` | local, remote | indicates if this host is localhost.
 `addresses`    |               | an array of names and addresses referring to this host
 
-The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none
-of them are required.
+The `irods_cfg_icat` variable is an `icat` object. An `icat` object has the following fields, none of them are required.
 
 Field                   | Default      | Choices                 | Comments
 ----------------------- | ------------ | ----------------------- | --------
@@ -169,8 +153,7 @@ For `catalog_database_type`, only `postgres` has been fully tested.
 
 ## Facts Set
 
-If any of the iRODS configuration files are changed, the fact `irods_cfg_made_changes` will be set
-to `true`.
+If any of the iRODS configuration files are changed, the fact `irods_cfg_made_changes` will be set to `true`.
 
 ## Dependencies
 
@@ -259,5 +242,5 @@ See [license](/LICENSE.txt).
 ## Author Information
 
 Tony Edgin
-<tedgin@cyverse.org>
+<tedgin@arizona.edu>
 [CyVerse](https://cyverse.org)
