@@ -9,4 +9,4 @@ jobs:
         with:
           path: "${{ github.repository }}"
 
-      - uses: robertdebock/molecule-action@5.0.3
+      - uses: robertdebock/molecule-action@6.0.0
