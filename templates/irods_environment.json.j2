@@ -56,8 +56,10 @@
 {% endif %}
     "irods_port": {{ _zone_port }},
 {% if _for_server %}
-    "irods_server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
-    "irods_server_control_plane_encryption_num_hash_rounds": {{ _server_control_plane_encryption_num_hash_rounds }},
+    "irods_server_control_plane_encryption_algorithm": "{{
+        _server_control_plane_encryption_algorithm }}",
+    "irods_server_control_plane_encryption_num_hash_rounds": {{
+        _server_control_plane_encryption_num_hash_rounds }},
     "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
     "irods_server_control_plane_port": {{ _server_control_plane_port }},
 {% endif %}

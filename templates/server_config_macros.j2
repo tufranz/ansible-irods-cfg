@@ -12,7 +12,7 @@
 {%   if _access_entries %}
 [
 {%     for e in _access_entries %}
-    {{ mk_access_entry(e) | indent(4) }}{% if not loop.last %},{% endif +%}
+    {{ mk_access_entry(e) | string | indent(4) }}{% if not loop.last %},{% endif +%}
 {%     endfor %}
 ]
 {%-  else %}
@@ -23,26 +23,30 @@
 
 {% macro advanced_settings() -%}
 {
-    "default_number_of_transfer_threads": {{ _default_number_of_transfer_threads }},
+    "default_number_of_transfer_threads": {{
+        _default_number_of_transfer_threads }},
     "default_temporary_password_lifetime_in_seconds": {{ _default_temporary_password_lifetime }},
-    "maximum_number_of_concurrent_rule_engine_server_processes": {{ _maximum_number_of_concurrent_rule_engine_server_processes }},
+    "maximum_number_of_concurrent_rule_engine_server_processes": {{
+        _maximum_number_of_concurrent_rule_engine_server_processes }},
     "maximum_size_for_single_buffer_in_megabytes": {{ _maximum_size_for_single_buffer }},
     "maximum_temporary_password_lifetime_in_seconds": {{ _maximum_temporary_password_lifetime }},
     "rule_engine_server_sleep_time_in_seconds": {{ _rule_engine_server_sleep_time }},
-    "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{ _transfer_buffer_size_for_parallel_transfer }},
-    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{ _transfer_chunk_size_for_parallel_transfer }}
+    "transfer_buffer_size_for_parallel_transfer_in_megabytes": {{
+        _transfer_buffer_size_for_parallel_transfer }},
+    "transfer_chunk_size_for_parallel_transfer_in_megabytes": {{
+        _transfer_chunk_size_for_parallel_transfer }}
 }
 {%- endmacro %}
 
 
 {% macro environment_variables() -%}
-{%   if _environment_variables|length == 0 %}
+{%   if _environment_variables | length == 0 %}
 {}
-{%-  elif _environment_variables|length == 1 %}
-{%     set key, value = _environment_variables.items()|first %}
+{%-  elif _environment_variables | length == 1 %}
+{%     set key, value = _environment_variables.items() | first %}
 { "{{ key }}": "{{ value }}" }
 {%-  else %}
-{ 
+{
 {%     for key, value in _environment_variables.items() %}
     "{{ key }}": "{{ value }}"{% if not loop.last %},{% endif +%}
 {%     endfor %}
@@ -52,9 +56,9 @@
 
 
 {% macro mk_catalog_provider_hosts(hosts) -%}
-{%   if hosts|length == 0 %}
+{%   if hosts | length == 0 %}
 []
-{%-  elif hosts|length == 1 %}
+{%-  elif hosts | length == 1 %}
 [ "{{ hosts[0] }}" ]
 {%-  else %}
 [
@@ -68,7 +72,8 @@
 
 {% macro mk_federate(def) -%}
 {
-    "catalog_provider_hosts": {{ mk_catalog_provider_hosts(def.catalog_provider_hosts) | indent(4) }},
+    "catalog_provider_hosts": {{
+        mk_catalog_provider_hosts(def.catalog_provider_hosts) | string | indent(4) }},
     "negotiation_key": "{{ def.negotiation_key }}",
     "zone_key": "{{ def.zone_key }}",
     "zone_name": "{{ def.zone_name }}"
@@ -80,7 +85,7 @@
 {%   if _federation %}
 [
 {%     for f in _federation %}
-    {{ mk_federate(f) | indent(4) }}{% if not loop.last %},{% endif +%}
+    {{ mk_federate(f) | string | indent(4) }}{% if not loop.last %},{% endif +%}
 {%     endfor %}
 ]
 {%-  else %}
@@ -110,7 +115,7 @@
 {% macro mk_host_entry(entry) -%}
 {
     "address_type": "{{ entry.address_type }}",
-    "addresses": {{ mk_address_list(entry.addresses) | indent(4) }} 
+    "addresses": {{ mk_address_list(entry.addresses) | string | indent(4) }}
 }
 {%- endmacro %}
 
@@ -119,7 +124,7 @@
 {%   if _host_entries %}
 [
 {%     for e in _host_entries %}
-    {{ mk_host_entry(e) | indent(4) }}{% if not loop.last %},{% endif +%}
+    {{ mk_host_entry(e) | string | indent(4) }}{% if not loop.last %},{% endif +%}
 {%     endfor %}
 ]
 {%-  else %}
@@ -143,15 +148,15 @@
 {% macro mk_database(db, default_driver) -%}
 {%   set d = db if db.odbc_driver else db | combine({ 'odbc_driver': default_driver }) %}
 {
-    "{{ db.catalog_database_type }}": {{ mk_database_config(d) | indent(4) }}
+    "{{ db.catalog_database_type }}": {{ mk_database_config(d) | string | indent(4) }}
 }
 {%- endmacro %}
 
 
 {% macro mk_re_file_set(files) -%}
-{%   if files|length == 0 %}
+{%   if files | length == 0 %}
 []
-{%-  elif files|length == 1 %}
+{%-  elif files | length == 1 %}
 [ "{{ files[0] }}" ]
 {%-  else %}
 [
@@ -165,12 +170,14 @@
 
 {% macro mk_rule_lang_config(extra_dvm, extra_fnm, extra_rulebases) -%}
 {
-    "re_data_variable_mapping_set": {{ mk_re_file_set(extra_dvm + [ 'core' ]) | indent(4) }}, 
-    "re_function_name_mapping_set": {{ mk_re_file_set(extra_fnm + [ 'core' ]) | indent(4) }},
-    "re_rulebase_set": {{ mk_re_file_set(extra_rulebases + [ 'core' ]) | indent(4) }},
+    "re_data_variable_mapping_set": {{
+        mk_re_file_set(extra_dvm + [ 'core' ]) | string | indent(4) }},
+    "re_function_name_mapping_set": {{
+        mk_re_file_set(extra_fnm + [ 'core' ]) | string | indent(4) }},
+    "re_rulebase_set": {{ mk_re_file_set(extra_rulebases + [ 'core' ]) | string | indent(4) }},
     "regexes_for_supported_peps": [
-        "ac[^ ]*", 
-        "msi[^ ]*", 
+        "ac[^ ]*",
+        "msi[^ ]*",
         "[^ ]*pep_[^ ]*_(pre|post|except|finally)"
     ]
 }
@@ -181,20 +188,33 @@
 {
     "instance_name": "{{ instance_name }}",
     "plugin_name": "{{ plugin_name }}",
-    "plugin_specific_configuration": {{ cfg_json | indent(4) }}{% if shm %},{% endif +%}
+    "plugin_specific_configuration": {{ cfg_json | string | indent(4) }}{% if shm %},{% endif +%}
 {%   if shm %}
     "shared_memory_instance": "{{ shm }}"
 {%   endif %}
-} 
+}
 {%- endmacro %}
 
 
 {% macro mk_rule_engine_list(rule_lang_extra_dvm, rule_lang_extra_fnm, rule_lang_extra_rulebases)
 -%}
-{%   set rule_lang_cfg = mk_rule_lang_config(rule_lang_extra_dvm, rule_lang_extra_fnm, rule_lang_extra_rulebases) %}
+{%   set rule_lang_cfg = mk_rule_lang_config(
+        rule_lang_extra_dvm, rule_lang_extra_fnm, rule_lang_extra_rulebases) %}
 [
-    {{ mk_rule_engine('irods_rule_engine_plugin-irods_rule_language-instance', 'irods_rule_engine_plugin-irods_rule_language', rule_lang_cfg, 'irods_rule_language_rule_engine') | indent(4) }},
-    {{ mk_rule_engine('irods_rule_engine_plugin-cpp_default_policy-instance', 'irods_rule_engine_plugin-cpp_default_policy', '{}', none) | indent(4) }}
+    {{ mk_rule_engine(
+            'irods_rule_engine_plugin-irods_rule_language-instance',
+            'irods_rule_engine_plugin-irods_rule_language',
+            rule_lang_cfg,
+            'irods_rule_language_rule_engine' )
+        | string
+        | indent(4) }},
+    {{ mk_rule_engine(
+            'irods_rule_engine_plugin-cpp_default_policy-instance',
+            'irods_rule_engine_plugin-cpp_default_policy',
+            '{}',
+            none )
+        | string
+        | indent(4) }}
 ]
 {%- endmacro %}
 
@@ -203,10 +223,16 @@
 {
     "authentication": {},
 {%   if _icat %}
-    "database": {{ mk_database(_icat, _dbms_default_odbc_driver) | indent(4) }},
+    "database": {{ mk_database(_icat, _dbms_default_odbc_driver) | string | indent(4) }},
 {%   endif %}
     "network": {},
     "resource": {},
-    "rule_engines": {{ mk_rule_engine_list(_re_additional_data_variable_mappings, _re_additional_function_name_mappings, _re_additional_rulebases) | indent(4) }}
+    "rule_engines": {{
+        mk_rule_engine_list(
+            _re_additional_data_variable_mappings,
+            _re_additional_function_name_mappings,
+            _re_additional_rulebases )
+        | string
+        | indent(4) }}
 }
 {%- endmacro %}

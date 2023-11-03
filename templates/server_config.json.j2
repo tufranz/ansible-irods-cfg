@@ -1,7 +1,8 @@
 {% import 'server_config_macros.j2' as sc with context %}
 {
-    "advanced_settings": {{ sc.advanced_settings() | indent }},
-    "catalog_provider_hosts": {{ sc.mk_catalog_provider_hosts(_catalog_provider_hosts) | indent }},
+    "advanced_settings": {{ sc.advanced_settings() | string | indent }},
+    "catalog_provider_hosts": {{
+        sc.mk_catalog_provider_hosts(_catalog_provider_hosts) | string | indent }},
     "catalog_service_role": "{{ _catalog_service_role }}",
     "default_dir_mode": "{{ _default_dir_mode }}",
     "default_file_mode": "{{ _default_file_mode }}",
@@ -14,8 +15,8 @@
 {% else %}
     "default_resource_name": null,
 {% endif %}
-    "environment_variables": {{ sc.environment_variables() | indent }},
-    "federation": {{ sc.federation() | indent }},
+    "environment_variables": {{ sc.environment_variables() | string | indent }},
+    "federation": {{ sc.federation() | string | indent }},
 {% if _kerberos_name %}
     "kerberos_name": "{{ _kerberos_name }}",
 {% endif %}
@@ -33,13 +34,15 @@
 {% if _pam_password_min_time %}
     "pam_password_min_time": {{ _pam_password_min_time }},
 {% endif %}
-    "plugin_configuration": {{ sc.plugin_configuration() | indent }},
+    "plugin_configuration": {{ sc.plugin_configuration() | string | indent }},
     "rule_engine_namespaces": [ "" ],
     "schema_name": "server_config",
     "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",
     "schema_version": "v3",
-    "server_control_plane_encryption_algorithm": "{{ _server_control_plane_encryption_algorithm }}",
-    "server_control_plane_encryption_num_hash_rounds": {{ _server_control_plane_encryption_num_hash_rounds }},
+    "server_control_plane_encryption_algorithm": "{{
+        _server_control_plane_encryption_algorithm }}",
+    "server_control_plane_encryption_num_hash_rounds": {{
+        _server_control_plane_encryption_num_hash_rounds }},
     "server_control_plane_key": "{{ _server_control_plane_key }}",
     "server_control_plane_port": {{ _server_control_plane_port }},
     "server_control_plane_timeout_milliseconds": {{ _server_control_plane_timeout }},
