@@ -1,29 +1,23 @@
 ---
-- name: prepare | control node
-  hosts: localhost
-  tasks:
-    - name: install Jinja 3
-      pip:
-        name: Jinja2>3
-
-
-- name: Prepare | base 
+- name: Prepare | CentOS base
   hosts: centos
   tasks:
     - name: CentOS | install epel repo
-      package:
+      ansible.builtin.package:
         name: epel-release
         state: present
- 
+
     - name: CentOS | install pip module prerequisites
       ansible.builtin.package:
         name: python-pip
         state: present
 
     - name: CentOS | get pip version
-      ansible.builtin.shell: |
-        set -o pipefail
-        pip --version | cut --delimiter=' ' --fields=2
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          set -o pipefail
+          pip --version | cut --delimiter=' ' --fields=2
       register: ver_response
       changed_when: false
 
@@ -40,36 +34,33 @@
         extra_args: '--upgrade'
 
 
-- name: Prepare | base
+- name: Prepare | Ubuntu base
   hosts: ubuntu
   tasks:
-    - name: Ubuntu | initialize apt cache
-      apt:
+    - name: Ubuntu | install pip
+      ansible.builtin.apt:
         update_cache: true
-
-    - name: Ubuntu | install pip module prerequisites
-      ansible.builtin.package:
         name: python3-pip
 
 
-- name: prepare | base
+- name: Prepare | base
   hosts: all
   gather_facts: false
   tasks:
-    - name: update ca-certificates
-      package:
+    - name: Update ca-certificates
+      ansible.builtin.package:
         name: ca-certificates
         state: latest  # noqa package-latest
-        
-    - name: install setuptools
+
+    - name: Install setuptools
       ansible.builtin.pip:
         name: setuptools
 
-    - name: install jsonschema
+    - name: Install jsonschema
       ansible.builtin.pip:
         name: jsonschema
-        
-    - name: create irods user
-      user:
+
+    - name: Create irods user
+      ansible.builtin.user:
         name: irods
         home: /var/lib/irods
