@@ -1,17 +1,17 @@
 ---
-- name: server | generate host_access_control_config.json
+- name: Server | generate host_access_control_config.json
   ansible.builtin.import_tasks: host_access_control_config.yml
 
-- name: server | generate hosts_config.json
+- name: Server | generate hosts_config.json
   ansible.builtin.import_tasks: hosts_config.yml
 
-- name: server | generate server version of irods_environment.json
+- name: Server | generate server version of irods_environment.json
   ansible.builtin.include_tasks: irods_environment.yml
   vars:
     _for_server: true
 
-- name: server | generate server_config.json
+- name: Server | generate server_config.json
   ansible.builtin.import_tasks: server_config.yml
 
-- name: server | generate service_account.config
+- name: Server | generate service_account.config
   ansible.builtin.import_tasks: service_account.yml

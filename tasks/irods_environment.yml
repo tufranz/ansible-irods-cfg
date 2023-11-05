@@ -1,17 +1,17 @@
 ---
-- name: Irods_environment | load variable values
+- name: IRODS environment | load variable values
   ansible.builtin.include_vars: >-
     {{ 'irods_environment_server.yml' if _for_server | bool else 'irods_environment_client.yml' }}
 
-- name: Irods_environment | validate if required
+- name: IRODS environment | validate if required
   when: _validate | bool
   block:
-    - name: Irods_environment | validate core variables
+    - name: Validate core variables
       ansible.builtin.assert:
         that:
           - _zone_port|int >= 1 and _zone_port|int <= 65535
 
-    - name: Irods_environment | validate variables
+    - name: Validate variables
       when: _for_server | bool
       ansible.builtin.assert:
         that:
@@ -40,11 +40,11 @@
               and _client_xmsg_port|int != _server_control_plane_port|int )
           - not _zone_auth_scheme or _zone_auth_scheme in ['gsi', 'krb', 'native', 'pam']
 
-- name: irods_environment | generate file
+- name: IRODS environment | generate file
   ansible.builtin.include_tasks: _cfg_template.yml
   vars:
     _cfg_template_dest_file: "{{ _environment_file }}"
     _cfg_template_name: irods_environment.json.j2
 
-- name: Irods_environment | ensure known that changes were made
+- name: IRODS environment | ensure known that changes were made
   ansible.builtin.meta: flush_handlers

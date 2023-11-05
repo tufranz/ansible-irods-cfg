@@ -1,28 +1,28 @@
 ---
-- name: setup_irods | Initialize ICAT schema if needed
+- name: Setup iRODS | Initialize ICAT schema if needed
   when: _catalog_service_role == 'provider'
   block:
-    - name: setup_irods | determine if ICAT schema initialized
+    - name: Determine if ICAT schema initialized
       ansible.builtin.stat:
         path: "{{ _root_dir }}/var/lib/irods/.odbc.ini"
       register: odbc
 
-    - name: setup_irods | load vars for chosen database type
+    - name: Load vars for chosen database type
       when: not odbc.stat.exists
       ansible.builtin.include_vars: "{{ _icat.catalog_database_type }}.yml"
 
-    - name: setup_irods | load variable values
+    - name: Load variable values
       when: not odbc.stat.exists
       ansible.builtin.include_vars: irods_environment_server.yml
 
-    - name: setup_irods | create setup configuration file
+    - name: Create setup configuration file
       when: not odbc.stat.exists
       ansible.builtin.template:
         src: setup_configuration.json.j2
         dest: /tmp/setup_configuration.json
         mode: u+rw
 
-    - name: setup_irods | initialize ICAT schema
+    - name: Initialize ICAT schema
       when: not odbc.stat.exists
       ansible.builtin.shell: |
         set -e
@@ -35,10 +35,10 @@
         - not response.stdout is search('Attempting test put')
       changed_when: not response.stderr is search('Database specified already in use by iRODS')
   rescue:
-    - name: setup_irods | ensure .odbc.ini missing on failure
+    - name: Ensure .odbc.ini missing on failure
       ansible.builtin.file:
         path: "{{ _root_dir }}/var/lib/irods/.odbc.ini"
         state: absent
 
-- name: setup_irods | configure server
+- name: Setup iRODS | configure server
   ansible.builtin.import_tasks: server.yml

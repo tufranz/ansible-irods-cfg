@@ -1,31 +1,31 @@
 ---
-- name: Server_config | include variables
+- name: Server config | include variables
   ansible.builtin.include_vars: server_config.yml
 
-- name: Server_config | validate ICAT vars if requested
+- name: Server config | validate ICAT vars if requested
   when: _icat is mapping
   block:
-    - name: Server_config | validate database params
+    - name: Server config | validate database params
       when: _validate | bool
       ansible.builtin.assert:
         that:
           - _icat.catalog_database_type in ('mysql', 'oracle', 'postgres')
           - _icat.db_port|int >= 1 and _icat.db_port|int <= 65535
 
-    - name: Server_config | load vars for chosen database type
+    - name: Server config | load vars for chosen database type
       ansible.builtin.include_vars: "{{ _icat.catalog_database_type }}.yml"
 
-- name: Server_config | validate rest if requested
+- name: Server config | validate rest if requested
   when: _validate | bool
   block:
-    - name: Server_config | validate federation
+    - name: Validate federation
       with_items: "{{ _federation }}"
       ansible.builtin.assert:
         that:
           - item.zone_name != _zone_name
           - item.negotiation_key|length == 32
 
-    - name: Server_config | validate parameters
+    - name: Validate parameters
       ansible.builtin.assert:
         that:
           - _catalog_provider_hosts|length >= 1
@@ -83,10 +83,10 @@
               or _zone_port|int > _server_port_range_end|int)
             and _zone_port != _xmsg_port
 
-- name: server_config | generate file
+- name: Server config | generate file
   ansible.builtin.include_tasks: _cfg_template.yml
   vars:
     _cfg_template_dest_file: etc/irods/server_config.json
 
-- name: Server_config | ensure known that changes were made
+- name: Server config | ensure known that changes were made
   ansible.builtin.meta: flush_handlers
