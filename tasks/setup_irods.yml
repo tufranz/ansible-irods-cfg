@@ -1,6 +1,8 @@
 ---
 - name: Setup iRODS | Initialize ICAT schema if needed
   when: _catalog_service_role == 'provider'
+  vars:
+    _for_server: true
   block:
     - name: Determine if ICAT schema initialized
       ansible.builtin.stat:
@@ -8,37 +10,82 @@
       register: odbc
 
     - name: Load vars for chosen database type
-      when: not odbc.stat.exists
+      # when: not odbc.stat.exists
       ansible.builtin.include_vars: "{{ _icat.catalog_database_type }}.yml"
 
     - name: Load variable values
-      when: not odbc.stat.exists
+      # when: not odbc.stat.exists
       ansible.builtin.include_vars: irods_environment_server.yml
 
     - name: Create setup configuration file
-      when: not odbc.stat.exists
+      # when: not odbc.stat.exists
       ansible.builtin.template:
         src: setup_configuration.json.j2
         dest: /tmp/setup_configuration.json
         mode: u+rw
 
+    # maf temp
+    - name: Sometimes we have to replace single- with double-quotes 1/3
+      ansible.builtin.replace:
+        path: /tmp/setup_configuration.json
+        regexp: "'"
+        replace: "\""
+
+    - name: Create needed test-resource
+      ansible.builtin.file:
+        # path: "{{ irods_cfg_default_resource_directory }}"
+        path: "/iRODS"
+        mode: '0777'
+        # owner: "{{ irods_admin_username }}"
+        # owner: "rods"
+        state: directory
+        recurse: true
+      become: true
+      become_user: "root"
+
+    - name: Create needed test-resource
+      ansible.builtin.file:
+        path: "{{ irods_cfg_default_resource_directory }}"
+        mode: '0777'
+        state: directory
+        recurse: true
+      become: true
+      become_user: "root"
+    # maf temp
+
     - name: Initialize ICAT schema
-      when: not odbc.stat.exists
+      # when: not odbc.stat.exists
       ansible.builtin.shell: |
         set -e
         python /var/lib/irods/scripts/setup_irods.py \
           --json_configuration_file=/tmp/setup_configuration.json
-        rm --force /tmp/setup_configuration.json || true
+        # rm --force /tmp/setup_configuration.json || true
       register: response
-      failed_when:
-        - not response.stderr is search('Database specified already in use by iRODS')
-        - not response.stdout is search('Attempting test put')
-      changed_when: not response.stderr is search('Database specified already in use by iRODS')
+      # failed_when:
+      #   - not response.stderr is search('Database specified already in use by iRODS')
+      #   - not response.stdout is search('Attempting test put')
+      # changed_when: not response.stderr is search('Database specified already in use by iRODS')
+
+    # maf temp
+    - name: Sometimes we have to replace single- with double-quotes 2/3
+      ansible.builtin.replace:
+        path: /etc/irods/server_config.json
+        regexp: "'"
+        replace: "\""
+    # maf temp
+
+    - name: DEBUG01
+      ansible.builtin.debug:
+        var: response
   rescue:
     - name: Ensure .odbc.ini missing on failure
       ansible.builtin.file:
         path: "{{ _root_dir }}/var/lib/irods/.odbc.ini"
         state: absent
+
+    - name: DEBUG02
+      ansible.builtin.debug:
+        var: response
 
 - name: Setup iRODS | configure server
   ansible.builtin.import_tasks: server.yml

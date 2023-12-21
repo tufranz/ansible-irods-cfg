@@ -23,6 +23,7 @@
 {% if _client_default_hash_scheme %}
     "irods_default_hash_scheme": "{{ _client_default_hash_scheme }}",
 {% endif %}
+    "irods_default_number_of_transfer_threads": {{ _irods_default_number_of_transfer_threads }},
 {% if _client_default_resource %}
     "irods_default_resource": "{{ _client_default_resource }}",
 {% endif %}
@@ -46,7 +47,7 @@
 {% endif %}
     "irods_host": "{{ _host }}",
 {% if _log_level %}
-    "irods_log_level": {{ _log_level }},
+    "irods_log_level": "{{ _log_level }}",
 {% endif %}
 {% if _match_hash_policy %}
     "irods_match_hash_policy": "{{ _match_hash_policy }}",
@@ -54,6 +55,7 @@
 {% if _plugins_home %}
     "irods_plugins_home": "{{ _plugins_home }}",
 {% endif %}
+    "irods_maximum_size_for_single_buffer_in_megabytes": {{ _irods_maximum_size_for_single_buffer_in_megabytes}},
     "irods_port": {{ _zone_port }},
 {% if _for_server %}
     "irods_server_control_plane_encryption_algorithm": "{{
@@ -63,6 +65,7 @@
     "irods_server_control_plane_key": "{{ _server_control_plane_key }}",
     "irods_server_control_plane_port": {{ _server_control_plane_port }},
 {% endif %}
+    "irods_transfer_buffer_size_for_parallel_transfer_in_megabytes": {{ _irods_transfer_buffer_size_for_parallel_transfer_in_megabytes }},
 {% if _ssl_ca_certificate_file %}
     "irods_ssl_ca_certificate_file": "{{ _ssl_ca_certificate_file }}",
 {% endif %}
@@ -90,5 +93,5 @@
 {% endif %}
     "irods_zone_name": "{{ _zone_name }}",
     "schema_name": "{{ _environment_schema_name }}",
-    "schema_version": "v3"
+    "schema_version": "v4"
 }

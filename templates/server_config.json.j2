@@ -4,6 +4,11 @@
     "catalog_provider_hosts": {{
         sc.mk_catalog_provider_hosts(_catalog_provider_hosts) | string | indent }},
     "catalog_service_role": "{{ _catalog_service_role }}",
+    "client_api_allowlist_policy": "enforce",
+    "controlled_user_connection_list": {
+      "control_type": "denylist",
+      "users": []
+    },
     "default_dir_mode": "{{ _default_dir_mode }}",
     "default_file_mode": "{{ _default_file_mode }}",
     "default_hash_scheme": "{{ _default_hash_scheme }}",
@@ -17,6 +22,27 @@
 {% endif %}
     "environment_variables": {{ sc.environment_variables() | string | indent }},
     "federation": {{ sc.federation() | string | indent }},
+    "host_access_control": {
+        "access_entries": {{ sc.access_entries() | string | indent(4) }}
+    },
+    "host_resolution": {
+        "host_entries": []
+    },
+    "log_level": {
+        "agent": "{{ irods_cfg_log_level | default('info') }}",
+        "agent_factory": "{{ irods_cfg_log_level | default('info') }}",
+        "api": "{{ irods_cfg_log_level | default('info') }}",
+        "authentication": "{{ irods_cfg_log_level | default('info') }}",
+        "database": "{{ irods_cfg_log_level | default('info') }}",
+        "delay_server": "{{ irods_cfg_log_level | default('info') }}",
+        "legacy": "{{ irods_cfg_log_level | default('info') }}",
+        "microservice": "{{ irods_cfg_log_level | default('info') }}",
+        "network": "{{ irods_cfg_log_level | default('info') }}",
+        "resource": "{{ irods_cfg_log_level | default('info') }}",
+        "rule_engine": "{{ irods_cfg_log_level | default('info') }}",
+        "server": "{{ irods_cfg_log_level | default('info') }}",
+        "sql": "{{ irods_cfg_log_level | default('info') }}"
+    },
 {% if _kerberos_name %}
     "kerberos_name": "{{ _kerberos_name }}",
 {% endif %}
@@ -38,7 +64,7 @@
     "rule_engine_namespaces": [ "" ],
     "schema_name": "server_config",
     "schema_validation_base_uri": "{{ _schema_validation_base_uri }}",
-    "schema_version": "v3",
+    "schema_version": "v4",
     "server_control_plane_encryption_algorithm": "{{
         _server_control_plane_encryption_algorithm }}",
     "server_control_plane_encryption_num_hash_rounds": {{
