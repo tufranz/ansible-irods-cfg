@@ -74,18 +74,11 @@
         replace: "\""
     # maf temp
 
-    - name: DEBUG01
-      ansible.builtin.debug:
-        var: response
   rescue:
     - name: Ensure .odbc.ini missing on failure
       ansible.builtin.file:
         path: "{{ _root_dir }}/var/lib/irods/.odbc.ini"
         state: absent
-
-    - name: DEBUG02
-      ansible.builtin.debug:
-        var: response
 
 - name: Setup iRODS | configure server
   ansible.builtin.import_tasks: server.yml
